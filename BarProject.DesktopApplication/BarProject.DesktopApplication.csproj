@@ -79,6 +79,12 @@
     <Compile Include="Desktop\Controls\Menagement\Taxes.xaml.cs">
       <DependentUpon>Taxes.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Desktop\Controls\Menagement\Units.xaml.cs">
+      <DependentUpon>Units.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Desktop\Controls\Warehouse\WarehouseUserControl.xaml.cs">
+      <DependentUpon>WarehouseUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\MessageBoxesUtil.cs" />
     <Page Include="Common\Login.xaml">
       <SubType>Designer</SubType>
@@ -92,11 +98,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Desktop\Controls\Menagement\Units.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Desktop\Controls\UsersUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Desktop\Controls\Menagement\MenagementUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Desktop\Controls\Warehouse\WarehouseUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

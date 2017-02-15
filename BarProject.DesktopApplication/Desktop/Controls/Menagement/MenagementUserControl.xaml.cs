@@ -46,7 +46,8 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             };
             var units = new MetroTabItem()
             {
-                Header = "Units"
+                Header = "Units",
+                Content = new Units()
             };
             categories.SetResourceReference(StyleProperty, "MenuLevel2");
             taxes.SetResourceReference(StyleProperty, "MenuLevel2");

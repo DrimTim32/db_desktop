@@ -7,9 +7,7 @@
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.Resources>
-    </UserControl.Resources>
+             d:DesignHeight="300" d:DesignWidth="300"> 
     <Grid>
         <StackPanel>
             <Controls:MetroAnimatedTabControl x:Name="TabControl"/>
