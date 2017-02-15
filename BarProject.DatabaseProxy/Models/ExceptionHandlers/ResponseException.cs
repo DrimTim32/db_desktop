@@ -74,7 +74,7 @@
             {
                 var reg = ReasonForDatabaseExceptionDictionary[exceptionSql.Number];
                 var match = reg.Match(exceptionSql.Message);
-                ExceptionData.Reason = $"Value {match.Groups[1].Value} has to be unique but already exists in database";
+                ExceptionData.Reason = $"Value '{match.Groups[1].Value}' has to be unique but already exists in database";
             }
             else
                 ExceptionData.Reason = exceptionSql.Message;

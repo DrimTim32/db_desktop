@@ -76,12 +76,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Desktop\Controls\Menagement\Taxes.xaml.cs">
+      <DependentUpon>Taxes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\MessageBoxesUtil.cs" />
     <Page Include="Common\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Desktop\Controls\Menagement\Categories.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Desktop\Controls\Menagement\Taxes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

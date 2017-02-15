@@ -48,6 +48,7 @@
     <Compile Include="RestHelpers\Categories.cs" />
     <Compile Include="RestHelpers\RestClient.cs" />
     <Compile Include="RestHelpers\RestClientStatic.cs" />
+    <Compile Include="RestHelpers\Taxes.cs" />
     <Compile Include="RestHelpers\Users.cs" />
   </ItemGroup>
   <ItemGroup>

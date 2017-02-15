@@ -41,7 +41,8 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
 
             var taxes = new MetroTabItem()
             {
-                Header = "Taxes"
+                Header = "Taxes",
+                Content = new Taxes()
             };
             var units = new MetroTabItem()
             {

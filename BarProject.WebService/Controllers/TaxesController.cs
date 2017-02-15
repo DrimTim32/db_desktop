@@ -48,7 +48,7 @@ namespace BarProject.WebService.Controllers
         }
         [HttpDelete]
         [Authorize(Roles = "Admin,Owner")]
-        [Route("{tax}")]
+        [Route("{id}")]
         public IHttpActionResult Delete(int id)
         {
             try
