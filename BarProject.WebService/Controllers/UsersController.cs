@@ -64,7 +64,7 @@ namespace BarProject.WebService.Controllers
 
         [Authorize(Roles = "Admin,Owner")]
         [HttpPost, Route("")]
-        public IHttpActionResult Post(WritableUser user)
+        public IHttpActionResult Post(PureWritableUser user)
         {
             try
             {

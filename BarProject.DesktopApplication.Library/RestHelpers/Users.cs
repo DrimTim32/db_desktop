@@ -11,6 +11,7 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
     using DatabaseProxy.Models.ReadModels;
     using DatabaseProxy.Models.WriteModels;
     using RestSharp;
+    using RestSharp.Serializers;
 
     public partial class RestClient
     {
@@ -18,7 +19,7 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
         {
             var request = new RestRequest($"api/users/privileges/{username}", Method.GET);
             request.AddHeader("Authorization", $"bearer {token}");
-            request.AddHeader("Content-Type", "application/json"); 
+            request.AddHeader("Content-Type", "application/json");
             var data = await client.ExecuteGetTaskAsync<UserPrivileges>(request);
             return data;
         }
@@ -27,18 +28,17 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
         {
             var request = new RestRequest($"api/users/", Method.GET);
             request.AddHeader("Authorization", $"bearer {token}");
-            request.AddHeader("Content-Type", "application/json"); 
+            request.AddHeader("Content-Type", "application/json");
             var data = await client.ExecuteGetTaskAsync<List<ShowableUser>>(request);
             return data;
         }
-        public async Task<IRestResponse> AddUser(WritableUser user)
+        public void AddUser(PureWritableUser user, Action<IRestResponse, RestRequestAsyncHandle> callback)
         {
-            var request = new RestRequest($"api/users/", Method.GET);
-            request.AddHeader("Authorization", $"bearer {token}");
-            request.AddHeader("Content-Type", "application/json"); 
+            var request = new RestRequest($"api/users/", Method.POST) { RequestFormat = DataFormat.Json };
+            request.AddHeader("Authorization", $"bearer {token}");  
+            request.JsonSerializer = new JsonSerializer();
             request.AddBody(user);
-            var data = await client.ExecuteGetTaskAsync(request);
-            return data;
+            client.ExecuteAsync(request, callback);
         }
     }
 }

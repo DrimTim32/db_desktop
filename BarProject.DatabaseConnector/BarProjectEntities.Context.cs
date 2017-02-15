@@ -210,7 +210,7 @@ namespace BarProject.DatabaseConnector
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addUnit", unit_nameParameter, convert_factorParameter, unit_typeParameter);
         }
 
-        public virtual int addUser(string password, string username, string name, string surname, Nullable<byte> permission)
+        public virtual int addUser(string password, string username, string name, string surname, Nullable<int> permission)
         {
             var passwordParameter = password != null ?
                 new ObjectParameter("password", password) :
@@ -230,7 +230,7 @@ namespace BarProject.DatabaseConnector
 
             var permissionParameter = permission.HasValue ?
                 new ObjectParameter("permission", permission) :
-                new ObjectParameter("permission", typeof(byte));
+                new ObjectParameter("permission", typeof(int));
 
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addUser", passwordParameter, usernameParameter, nameParameter, surnameParameter, permissionParameter);
         }

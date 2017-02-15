@@ -10,6 +10,10 @@
         Title="AddUserWindow" Height="300" Width="300">
     <Grid>
         <StackPanel MinWidth="200">
+            <Grid x:Name="Progress" Visibility="Hidden">
+                <controls:MetroProgressBar IsIndeterminate="True"/>
+                <TextBlock>Loading..</TextBlock>
+            </Grid>
             <TextBlock Text="Add new user" Margin="0,0,0,8" />
             <StackPanel x:Name="Form" Orientation="Vertical">
                 <StackPanel.Resources>

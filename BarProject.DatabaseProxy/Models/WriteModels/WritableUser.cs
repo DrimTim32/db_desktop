@@ -1,7 +1,17 @@
 ﻿namespace BarProject.DatabaseProxy.Models.WriteModels
 {
     using System.ComponentModel;
+    using Newtonsoft.Json;
 
+    public class PureWritableUser
+    {
+
+        public string Password { get; set; }
+        public string Username { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public UserPrivileges Permission { get; set; }
+    }
     public class WritableUser : IDataErrorInfo
     {
         private string password;
@@ -11,6 +21,17 @@
         private UserPrivileges permission;
         private string error;
 
+        public PureWritableUser ToPure()
+        {
+            return new PureWritableUser()
+            {
+                Password = Password,
+                Name = Name,
+                Username = Username,
+                Permission = UserPrivlidgesExtensions.GetValueFromDescription(Permission),
+                Surname = Surname
+            };
+        }
         public string Password
         {
             get { return password; }
@@ -36,7 +57,7 @@
             get { return permission.ToReadable(); }
             set { permission = UserPrivlidgesExtensions.GetValueFromDescription(value); }
         }
-
+        [JsonIgnore]
         public string this[string columnName]
         {
             get
@@ -48,7 +69,6 @@
                         error = "Name is required.";
                         return "Required value";
                     }
-                    return null;
                 }
                 if (columnName == "Password")
                 {
@@ -65,16 +85,14 @@
                         error = "Surname is required.";
                         return "Required value";
                     }
-                    return null;
                 }
                 if (columnName == "Username")
                 {
-                    if (string.IsNullOrEmpty(Surname))
+                    if (string.IsNullOrEmpty(Username))
                     {
                         error = "Username is required.";
                         return "Required value";
                     }
-                    return null;
                 }
                 error = null;
                 return null;

@@ -17,6 +17,7 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
 
         private static readonly object tokenLocker = new object();
         private static readonly object clientLocker = new object();
+        private static readonly object staticClientLocker = new object();
 
         private RestSharp.RestClient client
         {
@@ -58,20 +59,27 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
         }
         public static RestClient Client(string url)
         {
-            if (_staticClient == null || _staticClient.BaseUrl != url)
+            lock (staticClientLocker)
             {
-                _staticClient = new RestClient(url);
+                if (_staticClient == null || _staticClient.BaseUrl != url)
+                {
+                    _staticClient = new RestClient(url);
+                }
+                return _staticClient;
             }
-            return _staticClient;
 
         }
         public static RestClient Client()
         {
-            if (_staticClient == null)
+            lock (staticClientLocker)
             {
-                throw new NullReferenceException("Client was not initialised");
+                if (_staticClient == null)
+                {
+                    throw new NullReferenceException("Client was not initialised");
+                }
+
+                return _staticClient;
             }
-            return _staticClient;
 
         }
     }

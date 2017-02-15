@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 namespace BarProject.DesktopApplication.Desktop.Controls
 {
     using System.Threading;
+    using System.Windows.Threading;
     using Library.RestHelpers;
 
     /// <summary>
@@ -31,19 +32,34 @@ namespace BarProject.DesktopApplication.Desktop.Controls
         }
         private void AllUsers_Loaded(object sender, RoutedEventArgs e)
         {
-            var thread = new Thread(DoLoadAllUsers);
-            thread.Start();
+
+            Dispatcher.Invoke(DispatcherPriority.Background,
+                  new Action(
+                  DoLoadAllUsers
+                  ));
         }
 
         private async void DoLoadAllUsers()
         {
+            ProgressBarStart();
             var users = await RestClient.Client().GetUsers();
 
             await Dispatcher.InvokeAsync(() =>
              {
                  DataGrid.DataContext = users.Data;
-                 Progress.Visibility = Visibility.Hidden;
              });
+            ProgressBarStop();
+        }
+
+        private void ProgressBarStart()
+        {
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => Progress.Visibility = Visibility.Visible));
+
+        }
+
+        private void ProgressBarStop()
+        {
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => Progress.Visibility = Visibility.Hidden));
         }
 
         private void AddNewUserButtonClick(object sender, RoutedEventArgs e)
@@ -51,5 +67,6 @@ namespace BarProject.DesktopApplication.Desktop.Controls
             var window = new Windows.AddUserWindow();
             window.ShowDialog();
         }
+
     }
 }

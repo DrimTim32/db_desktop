@@ -9,6 +9,7 @@
     using DatabaseConnector;
     using Extensions;
     using Models;
+    using Models.ExceptionHandlers;
     using Models.ReadModels;
     using Models.WriteModels;
 
@@ -59,11 +60,14 @@
             }
         }
 
-        public static void AddUser(WritableUser userData)
+        public static void AddUser(PureWritableUser userData)
         {
             using (var db = new BarProjectEntities())
             {
-                db.addUser(userData.Password, userData.Username, userData.Name, userData.Surname, (byte)UserPrivlidgesExtensions.GetValueFromDescription(userData.Permission));
+                var permissionId = db.EmployePermissions.FirstOrDefault(x => x.value == (byte)userData.Permission);
+                if (permissionId == null)
+                    throw new ArgumentException("No such permission exists");
+                db.addUser(userData.Password, userData.Username, userData.Name, userData.Surname, permissionId.id);
             }
         }
 
