@@ -33,13 +33,12 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
             var prices = new MetroTabItem()
             {
                 Header = "Prices",
-                //Content = new Categories()
             };
 
             var products = new MetroTabItem()
             {
                 Header = "Products",
-                //Content = new Taxes()
+                Content = new Products()
             };
             var recipies = new MetroTabItem()
             {

@@ -43,7 +43,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             RefreshData();
         }
         private ObservableCollection<ShowableUnit> _unitsList;
-        private object UnitsDataLock = new object();
+        private readonly object UnitsDataLock = new object();
         public ObservableCollection<ShowableUnit> UnitsLits
         {
             get
@@ -51,7 +51,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 lock (UnitsDataLock)
                 {
                     if (_unitsList == null)
-                        _unitsList = new ObservableCollection<ShowableUnit>(UnitsFunctions.GetAllUnits());
+                        _unitsList = new ObservableCollection<ShowableUnit>();
                     return _unitsList;
                 }
             }

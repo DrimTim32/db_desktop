@@ -11,7 +11,7 @@
         <StackPanel>
             <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
             <DataGrid Name="DataGrid"                       
-                      DataContext="{Binding RelativeSource={RelativeSource AncestorType=Page}}"
+                      DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:Units}}"
                       ItemsSource="{Binding UnitsLits}" 
                       AutoGenerateColumns="False">
                 <DataGrid.Columns>

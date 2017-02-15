@@ -2,6 +2,7 @@
 {
     using Controls;
     using Controls.Menagement;
+    using Controls.Warehouse;
     using MahApps.Metro.Controls;
 
     /// <summary>
@@ -29,7 +30,8 @@
 
             var warehouse = new MetroTabItem
             {
-                Header = "Warehouse"
+                Header = "Warehouse",
+                Content= new WarehouseUserControl()
             };
             var administration = new MetroTabItem
             {
