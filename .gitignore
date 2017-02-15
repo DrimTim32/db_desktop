@@ -240,3 +240,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/BarProject.DatabaseConnector/connections.config
+/BarProject.WebService/connections.config

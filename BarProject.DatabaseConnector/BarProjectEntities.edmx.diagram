@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b4c36135b55d4943b7ca135f67523e51" Name="Diagram1">
+        <EntityTypeShape EntityType="BarProjectModel.Category" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.EmployePermission" Width="1.5" PointX="7.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Ingredient" Width="1.5" PointX="9.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Price" Width="1.5" PointX="9.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Product" Width="1.5" PointX="5.25" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.ProductsSold" Width="1.5" PointX="7.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.ProductsStored" Width="1.5" PointX="7.5" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Receipt" Width="1.5" PointX="5.25" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Tax" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Unit" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.UnitType" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.User" Width="1.5" PointX="10" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.productSimple" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.database_firewall_rules" Width="1.5" PointX="2.75" PointY="12.5" IsExpanded="true" />
+        <AssociationConnector Association="BarProjectModel.FK__Categorie__overr__5E8A0973" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Products__catego__33F4B129" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Users__permissio__573DED66" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Ingredien__ingre__4336F4B9" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Ingredien__recei__4242D080" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Prices__product___46136164" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Products__tax_id__35DCF99B" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Products__unit_i__34E8D562" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__ProductsStor__id__38B96646" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.fk_sold_base_prod" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.fk_stored_base_prod" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__ProductsS__recei__3E723F9C" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Units__unit_type__12C8C788" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BarProjectModel.InternalError" Width="1.5" PointX="7.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

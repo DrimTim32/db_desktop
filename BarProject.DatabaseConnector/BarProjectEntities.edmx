@@ -1,0 +1,1364 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BarProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="slug" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="category_name" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="overriding_category" Type="int" />
+        </EntityType>
+        <EntityType Name="EmployePermissions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="value" Type="tinyint" />
+          <Property Name="name" Type="nvarchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ingredients">
+          <Key>
+            <PropertyRef Name="receipt_id" />
+            <PropertyRef Name="ingredient_id" />
+          </Key>
+          <Property Name="receipt_id" Type="int" Nullable="false" />
+          <Property Name="ingredient_id" Type="int" Nullable="false" />
+          <Property Name="quantity" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InternalErrors">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="error_name" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="error_time" Type="datetime" Nullable="false" />
+          <Property Name="message" Type="nvarchar" MaxLength="3000" />
+          <Property Name="stack_trace" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="context" Type="nvarchar" MaxLength="900" Nullable="false" />
+          <Property Name="inner_message" Type="nvarchar" MaxLength="400" />
+        </EntityType>
+        <EntityType Name="Prices">
+          <Key>
+            <PropertyRef Name="product_id" />
+            <PropertyRef Name="period_start" />
+          </Key>
+          <Property Name="product_id" Type="int" Nullable="false" />
+          <Property Name="period_start" Type="date" Nullable="false" />
+          <Property Name="price" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="category_id" Type="int" />
+          <Property Name="unit_id" Type="int" />
+          <Property Name="tax_id" Type="int" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductsSold">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="receipt_id" Type="int" />
+        </EntityType>
+        <EntityType Name="ProductsStored">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Receipts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="512" />
+        </EntityType>
+        <EntityType Name="Taxes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tax_name" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="tax_value" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Units">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="unit_name" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="convert_factor" Type="float" Nullable="false" />
+          <Property Name="unit_type" Type="int" />
+        </EntityType>
+        <EntityType Name="UnitTypes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type_name" Type="nvarchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="password" Type="varbinary" MaxLength="20" Nullable="false" />
+          <Property Name="password_salt" Type="char" MaxLength="25" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="surname" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="permission" Type="tinyint" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'BarProject.dbo.productSimple' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="productSimple">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="category_name" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="category_name" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="sold" Type="bit" />
+          <Property Name="stored" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="start_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="end_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="modify_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Categorie__overr__5E8A0973">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="Categories1" Type="Self.Categories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Categories1">
+              <PropertyRef Name="overriding_category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ingredien__ingre__4336F4B9">
+          <End Role="ProductsStored" Type="Self.ProductsStored" Multiplicity="1" />
+          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductsStored">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ingredients">
+              <PropertyRef Name="ingredient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ingredien__recei__4242D080">
+          <End Role="Receipts" Type="Self.Receipts" Multiplicity="1" />
+          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receipts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ingredients">
+              <PropertyRef Name="receipt_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Prices__product___46136164">
+          <End Role="ProductsSold" Type="Self.ProductsSold" Multiplicity="1" />
+          <End Role="Prices" Type="Self.Prices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductsSold">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Prices">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products__catego__33F4B129">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products__tax_id__35DCF99B">
+          <End Role="Taxes" Type="Self.Taxes" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Taxes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="tax_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products__unit_i__34E8D562">
+          <End Role="Units" Type="Self.Units" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Units">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="unit_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductsS__recei__3E723F9C">
+          <End Role="Receipts" Type="Self.Receipts" Multiplicity="0..1" />
+          <End Role="ProductsSold" Type="Self.ProductsSold" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receipts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductsSold">
+              <PropertyRef Name="receipt_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductsStor__id__38B96646">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="ProductsStored" Type="Self.ProductsStored" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductsStored">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Units__unit_type__12C8C788">
+          <End Role="UnitTypes" Type="Self.UnitTypes" Multiplicity="0..1" />
+          <End Role="Units" Type="Self.Units" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnitTypes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Units">
+              <PropertyRef Name="unit_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__permissio__573DED66">
+          <End Role="EmployePermissions" Type="Self.EmployePermissions" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployePermissions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="permission" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_sold_base_prod">
+          <End Role="Products" Type="Self.Products" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductsSold" Type="Self.ProductsSold" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductsSold">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_stored_base_prod">
+          <End Role="Products" Type="Self.Products" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductsStored" Type="Self.ProductsStored" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductsStored">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="addCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="category_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="slug" Type="nvarchar" Mode="In" />
+          <Parameter Name="overriding_category" Type="int" Mode="In" />
+        </Function>
+        <Function Name="addIngredient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="receipt_id" Type="int" Mode="In" />
+          <Parameter Name="ingredient_id" Type="int" Mode="In" />
+          <Parameter Name="quantity" Type="float" Mode="In" />
+        </Function>
+        <Function Name="addProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="category_id" Type="int" Mode="In" />
+          <Parameter Name="unit_id" Type="int" Mode="In" />
+          <Parameter Name="tax_id" Type="int" Mode="In" />
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="addReceipt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="description" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="addSoldProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="product_id" Type="int" Mode="In" />
+          <Parameter Name="receipt_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="addStoredProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="product_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="addTax" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tax_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="tax_value" Type="float" Mode="In" />
+        </Function>
+        <Function Name="addUnit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="unit_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="convert_factor" Type="float" Mode="In" />
+          <Parameter Name="unit_type" Type="int" Mode="In" />
+        </Function>
+        <Function Name="addUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="password" Type="nvarchar" Mode="In" />
+          <Parameter Name="username" Type="nvarchar" Mode="In" />
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="surname" Type="nvarchar" Mode="In" />
+          <Parameter Name="permission" Type="tinyint" Mode="In" />
+        </Function>
+        <Function Name="checkCredentials" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="nvarchar" Mode="In" />
+          <Parameter Name="password" Type="nvarchar" Mode="In" />
+          <Parameter Name="tmp_credentials" Type="smallint" Mode="InOut" />
+        </Function>
+        <Function Name="clearInternalErrors" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="createInternalError" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="error_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="error_time" Type="datetime" Mode="In" />
+          <Parameter Name="message" Type="nvarchar" Mode="In" />
+          <Parameter Name="stack_trace" Type="nvarchar" Mode="In" />
+          <Parameter Name="context" Type="nvarchar" Mode="In" />
+          <Parameter Name="inner_message" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="getRandom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Seed" Type="int" Mode="In" />
+          <Parameter Name="Random" Type="float" Mode="InOut" />
+        </Function>
+        <Function Name="getSalt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Salt" Type="char" Mode="InOut" />
+        </Function>
+        <Function Name="getSeed" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="getUserPermission" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="tinyint">
+          <Parameter Name="username" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="pricesHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="product_id" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="price" Type="money" Nullable="false" />
+                <Property Name="period_start" Type="date" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="productDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="product_id" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="id" Type="int" Nullable="false" />
+                <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+                <Property Name="category_id" Type="int" />
+                <Property Name="category_name" Type="nvarchar" MaxLength="64" Nullable="false" />
+                <Property Name="unit_id" Type="int" />
+                <Property Name="unit_name" Type="nvarchar" MaxLength="32" Nullable="false" />
+                <Property Name="tax_id" Type="int" />
+                <Property Name="tax_name" Type="nvarchar" MaxLength="32" Nullable="false" />
+                <Property Name="tax_value" Type="float" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="productsByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="category_id" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+                <Property Name="tax_id" Type="int" />
+                <Property Name="unit_id" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="receiptDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="receipt_id" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="receipt_id" Type="int" Nullable="false" />
+                <Property Name="ingredient_id" Type="int" Nullable="false" />
+                <Property Name="quantity" Type="float" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="removeCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="category_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="removeProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="product_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="removeSoldProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="product_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="removeStoredProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="product_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="removeTax" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tax_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="removeUnit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="unit_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="soldProductDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="product_id" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="product_id" Type="int" Nullable="false" />
+                <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+                <Property Name="category_id" Type="int" />
+                <Property Name="category_name" Type="nvarchar" MaxLength="64" Nullable="false" />
+                <Property Name="unit_id" Type="int" />
+                <Property Name="unit_name" Type="nvarchar" MaxLength="32" Nullable="false" />
+                <Property Name="tax_id" Type="int" />
+                <Property Name="tax_name" Type="nvarchar" MaxLength="32" Nullable="false" />
+                <Property Name="tax_value" Type="float" Nullable="false" />
+                <Property Name="receipt_id" Type="int" />
+                <Property Name="period_start" Type="date" Nullable="false" />
+                <Property Name="price" Type="money" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="updatePrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="priduct_id" Type="int" Mode="In" />
+          <Parameter Name="new_price" Type="float" Mode="In" />
+        </Function>
+        <Function Name="userExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="login" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="BarProjectModelStoreContainer">
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployePermissions" EntityType="Self.EmployePermissions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ingredients" EntityType="Self.Ingredients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InternalErrors" EntityType="Self.InternalErrors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Prices" EntityType="Self.Prices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductsSold" EntityType="Self.ProductsSold" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductsStored" EntityType="Self.ProductsStored" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Receipts" EntityType="Self.Receipts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Taxes" EntityType="Self.Taxes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UnitTypes" EntityType="Self.UnitTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="productSimple" EntityType="Self.productSimple" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [productSimple].[id] AS [id], 
+    [productSimple].[name] AS [name], 
+    [productSimple].[category_name] AS [category_name], 
+    [productSimple].[sold] AS [sold], 
+    [productSimple].[stored] AS [stored]
+    FROM [dbo].[productSimple] AS [productSimple]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
+            <DefiningQuery>SELECT 
+    [database_firewall_rules].[id] AS [id], 
+    [database_firewall_rules].[name] AS [name], 
+    [database_firewall_rules].[start_ip_address] AS [start_ip_address], 
+    [database_firewall_rules].[end_ip_address] AS [end_ip_address], 
+    [database_firewall_rules].[create_date] AS [create_date], 
+    [database_firewall_rules].[modify_date] AS [modify_date]
+    FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Categorie__overr__5E8A0973" Association="Self.FK__Categorie__overr__5E8A0973">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Categories1" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ingredien__ingre__4336F4B9" Association="Self.FK__Ingredien__ingre__4336F4B9">
+            <End Role="ProductsStored" EntitySet="ProductsStored" />
+            <End Role="Ingredients" EntitySet="Ingredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ingredien__recei__4242D080" Association="Self.FK__Ingredien__recei__4242D080">
+            <End Role="Receipts" EntitySet="Receipts" />
+            <End Role="Ingredients" EntitySet="Ingredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Prices__product___46136164" Association="Self.FK__Prices__product___46136164">
+            <End Role="ProductsSold" EntitySet="ProductsSold" />
+            <End Role="Prices" EntitySet="Prices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products__catego__33F4B129" Association="Self.FK__Products__catego__33F4B129">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products__tax_id__35DCF99B" Association="Self.FK__Products__tax_id__35DCF99B">
+            <End Role="Taxes" EntitySet="Taxes" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products__unit_i__34E8D562" Association="Self.FK__Products__unit_i__34E8D562">
+            <End Role="Units" EntitySet="Units" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductsS__recei__3E723F9C" Association="Self.FK__ProductsS__recei__3E723F9C">
+            <End Role="Receipts" EntitySet="Receipts" />
+            <End Role="ProductsSold" EntitySet="ProductsSold" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductsStor__id__38B96646" Association="Self.FK__ProductsStor__id__38B96646">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductsStored" EntitySet="ProductsStored" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Units__unit_type__12C8C788" Association="Self.FK__Units__unit_type__12C8C788">
+            <End Role="UnitTypes" EntitySet="UnitTypes" />
+            <End Role="Units" EntitySet="Units" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__permissio__573DED66" Association="Self.FK__Users__permissio__573DED66">
+            <End Role="EmployePermissions" EntitySet="EmployePermissions" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="fk_sold_base_prod" Association="Self.fk_sold_base_prod">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductsSold" EntitySet="ProductsSold" />
+          </AssociationSet>
+          <AssociationSet Name="fk_stored_base_prod" Association="Self.fk_stored_base_prod">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductsStored" EntitySet="ProductsStored" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BarProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <ComplexType Name="pricesHistory_Result">
+          <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="period_start" Type="DateTime" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="productDetails_Result">
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="category_id" Type="Int32" />
+          <Property Name="category_name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="unit_id" Type="Int32" />
+          <Property Name="unit_name" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tax_id" Type="Int32" />
+          <Property Name="tax_name" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tax_value" Type="Double" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="productsByCategory_Result">
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tax_id" Type="Int32" />
+          <Property Name="unit_id" Type="Int32" />
+        </ComplexType>
+        <ComplexType Name="receiptDetails_Result">
+          <Property Name="receipt_id" Type="Int32" Nullable="false" />
+          <Property Name="ingredient_id" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Double" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="soldProductDetails_Result">
+          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="category_id" Type="Int32" />
+          <Property Name="category_name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="unit_id" Type="Int32" />
+          <Property Name="unit_name" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tax_id" Type="Int32" />
+          <Property Name="tax_name" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tax_value" Type="Double" Nullable="false" />
+          <Property Name="receipt_id" Type="Int32" />
+          <Property Name="period_start" Type="DateTime" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="slug" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="category_name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="overriding_category" Type="Int32" />
+          <NavigationProperty Name="Categories1" Relationship="Self.FK__Categorie__overr__5E8A0973" FromRole="Categories" ToRole="Categories1" />
+          <NavigationProperty Name="Category1" Relationship="Self.FK__Categorie__overr__5E8A0973" FromRole="Categories1" ToRole="Categories" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Products__catego__33F4B129" FromRole="Categories" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="EmployePermission">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="value" Type="Byte" />
+          <Property Name="name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Users__permissio__573DED66" FromRole="EmployePermissions" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="receipt_id" />
+            <PropertyRef Name="ingredient_id" />
+          </Key>
+          <Property Name="receipt_id" Type="Int32" Nullable="false" />
+          <Property Name="ingredient_id" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Double" Nullable="false" />
+          <NavigationProperty Name="ProductsStored" Relationship="Self.FK__Ingredien__ingre__4336F4B9" FromRole="Ingredients" ToRole="ProductsStored" />
+          <NavigationProperty Name="Receipt" Relationship="Self.FK__Ingredien__recei__4242D080" FromRole="Ingredients" ToRole="Receipts" />
+        </EntityType>
+        <EntityType Name="Price">
+          <Key>
+            <PropertyRef Name="product_id" />
+            <PropertyRef Name="period_start" />
+          </Key>
+          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <Property Name="period_start" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="price1" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="ProductsSold" Relationship="Self.FK__Prices__product___46136164" FromRole="Prices" ToRole="ProductsSold" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="category_id" Type="Int32" />
+          <Property Name="unit_id" Type="Int32" />
+          <Property Name="tax_id" Type="Int32" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK__Products__catego__33F4B129" FromRole="Products" ToRole="Categories" />
+          <NavigationProperty Name="Tax" Relationship="Self.FK__Products__tax_id__35DCF99B" FromRole="Products" ToRole="Taxes" />
+          <NavigationProperty Name="Unit" Relationship="Self.FK__Products__unit_i__34E8D562" FromRole="Products" ToRole="Units" />
+          <NavigationProperty Name="ProductsStored" Relationship="Self.FK__ProductsStor__id__38B96646" FromRole="Products" ToRole="ProductsStored" />
+          <NavigationProperty Name="ProductsSold" Relationship="Self.fk_sold_base_prod" FromRole="Products" ToRole="ProductsSold" />
+          <NavigationProperty Name="ProductsStored1" Relationship="Self.fk_stored_base_prod" FromRole="Products" ToRole="ProductsStored" />
+        </EntityType>
+        <EntityType Name="ProductsSold">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="receipt_id" Type="Int32" />
+          <NavigationProperty Name="Prices" Relationship="Self.FK__Prices__product___46136164" FromRole="ProductsSold" ToRole="Prices" />
+          <NavigationProperty Name="Product" Relationship="Self.fk_sold_base_prod" FromRole="ProductsSold" ToRole="Products" />
+          <NavigationProperty Name="Receipt" Relationship="Self.FK__ProductsS__recei__3E723F9C" FromRole="ProductsSold" ToRole="Receipts" />
+        </EntityType>
+        <EntityType Name="ProductsStored">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ingredients" Relationship="Self.FK__Ingredien__ingre__4336F4B9" FromRole="ProductsStored" ToRole="Ingredients" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__ProductsStor__id__38B96646" FromRole="ProductsStored" ToRole="Products" />
+          <NavigationProperty Name="Product1" Relationship="Self.fk_stored_base_prod" FromRole="ProductsStored" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Receipt">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ingredients" Relationship="Self.FK__Ingredien__recei__4242D080" FromRole="Receipts" ToRole="Ingredients" />
+          <NavigationProperty Name="ProductsSolds" Relationship="Self.FK__ProductsS__recei__3E723F9C" FromRole="Receipts" ToRole="ProductsSold" />
+        </EntityType>
+        <EntityType Name="Tax">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tax_name" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tax_value" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Products__tax_id__35DCF99B" FromRole="Taxes" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="unit_name" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="convert_factor" Type="Double" Nullable="false" />
+          <Property Name="unit_type" Type="Int32" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Products__unit_i__34E8D562" FromRole="Units" ToRole="Products" />
+          <NavigationProperty Name="UnitType" Relationship="Self.FK__Units__unit_type__12C8C788" FromRole="Units" ToRole="UnitTypes" />
+        </EntityType>
+        <EntityType Name="UnitType">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type_name" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Units" Relationship="Self.FK__Units__unit_type__12C8C788" FromRole="UnitTypes" ToRole="Units" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="Binary" MaxLength="20" FixedLength="false" Nullable="false" />
+          <Property Name="password_salt" Type="String" MaxLength="25" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="permission" Type="Byte" />
+          <NavigationProperty Name="EmployePermission" Relationship="Self.FK__Users__permissio__573DED66" FromRole="Users" ToRole="EmployePermissions" />
+        </EntityType>
+        <EntityType Name="productSimple">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="category_name" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="category_name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sold" Type="Boolean" />
+          <Property Name="stored" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="start_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="end_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK__Categorie__overr__5E8A0973">
+          <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Categories1" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Categories1">
+              <PropertyRef Name="overriding_category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products__catego__33F4B129">
+          <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__permissio__573DED66">
+          <End Role="EmployePermissions" Type="Self.EmployePermission" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployePermissions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="permission" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ingredien__ingre__4336F4B9">
+          <End Role="ProductsStored" Type="Self.ProductsStored" Multiplicity="1" />
+          <End Role="Ingredients" Type="Self.Ingredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductsStored">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ingredients">
+              <PropertyRef Name="ingredient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ingredien__recei__4242D080">
+          <End Role="Receipts" Type="Self.Receipt" Multiplicity="1" />
+          <End Role="Ingredients" Type="Self.Ingredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receipts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ingredients">
+              <PropertyRef Name="receipt_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Prices__product___46136164">
+          <End Role="ProductsSold" Type="Self.ProductsSold" Multiplicity="1" />
+          <End Role="Prices" Type="Self.Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductsSold">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Prices">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products__tax_id__35DCF99B">
+          <End Role="Taxes" Type="Self.Tax" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Taxes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="tax_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products__unit_i__34E8D562">
+          <End Role="Units" Type="Self.Unit" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Units">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="unit_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductsStor__id__38B96646">
+          <End Role="Products" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductsStored" Type="Self.ProductsStored" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductsStored">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_sold_base_prod">
+          <End Role="Products" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductsSold" Type="Self.ProductsSold" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductsSold">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_stored_base_prod">
+          <End Role="Products" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductsStored" Type="Self.ProductsStored" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductsStored">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductsS__recei__3E723F9C">
+          <End Role="Receipts" Type="Self.Receipt" Multiplicity="0..1" />
+          <End Role="ProductsSold" Type="Self.ProductsSold" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receipts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductsSold">
+              <PropertyRef Name="receipt_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Units__unit_type__12C8C788">
+          <End Role="UnitTypes" Type="Self.UnitType" Multiplicity="0..1" />
+          <End Role="Units" Type="Self.Unit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnitTypes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Units">
+              <PropertyRef Name="unit_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BarProjectEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="EmployePermissions" EntityType="Self.EmployePermission" />
+          <EntitySet Name="Ingredients" EntityType="Self.Ingredient" />
+          <EntitySet Name="Prices" EntityType="Self.Price" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="ProductsSolds" EntityType="Self.ProductsSold" />
+          <EntitySet Name="ProductsStoreds" EntityType="Self.ProductsStored" />
+          <EntitySet Name="Receipts" EntityType="Self.Receipt" />
+          <EntitySet Name="Taxes" EntityType="Self.Tax" />
+          <EntitySet Name="Units" EntityType="Self.Unit" />
+          <EntitySet Name="UnitTypes" EntityType="Self.UnitType" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="productSimples" EntityType="Self.productSimple" />
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" />
+          <AssociationSet Name="FK__Categorie__overr__5E8A0973" Association="Self.FK__Categorie__overr__5E8A0973">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Categories1" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products__catego__33F4B129" Association="Self.FK__Products__catego__33F4B129">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__permissio__573DED66" Association="Self.FK__Users__permissio__573DED66">
+            <End Role="EmployePermissions" EntitySet="EmployePermissions" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ingredien__ingre__4336F4B9" Association="Self.FK__Ingredien__ingre__4336F4B9">
+            <End Role="ProductsStored" EntitySet="ProductsStoreds" />
+            <End Role="Ingredients" EntitySet="Ingredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ingredien__recei__4242D080" Association="Self.FK__Ingredien__recei__4242D080">
+            <End Role="Receipts" EntitySet="Receipts" />
+            <End Role="Ingredients" EntitySet="Ingredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Prices__product___46136164" Association="Self.FK__Prices__product___46136164">
+            <End Role="ProductsSold" EntitySet="ProductsSolds" />
+            <End Role="Prices" EntitySet="Prices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products__tax_id__35DCF99B" Association="Self.FK__Products__tax_id__35DCF99B">
+            <End Role="Taxes" EntitySet="Taxes" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products__unit_i__34E8D562" Association="Self.FK__Products__unit_i__34E8D562">
+            <End Role="Units" EntitySet="Units" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductsStor__id__38B96646" Association="Self.FK__ProductsStor__id__38B96646">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductsStored" EntitySet="ProductsStoreds" />
+          </AssociationSet>
+          <AssociationSet Name="fk_sold_base_prod" Association="Self.fk_sold_base_prod">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductsSold" EntitySet="ProductsSolds" />
+          </AssociationSet>
+          <AssociationSet Name="fk_stored_base_prod" Association="Self.fk_stored_base_prod">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductsStored" EntitySet="ProductsStoreds" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductsS__recei__3E723F9C" Association="Self.FK__ProductsS__recei__3E723F9C">
+            <End Role="Receipts" EntitySet="Receipts" />
+            <End Role="ProductsSold" EntitySet="ProductsSolds" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Units__unit_type__12C8C788" Association="Self.FK__Units__unit_type__12C8C788">
+            <End Role="UnitTypes" EntitySet="UnitTypes" />
+            <End Role="Units" EntitySet="Units" />
+          </AssociationSet>
+          <FunctionImport Name="pricesHistory" IsComposable="true" ReturnType="Collection(BarProjectModel.pricesHistory_Result)">
+          <Parameter Name="product_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="productDetails" IsComposable="true" ReturnType="Collection(BarProjectModel.productDetails_Result)">
+          <Parameter Name="product_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="productsByCategory" IsComposable="true" ReturnType="Collection(BarProjectModel.productsByCategory_Result)">
+          <Parameter Name="category_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="receiptDetails" IsComposable="true" ReturnType="Collection(BarProjectModel.receiptDetails_Result)">
+          <Parameter Name="receipt_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="soldProductDetails" IsComposable="true" ReturnType="Collection(BarProjectModel.soldProductDetails_Result)">
+          <Parameter Name="product_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="addCategory">
+            <Parameter Name="category_name" Mode="In" Type="String" />
+            <Parameter Name="slug" Mode="In" Type="String" />
+            <Parameter Name="overriding_category" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="addIngredient">
+            <Parameter Name="receipt_id" Mode="In" Type="Int32" />
+            <Parameter Name="ingredient_id" Mode="In" Type="Int32" />
+            <Parameter Name="quantity" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="addProduct">
+            <Parameter Name="category_id" Mode="In" Type="Int32" />
+            <Parameter Name="unit_id" Mode="In" Type="Int32" />
+            <Parameter Name="tax_id" Mode="In" Type="Int32" />
+            <Parameter Name="name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="addReceipt">
+          <Parameter Name="description" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="addSoldProduct">
+            <Parameter Name="product_id" Mode="In" Type="Int32" />
+            <Parameter Name="receipt_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="addStoredProduct">
+          <Parameter Name="product_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="addTax">
+            <Parameter Name="tax_name" Mode="In" Type="String" />
+            <Parameter Name="tax_value" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="addUnit">
+            <Parameter Name="unit_name" Mode="In" Type="String" />
+            <Parameter Name="convert_factor" Mode="In" Type="Double" />
+            <Parameter Name="unit_type" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="addUser">
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="surname" Mode="In" Type="String" />
+            <Parameter Name="permission" Mode="In" Type="Byte" />
+          </FunctionImport>
+          <FunctionImport Name="checkCredentials">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="tmp_credentials" Mode="InOut" Type="Int16" />
+          </FunctionImport>
+          <FunctionImport Name="getRandom">
+            <Parameter Name="Seed" Mode="In" Type="Int32" />
+            <Parameter Name="Random" Mode="InOut" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="getSalt">
+          <Parameter Name="Salt" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="removeCategory">
+          <Parameter Name="category_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="removeProduct">
+          <Parameter Name="product_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="removeSoldProduct">
+          <Parameter Name="product_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="removeStoredProduct">
+          <Parameter Name="product_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="removeTax">
+          <Parameter Name="tax_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="removeUnit">
+          <Parameter Name="unit_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="updatePrice">
+            <Parameter Name="priduct_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_price" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="userExists">
+          <Parameter Name="login" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="InternalErrors" EntityType="BarProjectModel.InternalError" />
+          <FunctionImport Name="clearInternalErrors" />
+          <FunctionImport Name="createInternalError">
+            <Parameter Name="error_name" Mode="In" Type="String" />
+            <Parameter Name="error_time" Mode="In" Type="DateTime" />
+            <Parameter Name="message" Mode="In" Type="String" />
+            <Parameter Name="stack_trace" Mode="In" Type="String" />
+            <Parameter Name="context" Mode="In" Type="String" />
+            <Parameter Name="inner_message" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="InternalError">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="error_name" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="error_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="message" Type="String" MaxLength="3000" FixedLength="false" Unicode="true" />
+          <Property Name="stack_trace" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="context" Type="String" Nullable="false" MaxLength="900" FixedLength="false" Unicode="true" />
+          <Property Name="inner_message" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BarProjectModelStoreContainer" CdmEntityContainer="BarProjectEntities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="BarProjectModel.Category">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="slug" ColumnName="slug" />
+                <ScalarProperty Name="category_name" ColumnName="category_name" />
+                <ScalarProperty Name="overriding_category" ColumnName="overriding_category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployePermissions">
+            <EntityTypeMapping TypeName="BarProjectModel.EmployePermission">
+              <MappingFragment StoreEntitySet="EmployePermissions">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ingredients">
+            <EntityTypeMapping TypeName="BarProjectModel.Ingredient">
+              <MappingFragment StoreEntitySet="Ingredients">
+                <ScalarProperty Name="receipt_id" ColumnName="receipt_id" />
+                <ScalarProperty Name="ingredient_id" ColumnName="ingredient_id" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prices">
+            <EntityTypeMapping TypeName="BarProjectModel.Price">
+              <MappingFragment StoreEntitySet="Prices">
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="period_start" ColumnName="period_start" />
+                <ScalarProperty Name="price1" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="BarProjectModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="unit_id" ColumnName="unit_id" />
+                <ScalarProperty Name="tax_id" ColumnName="tax_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductsSolds">
+            <EntityTypeMapping TypeName="BarProjectModel.ProductsSold">
+              <MappingFragment StoreEntitySet="ProductsSold">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="receipt_id" ColumnName="receipt_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductsStoreds">
+            <EntityTypeMapping TypeName="BarProjectModel.ProductsStored">
+              <MappingFragment StoreEntitySet="ProductsStored">
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Receipts">
+            <EntityTypeMapping TypeName="BarProjectModel.Receipt">
+              <MappingFragment StoreEntitySet="Receipts">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Taxes">
+            <EntityTypeMapping TypeName="BarProjectModel.Tax">
+              <MappingFragment StoreEntitySet="Taxes">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="tax_name" ColumnName="tax_name" />
+                <ScalarProperty Name="tax_value" ColumnName="tax_value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Units">
+            <EntityTypeMapping TypeName="BarProjectModel.Unit">
+              <MappingFragment StoreEntitySet="Units">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="unit_name" ColumnName="unit_name" />
+                <ScalarProperty Name="convert_factor" ColumnName="convert_factor" />
+                <ScalarProperty Name="unit_type" ColumnName="unit_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnitTypes">
+            <EntityTypeMapping TypeName="BarProjectModel.UnitType">
+              <MappingFragment StoreEntitySet="UnitTypes">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="type_name" ColumnName="type_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="BarProjectModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="password_salt" ColumnName="password_salt" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="permission" ColumnName="permission" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productSimples">
+            <EntityTypeMapping TypeName="BarProjectModel.productSimple">
+              <MappingFragment StoreEntitySet="productSimple">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="category_name" ColumnName="category_name" />
+                <ScalarProperty Name="sold" ColumnName="sold" />
+                <ScalarProperty Name="stored" ColumnName="stored" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="database_firewall_rules">
+            <EntityTypeMapping TypeName="BarProjectModel.database_firewall_rules">
+              <MappingFragment StoreEntitySet="database_firewall_rules">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
+                <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="modify_date" ColumnName="modify_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionName="BarProjectModel.Store.pricesHistory" FunctionImportName="pricesHistory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BarProjectModel.pricesHistory_Result">
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="period_start" ColumnName="period_start" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="BarProjectModel.Store.productDetails" FunctionImportName="productDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BarProjectModel.productDetails_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="category_name" ColumnName="category_name" />
+                <ScalarProperty Name="unit_id" ColumnName="unit_id" />
+                <ScalarProperty Name="unit_name" ColumnName="unit_name" />
+                <ScalarProperty Name="tax_id" ColumnName="tax_id" />
+                <ScalarProperty Name="tax_name" ColumnName="tax_name" />
+                <ScalarProperty Name="tax_value" ColumnName="tax_value" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="BarProjectModel.Store.productsByCategory" FunctionImportName="productsByCategory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BarProjectModel.productsByCategory_Result">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="tax_id" ColumnName="tax_id" />
+                <ScalarProperty Name="unit_id" ColumnName="unit_id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="BarProjectModel.Store.receiptDetails" FunctionImportName="receiptDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BarProjectModel.receiptDetails_Result">
+                <ScalarProperty Name="receipt_id" ColumnName="receipt_id" />
+                <ScalarProperty Name="ingredient_id" ColumnName="ingredient_id" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="BarProjectModel.Store.soldProductDetails" FunctionImportName="soldProductDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BarProjectModel.soldProductDetails_Result">
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="category_name" ColumnName="category_name" />
+                <ScalarProperty Name="unit_id" ColumnName="unit_id" />
+                <ScalarProperty Name="unit_name" ColumnName="unit_name" />
+                <ScalarProperty Name="tax_id" ColumnName="tax_id" />
+                <ScalarProperty Name="tax_name" ColumnName="tax_name" />
+                <ScalarProperty Name="tax_value" ColumnName="tax_value" />
+                <ScalarProperty Name="receipt_id" ColumnName="receipt_id" />
+                <ScalarProperty Name="period_start" ColumnName="period_start" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="addCategory" FunctionName="BarProjectModel.Store.addCategory" />
+          <FunctionImportMapping FunctionImportName="addIngredient" FunctionName="BarProjectModel.Store.addIngredient" />
+          <FunctionImportMapping FunctionImportName="addProduct" FunctionName="BarProjectModel.Store.addProduct" />
+          <FunctionImportMapping FunctionImportName="addReceipt" FunctionName="BarProjectModel.Store.addReceipt" />
+          <FunctionImportMapping FunctionImportName="addSoldProduct" FunctionName="BarProjectModel.Store.addSoldProduct" />
+          <FunctionImportMapping FunctionImportName="addStoredProduct" FunctionName="BarProjectModel.Store.addStoredProduct" />
+          <FunctionImportMapping FunctionImportName="addTax" FunctionName="BarProjectModel.Store.addTax" />
+          <FunctionImportMapping FunctionImportName="addUnit" FunctionName="BarProjectModel.Store.addUnit" />
+          <FunctionImportMapping FunctionImportName="addUser" FunctionName="BarProjectModel.Store.addUser" />
+          <FunctionImportMapping FunctionImportName="checkCredentials" FunctionName="BarProjectModel.Store.checkCredentials" />
+          <FunctionImportMapping FunctionImportName="getRandom" FunctionName="BarProjectModel.Store.getRandom" />
+          <FunctionImportMapping FunctionImportName="getSalt" FunctionName="BarProjectModel.Store.getSalt" />
+          <FunctionImportMapping FunctionImportName="removeCategory" FunctionName="BarProjectModel.Store.removeCategory" />
+          <FunctionImportMapping FunctionImportName="removeProduct" FunctionName="BarProjectModel.Store.removeProduct" />
+          <FunctionImportMapping FunctionImportName="removeSoldProduct" FunctionName="BarProjectModel.Store.removeSoldProduct" />
+          <FunctionImportMapping FunctionImportName="removeStoredProduct" FunctionName="BarProjectModel.Store.removeStoredProduct" />
+          <FunctionImportMapping FunctionImportName="removeTax" FunctionName="BarProjectModel.Store.removeTax" />
+          <FunctionImportMapping FunctionImportName="removeUnit" FunctionName="BarProjectModel.Store.removeUnit" />
+          <FunctionImportMapping FunctionImportName="updatePrice" FunctionName="BarProjectModel.Store.updatePrice" />
+          <FunctionImportMapping FunctionImportName="userExists" FunctionName="BarProjectModel.Store.userExists" />
+          <EntitySetMapping Name="InternalErrors">
+            <EntityTypeMapping TypeName="BarProjectModel.InternalError">
+              <MappingFragment StoreEntitySet="InternalErrors">
+                <ScalarProperty Name="inner_message" ColumnName="inner_message" />
+                <ScalarProperty Name="context" ColumnName="context" />
+                <ScalarProperty Name="stack_trace" ColumnName="stack_trace" />
+                <ScalarProperty Name="message" ColumnName="message" />
+                <ScalarProperty Name="error_time" ColumnName="error_time" />
+                <ScalarProperty Name="error_name" ColumnName="error_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="clearInternalErrors" FunctionName="BarProjectModel.Store.clearInternalErrors" />
+          <FunctionImportMapping FunctionImportName="createInternalError" FunctionName="BarProjectModel.Store.createInternalError" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,25 @@
+﻿<Controls:MetroWindow x:Class="BarProject.DesktopApplication.Common.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:utils="clr-namespace:BarProject.DesktopApplication.Common.Utils"
+        mc:Ignorable="d"
+        Title="Login" Height="350" Width="500">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <Label>Login place</Label>
+            <TextBox x:Name="LoginBox" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                     Template="{DynamicResource WatermarkedTextBoxTemplate}" 
+                     utils:TextBoxHelper.Watermark="Username" Width="295"/>
+
+            <PasswordBox utils:PasswordBoxHelper.Watermark="Password" Template="{StaticResource WatermarkedPasswordBoxTemplate}" x:Name="PasswordBox" Width="295"/>
+            <Grid x:Name="ProgressReport">
+                <Controls:MetroProgressBar  x:Name="Progress" Background="{DynamicResource AccentColorBrush3}" Height="20"/>
+                <TextBlock Width="450" TextAlignment="Center" Height="20">Logging in...</TextBlock>
+            </Grid>
+            <Button Content="Login" Click="Button_Click"/>
+        </StackPanel>
+    </Grid>
+</Controls:MetroWindow>
