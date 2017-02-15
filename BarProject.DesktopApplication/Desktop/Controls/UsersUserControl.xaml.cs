@@ -65,7 +65,9 @@ namespace BarProject.DesktopApplication.Desktop.Controls
         private void AddNewUserButtonClick(object sender, RoutedEventArgs e)
         {
             var window = new Windows.AddUserWindow();
+            window.Closed += (o, args) => DoLoadAllUsers();
             window.ShowDialog();
+
         }
 
     }

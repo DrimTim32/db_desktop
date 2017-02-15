@@ -110,7 +110,10 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 {
                     if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
                     {
-                        MessageBoxesUtil.ShowWindowInformationAsync("Problem with writing to database", response.Content);
+                        if (response.Content.Contains("INSERT") && response.Content.Contains("CHECK"))
+                            MessageBoxesUtil.ShowWindowInformationAsync("Problem with writing to database", "Tax value must be between 0 and 1");
+                        else
+                            MessageBoxesUtil.ShowWindowInformationAsync("Problem with writing to database", response.Content.Replace("Reason",""));
                     }
                     RefreshData();
                 });

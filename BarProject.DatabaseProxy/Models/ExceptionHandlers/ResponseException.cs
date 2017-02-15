@@ -64,6 +64,7 @@
 
         }
         private static Regex uniqueKeyViolation = new Regex("Violation of (?:.*?) constraint (?:.*?). Cannot insert duplicate key in object (?:.*?). The duplicate key value is \\((.*?)\\)");
+        private static Regex insertViolation = new Regex("Violation of (?:.*?) constraint (?:.*?). Cannot insert duplicate key in object (?:.*?). The duplicate key value is \\((.*?)\\)");
         private void SqlExceptionDataFill(object[] arguments, SqlException sql)
         {
             var exceptionSql = sql;
