@@ -50,6 +50,7 @@
     <Compile Include="RestHelpers\Products.cs" />
     <Compile Include="RestHelpers\Autentication.cs" />
     <Compile Include="RestHelpers\RestClientStatic.cs" />
+    <Compile Include="RestHelpers\Suppliers.cs" />
     <Compile Include="RestHelpers\Taxes.cs" />
     <Compile Include="RestHelpers\Units.cs" />
     <Compile Include="RestHelpers\Users.cs" />
