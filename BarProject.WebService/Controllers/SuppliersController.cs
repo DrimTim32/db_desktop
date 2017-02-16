@@ -13,18 +13,17 @@ namespace BarProject.WebService.Controllers
     using DatabaseProxy.Models.ReadModels;
     using DatabaseProxy.Models.Utilities;
 
-    [RoutePrefix("api/categories")]
-    public class CategoriesController : ApiController
+    [RoutePrefix("api/suppliers")]
+    public class SuppliersController : ApiController
     {
-
         [HttpGet, Route("")]
         [Authorize(Roles = "Admin,Owner")]
-        [ResponseType(typeof(IEnumerable<ShowableCategory>))]
+        [ResponseType(typeof(IEnumerable<ShowableSupplier>))]
         public IHttpActionResult Get()
         {
             try
             {
-                return Ok(CategoriesFunctions.GetAllCategories());
+                return Ok(SuppliersFunctions.GetSuppliers());
             }
             catch (Exception ex)
             {
@@ -33,11 +32,11 @@ namespace BarProject.WebService.Controllers
         }
         [HttpPost, Route("")]
         [Authorize(Roles = "Admin,Owner")]
-        public IHttpActionResult Post(ShowableCategory category)
+        public IHttpActionResult Post(ShowableSupplier category)
         {
             try
             {
-                CategoriesFunctions.AddCategory(category);
+                SuppliersFunctions.AddSupplier(category);
                 return Ok();
             }
             catch (Exception ex)
@@ -52,7 +51,22 @@ namespace BarProject.WebService.Controllers
         {
             try
             {
-                CategoriesFunctions.RemoveCategory(id);
+                SuppliersFunctions.RemoveSuppliers(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+        [HttpPatch]
+        [Authorize(Roles = "Admin,Owner")]
+        [Route("{id}")]
+        public IHttpActionResult Patch(int id, ShowableSupplier supplier)
+        {
+            try
+            {
+                SuppliersFunctions.UpdateSuppliers(id, supplier);
                 return Ok();
             }
             catch (Exception ex)
@@ -61,4 +75,5 @@ namespace BarProject.WebService.Controllers
             }
         }
     }
+}
 }
