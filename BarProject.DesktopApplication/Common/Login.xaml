@@ -17,7 +17,7 @@
             <PasswordBox utils:PasswordBoxHelper.Watermark="Password" Template="{StaticResource WatermarkedPasswordBoxTemplate}" x:Name="PasswordBox" Width="295"/>
             <Grid x:Name="Progress"  Visibility="Hidden">
                 <Controls:MetroProgressBar  IsIndeterminate="True" Height="20"/>
-                <TextBlock Width="450" TextAlignment="Center" Height="20">Logging in...</TextBlock>
+                <TextBlock Width="450" TextAlignment="Center" Height="20" x:Name="LoggingMessage">Logging in...</TextBlock>
             </Grid>
             <Button Content="Login" Click="Button_Click" x:Name="LoginButton"/>
         </StackPanel>

@@ -23,6 +23,14 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
             return client.Execute<UserPrivileges>(request);
         }
 
+        public void GetUserCredentialsAsync(string username, Action<IRestResponse<UserPrivileges>, RestRequestAsyncHandle> callback)
+        {
+            var request = new RestRequest($"api/users/privileges/{username}", Method.GET);
+            request.AddHeader("Authorization", $"bearer {token}");
+            request.AddHeader("Content-Type", "application/json");
+            client.ExecuteAsync(request, callback);
+        }
+
         public async Task<IRestResponse<List<ShowableUser>>> GetUsers()
         {
             var request = new RestRequest($"api/users/", Method.GET);
