@@ -111,7 +111,6 @@
     <Compile Include="Functions\TaxesFunctions.cs" />
     <Compile Include="Functions\UnitsFunctions.cs" />
     <Compile Include="Functions\UserFunctions.cs" />
-    <Compile Include="Functions\UtilsFunctions.cs" />
     <Compile Include="Models\ExceptionHandlers\CustomExceptionHandler.cs" />
     <Compile Include="Models\ExceptionHandlers\CustomExceptionLogger.cs" />
     <Compile Include="Models\ExceptionHandlers\ResponseException.cs" />
@@ -119,6 +118,7 @@
     <Compile Include="Models\ReadModels\ShowablePricesHistory.cs" />
     <Compile Include="Models\ReadModels\ShowableSimpleProduct.cs" />
     <Compile Include="Models\ReadModels\ShowableSoldProduct.cs" />
+    <Compile Include="Models\ReadModels\ShowableStoredProduct.cs" />
     <Compile Include="Models\ReadModels\ShowableTax.cs" />
     <Compile Include="Models\ReadModels\ShowableUnit.cs" />
     <Compile Include="Models\ReadModels\ShowableUser.cs" />
@@ -126,6 +126,7 @@
     <Compile Include="Models\Utilities\ExceptionData.cs" />
     <Compile Include="Models\Utilities\Utilities.cs" />
     <Compile Include="Models\WriteModels\WritableUser.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -12,7 +12,7 @@
         public string Name { get; set; }
         public bool IsSold { get; set; }
         public bool IsStored { get; set; }
-        public int Id;
+        public int Id { get; set; }
         public ShowableSimpleProduct(productSimple product)
         {
             Name = product.name;
@@ -21,5 +21,6 @@
             IsStored = product.stored.Value;
             Id = product.id;
         }
+         
     }
 }

@@ -37,20 +37,24 @@ namespace BarProject.DesktopApplication.Desktop.Windows
             }
         }
 
-        private ShowableSimpleProduct storedProduct;
+        private ShowableStoredProduct _storedProduct;
         private readonly int _productId;
 
-        public ShowableSimpleProduct StoredProduct
+        public ShowableStoredProduct StoredProduct
         {
             get
             {
                 lock (simpleproductLocker)
-                    return storedProduct;
+                {
+                    if (_storedProduct == null)
+                        _storedProduct = new ShowableStoredProduct();
+                    return _storedProduct;
+                }
             }
             set
             {
                 lock (simpleproductLocker)
-                    storedProduct = value;
+                    _storedProduct = value;
             }
         }
         public StoredProductWindow(int id)
@@ -82,7 +86,7 @@ namespace BarProject.DesktopApplication.Desktop.Windows
         {
             ProgressBarStart();
             var tmp = await RestClient.Client().GetStoredProduct(productId);
-            StoredProduct = tmp.Data;
+            StoredProduct.LoadFromAnother(tmp.Data);
             ProgressBarStop();
         }
     }

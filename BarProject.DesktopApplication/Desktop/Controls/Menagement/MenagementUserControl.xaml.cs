@@ -26,10 +26,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         {
             InitializeComponent();
             SetTabs();
-        }
-        private void MenagementUserControl_Initialized(object sender, EventArgs e)
-        {
-        }
+        } 
 
         public void SetTabs()
         {

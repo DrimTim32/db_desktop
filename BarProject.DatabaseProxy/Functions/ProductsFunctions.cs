@@ -16,11 +16,11 @@
             }
         }
 
-        public static List<ShowableSoldProduct> GetSoldProductsView(int id)
+        public static ShowableSoldProduct GetSoldProductData(int id)
         {
             using (var db = new BarProjectEntities())
             {
-                return db.soldProductDetails(id).ToAnotherType<soldProductDetails_Result, ShowableSoldProduct>().ToList();
+                return db.soldProductDetails(id).ToAnotherType<soldProductDetails_Result, ShowableSoldProduct>().FirstOrDefault();
             }
         }
 
@@ -32,11 +32,11 @@
             }
 
         }
-        public static IEnumerable<ShowableSimpleProduct> GetStoredProdcuts(int id)
+        public static ShowableStoredProduct GetStoredProduct(int id)
         {
             using (var db = new BarProjectEntities())
             {
-              return db.productDetails(id).ToAnotherType<productDetails_Result, ShowableSimpleProduct>().ToList();
+                return db.productDetails(id).ToAnotherType<productDetails_Result, ShowableStoredProduct>().FirstOrDefault();
             }
 
         }

@@ -39,7 +39,7 @@ namespace BarProject.WebService.Controllers
         {
             try
             {
-                return Ok(ProductsFunctions.GetStoredProdcuts(id));
+                return Ok(ProductsFunctions.GetStoredProduct(id));
             }
             catch (Exception ex)
             {
@@ -48,13 +48,13 @@ namespace BarProject.WebService.Controllers
         }
         [HttpGet]
         [Authorize(Roles = "Admin,Owner")]
-        [ResponseType(typeof(IEnumerable<ShowableSoldProduct>))]
+        [ResponseType(typeof(ShowableSoldProduct))]
         [Route("sold/{id}")]
         public IHttpActionResult GetSold(int id)
         {
             try
             {
-                return Ok(ProductsFunctions.GetSoldProductsView(id));
+                return Ok(ProductsFunctions.GetSoldProductData(id));
             }
             catch (Exception ex)
             {
@@ -63,7 +63,7 @@ namespace BarProject.WebService.Controllers
         }
         [HttpGet]
         [Authorize(Roles = "Admin,Owner")]
-        [ResponseType(typeof(IEnumerable<ShowablePricesHistory>))]
+        [ResponseType(typeof(ShowablePricesHistory))]
         [Route("history/{id}")]
         public IHttpActionResult GetHistory(int id)
         {

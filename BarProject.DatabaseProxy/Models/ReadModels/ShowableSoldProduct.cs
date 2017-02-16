@@ -100,7 +100,7 @@
 
             }
         }
-
+        public ShowableSoldProduct() { }
         public ShowableSoldProduct(productDetails_Result product)
         {
             id = product.id;

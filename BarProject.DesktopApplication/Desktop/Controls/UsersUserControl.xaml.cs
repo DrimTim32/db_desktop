@@ -22,7 +22,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls
     /// <summary>
     /// Interaction logic for AdministrationUserControl.xaml
     /// </summary>
-    public partial class UsersUserControl : System.Windows.Controls.UserControl
+    public partial class UsersUserControl : UserControl
     {
         public UsersUserControl()
         {

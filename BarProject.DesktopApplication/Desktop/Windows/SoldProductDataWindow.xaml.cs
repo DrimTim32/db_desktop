@@ -26,7 +26,7 @@ namespace BarProject.DesktopApplication.Desktop.Windows
     {
         private readonly object productIdLocker = new object();
         private readonly object soldProductLocker = new object();
-        private int _productId;
+        private readonly int _productId;
 
         private int productId
         {
@@ -41,7 +41,11 @@ namespace BarProject.DesktopApplication.Desktop.Windows
             get
             {
                 lock (soldProductLocker)
+                {
+                    if (_soldProduct == null)
+                        _soldProduct = new ShowableSoldProduct();
                     return _soldProduct;
+                }
             }
             set
             {
@@ -67,7 +71,7 @@ namespace BarProject.DesktopApplication.Desktop.Windows
         {
             ProgressBarStart();
             var tmp = await RestClient.Client().GetSoldProduct(productId);
-            SoldProduct = tmp.Data;
+            SoldProduct.LoadFromAnother(tmp.Data);
             ProgressBarStop();
         }
         private void ProgressBarStart()
