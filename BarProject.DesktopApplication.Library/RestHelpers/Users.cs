@@ -15,13 +15,12 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
 
     public partial class RestClient
     {
-        public async Task<IRestResponse<UserPrivileges>> GetUserCredentials(string username)
+        public IRestResponse<UserPrivileges> GetUserCredentials(string username)
         {
             var request = new RestRequest($"api/users/privileges/{username}", Method.GET);
             request.AddHeader("Authorization", $"bearer {token}");
             request.AddHeader("Content-Type", "application/json");
-            var data = await client.ExecuteGetTaskAsync<UserPrivileges>(request);
-            return data;
+            return client.Execute<UserPrivileges>(request);
         }
 
         public async Task<IRestResponse<List<ShowableUser>>> GetUsers()
@@ -35,7 +34,7 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
         public void AddUser(PureWritableUser user, Action<IRestResponse, RestRequestAsyncHandle> callback)
         {
             var request = new RestRequest($"api/users/", Method.POST) { RequestFormat = DataFormat.Json };
-            request.AddHeader("Authorization", $"bearer {token}");  
+            request.AddHeader("Authorization", $"bearer {token}");
             request.JsonSerializer = new JsonSerializer();
             request.AddBody(user);
             client.ExecuteAsync(request, callback);

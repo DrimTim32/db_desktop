@@ -33,6 +33,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
             var prices = new MetroTabItem()
             {
                 Header = "Prices",
+                Content = new Prices()
             };
 
             var products = new MetroTabItem()
@@ -43,7 +44,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
             var recipies = new MetroTabItem()
             {
                 Header = "Recipies",
-                //Content = new Units()
+                Content = new Recipies()
             };
             prices.SetResourceReference(StyleProperty, "MenuLevel2");
             products.SetResourceReference(StyleProperty, "MenuLevel2");

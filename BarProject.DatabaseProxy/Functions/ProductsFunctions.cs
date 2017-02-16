@@ -4,7 +4,7 @@
     using System.Linq;
     using DatabaseConnector;
     using Extensions;
-    using Models.ReadModels;
+    using Models.ReadModels; 
 
     public static class ProductsFunctions
     {

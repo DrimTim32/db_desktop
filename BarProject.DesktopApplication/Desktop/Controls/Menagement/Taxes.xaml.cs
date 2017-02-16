@@ -65,10 +65,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         private void Taxes_Loaded(object sender, RoutedEventArgs e)
         {
 
-            Dispatcher.Invoke(DispatcherPriority.Background,
-                  new Action(
-                  DoRefreshData
-                  ));
+            Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoRefreshData));
         }
         private bool IsTaxEmpty(ShowableTax tax)
         {
@@ -113,7 +110,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                         if (response.Content.Contains("INSERT") && response.Content.Contains("CHECK"))
                             MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database", "Tax value must be between 0 and 1");
                         else
-                            MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database", response.Content.Replace("Reason",""));
+                            MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database", response.Content.Replace("Reason", ""));
                     }
                     RefreshData();
                 });

@@ -15,11 +15,11 @@
                      utils:TextBoxHelper.Watermark="Username" Width="295"/>
 
             <PasswordBox utils:PasswordBoxHelper.Watermark="Password" Template="{StaticResource WatermarkedPasswordBoxTemplate}" x:Name="PasswordBox" Width="295"/>
-            <Grid x:Name="ProgressReport">
-                <Controls:MetroProgressBar  x:Name="Progress" Background="{DynamicResource AccentColorBrush3}" Height="20"/>
+            <Grid x:Name="Progress"  Visibility="Hidden">
+                <Controls:MetroProgressBar  IsIndeterminate="True" Height="20"/>
                 <TextBlock Width="450" TextAlignment="Center" Height="20">Logging in...</TextBlock>
             </Grid>
-            <Button Content="Login" Click="Button_Click"/>
+            <Button Content="Login" Click="Button_Click" x:Name="LoginButton"/>
         </StackPanel>
     </Grid>
 </Controls:MetroWindow>

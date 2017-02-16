@@ -82,8 +82,14 @@
     <Compile Include="Desktop\Controls\Menagement\Units.xaml.cs">
       <DependentUpon>Units.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Desktop\Controls\Warehouse\Prices.xaml.cs">
+      <DependentUpon>Prices.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Desktop\Controls\Warehouse\Products.xaml.cs">
       <DependentUpon>Products.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Desktop\Controls\Warehouse\Recipies.xaml.cs">
+      <DependentUpon>Recipies.xaml</DependentUpon>
     </Compile>
     <Compile Include="Desktop\Controls\Warehouse\WarehouseUserControl.xaml.cs">
       <DependentUpon>WarehouseUserControl.xaml</DependentUpon>
@@ -119,7 +125,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Desktop\Controls\Warehouse\Prices.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Desktop\Controls\Warehouse\Products.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Desktop\Controls\Warehouse\Recipies.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
