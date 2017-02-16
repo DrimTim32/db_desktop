@@ -14,20 +14,19 @@ using System.Windows.Shapes;
 
 namespace BarProject.DesktopApplication.Desktop.Windows
 {
-    using System.Collections.ObjectModel;
-    using System.Diagnostics;
     using System.Windows.Threading;
     using DatabaseProxy.Functions;
     using DatabaseProxy.Models.ReadModels;
     using Library.RestHelpers;
 
     /// <summary>
-    /// Interaction logic for StoredProductWindow.xaml
+    /// Interaction logic for SoldProductDataWindow.xaml
     /// </summary>
-    public partial class StoredProductWindow : Window
+    public partial class SoldProductDataWindow : Window
     {
-        private object productIdLocker = new object();
-        private object simpleproductLocker = new object();
+        private readonly object productIdLocker = new object();
+        private readonly object soldProductLocker = new object();
+        private int _productId;
 
         private int productId
         {
@@ -36,38 +35,40 @@ namespace BarProject.DesktopApplication.Desktop.Windows
                 lock (productIdLocker) return _productId;
             }
         }
-
-        private ShowableSimpleProduct storedProduct;
-        private readonly int _productId;
-
-        public ShowableSimpleProduct StoredProduct
+        private ShowableSoldProduct _soldProduct;
+        public ShowableSoldProduct SoldProduct
         {
             get
             {
-                lock (simpleproductLocker)
-                    return storedProduct;
+                lock (soldProductLocker)
+                    return _soldProduct;
             }
             set
             {
-                lock (simpleproductLocker)
-                    storedProduct = value;
+                lock (soldProductLocker) _soldProduct = value;
             }
         }
-        public StoredProductWindow(int id)
+        public SoldProductDataWindow(int id)
         {
-            _productId = id;
-            Loaded += StoredProductWindow_Loaded; ;
             InitializeComponent();
+            Loaded += SoldProductWindow_Loaded; ;
+            _productId = id;
         }
 
-        private void StoredProductWindow_Loaded(object sender, RoutedEventArgs e)
+        private void SoldProductWindow_Loaded(object sender, RoutedEventArgs e)
         {
             ReloadModel();
         }
-
         private void ReloadModel()
         {
             this.Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoRefreshData));
+        }
+        private async void DoRefreshData()
+        {
+            ProgressBarStart();
+            var tmp = await RestClient.Client().GetSoldProduct(productId);
+            SoldProduct = tmp.Data;
+            ProgressBarStop();
         }
         private void ProgressBarStart()
         {
@@ -77,13 +78,6 @@ namespace BarProject.DesktopApplication.Desktop.Windows
         private void ProgressBarStop()
         {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => Progress.Visibility = Visibility.Hidden));
-        }
-        private async void DoRefreshData()
-        {
-            ProgressBarStart();
-            var tmp = await RestClient.Client().GetStoredProduct(productId);
-            StoredProduct = tmp.Data;
-            ProgressBarStop();
         }
     }
 }

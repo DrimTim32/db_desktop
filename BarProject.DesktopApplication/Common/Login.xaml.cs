@@ -2,6 +2,9 @@
 {
     using System;
     using System.Configuration;
+    using System.Net;
+    using System.Net.Http;
+    using System.Text.RegularExpressions;
     using System.Threading;
     using System.Windows;
     using System.Windows.Controls;
@@ -11,6 +14,8 @@
     using Desktop;
     using MahApps.Metro.Controls;
     using MahApps.Metro.Controls.Dialogs;
+    using RestSharp;
+    using Utils;
 
     /// <summary>
     /// Interaction logic for Login.xaml
@@ -37,7 +42,7 @@
         {
             await Dispatcher.InvokeAsync(() =>
             {
-                this.ShowMessageAsync("Problem with login.", "Please, check your login and/or password"); 
+                this.ShowMessageAsync("Problem with login.", "Please, check your login and/or password");
                 ProgressReport.Visibility = Visibility.Hidden;
             });
         }
@@ -56,7 +61,7 @@
             {
                 var window = new MainDesktopWindow { ShowActivated = true };
                 Application.Current.Dispatcher.Invoke(() =>
-                { 
+                {
                     Application.Current.MainWindow = window;
                     window.Show();
                 });
@@ -100,13 +105,29 @@
             var thread = new Thread(DoAfterLogin);
             thread.Start();
         }
-        private async void DoLogin(string login, string password)
+        static Regex tokenRegex = new Regex("\"access_token\":\"(.*?)\"", RegexOptions.Multiline);
+        private void DoLogin(string login, string password)
         {
             try
             {
                 Library.RestHelpers.RestClient.Client(ConfigurationManager.AppSettings["apiUrl"])
-                    .AutenticateMe(login, password);
-                await Dispatcher.InvokeAsync(AfterLogin);
+                    .AutenticateMe(login, password, (resp) =>
+                    {
+                        if (resp.ResponseStatus == ResponseStatus.TimedOut)
+                        {
+                            MessageBoxesHelper.ShowWindowInformation("Request timed out",
+                                "Problem connecting to the server");
+                        }
+                        else if (resp.StatusCode != HttpStatusCode.OK)
+                        {
+                            MessageBoxesHelper.ShowWindowInformation("Problem with login",
+                                "Make sure that both password and login are correct"); 
+                        }
+                        else
+                        {
+                            DoAfterLogin();
+                        }
+                    });
             }
             catch (Exception ex)
             {

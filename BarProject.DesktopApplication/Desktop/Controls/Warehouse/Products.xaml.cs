@@ -77,43 +77,37 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
         }
         private async void DoRefreshData()
         {
-            try
+            ProgressBarStart();
+            var tmp = await RestClient.Client().GetProducts();
+            ProductLists.Clear();
+            foreach (var showableTax in tmp.Data)
             {
-                ProgressBarStart();
-                var tmp = await RestClient.Client().GetProducts();
-                ProductLists.Clear();
-                foreach (var showableTax in tmp.Data)
-                {
-                    ProductLists.Add(showableTax);
-                }
-                DataGrid.Items.Refresh();
-                ProgressBarStop();
+                ProductLists.Add(showableTax);
             }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Exception in do refresh data" + ex.Message);
-            }
+            DataGrid.Items.Refresh();
+            ProgressBarStop();
         }
 
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            DataGrid dg = sender as DataGrid;
+            var dg = sender as DataGrid;
             if (dg != null)
             {
-                DataGridRow dgr = (DataGridRow)(dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex));
+                var dgr = (DataGridRow)(dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex));
                 var product = (ShowableSimpleProduct)dgr.Item;
-                string url = "";
                 if (product.IsSold)
                 {
-                    url = "../../Content/Warehouse/SoldProductPage.xaml";
+
+                    var window = new SoldProductDataWindow(product.Id);
+                    window.Closed += (s, x) => RefreshData();
+                    window.ShowDialog();
                 }
                 else if (product.IsStored)
                 {
                     var window = new StoredProductWindow(product.Id);
                     window.Closed += (s, x) => RefreshData();
-                    window.ShowDialog(); 
-                }
-
+                    window.ShowDialog();
+                } 
             }
         }
     }

@@ -88,10 +88,13 @@
     <Compile Include="Desktop\Controls\Warehouse\WarehouseUserControl.xaml.cs">
       <DependentUpon>WarehouseUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Desktop\Windows\SoldProductDataWindow.xaml.cs">
+      <DependentUpon>SoldProductDataWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Desktop\Windows\StoredProductWindow.xaml.cs">
       <DependentUpon>StoredProductWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utils\MessageBoxesUtil.cs" />
+    <Compile Include="Common\Utils\MessageBoxesHelper.cs" />
     <Page Include="Common\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -151,6 +154,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Desktop\Windows\AddUserWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Desktop\Windows\SoldProductDataWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

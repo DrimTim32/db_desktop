@@ -19,11 +19,11 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
     using System.Diagnostics;
     using System.Net;
     using System.Windows.Threading;
+    using Common.Utils;
     using DatabaseProxy.Functions;
     using DatabaseProxy.Models.ReadModels;
     using MahApps.Metro.Controls.Dialogs;
     using RestSharp;
-    using Utils;
     using RestClient = Library.RestHelpers.RestClient;
 
     /// <summary>
@@ -129,7 +129,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 {
                     grid.CancelEdit();
                     grid.RowEditEnding += DataGrid_RowEditEnding;
-                    MessageBoxesUtil.ShowWindowInformationAsync("Problem with new item!", message);
+                    MessageBoxesHelper.ShowWindowInformationAsync("Problem with new item!", message);
                     grid.Items.Refresh();
                     RefreshData();
                     ProgressBarStop();
@@ -141,9 +141,9 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                     if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
                     {
                         if (response.Content.Contains("INSERT") && response.Content.Contains("CHECK"))
-                            MessageBoxesUtil.ShowWindowInformationAsync("Problem with writing to database", "Tax value must be between 0 and 1");
+                            MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database", "Tax value must be between 0 and 1");
                         else
-                            MessageBoxesUtil.ShowWindowInformationAsync("Problem with writing to database", response.Content.Replace("Reason", ""));
+                            MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database", response.Content.Replace("Reason", ""));
                     }
                     RefreshData();
                 });
@@ -159,7 +159,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 if (e.Key == Key.Delete && !dgr.IsEditing)
                 {
                     // User is attempting to delete the row
-                    var resul = MessageBoxesUtil.ShowYesNoMessage("Delete", "About to delete the current row.\n\nProceed?");
+                    var resul = MessageBoxesHelper.ShowYesNoMessage("Delete", "About to delete the current row.\n\nProceed?");
                     if (resul == MessageDialogResult.Negative)
                     {
                         e.Handled = true;
@@ -172,7 +172,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                             {
                                 if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
                                 {
-                                    MessageBoxesUtil.ShowWindowInformationAsync("Problem with writing to database",
+                                    MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
                                         response.Content);
                                 }
                                 else

@@ -1,17 +1,19 @@
-﻿using System.Threading.Tasks;
-
-namespace BarProject.DesktopApplication.Utils
+﻿namespace BarProject.DesktopApplication.Common.Utils
 {
-    using System;
+    using System.Threading.Tasks;
     using System.Windows;
     using MahApps.Metro.Controls;
     using MahApps.Metro.Controls.Dialogs;
 
-    public static class MessageBoxesUtil
+    public static class MessageBoxesHelper
     {
         public static async void ShowWindowInformationAsync(string header, string message)
         {
             await MessageAsync(header, message);
+        }
+        public static void ShowWindowInformation(string header, string message)
+        {
+            Message(header, message);
         }
 
         public static MessageDialogResult ShowYesNoMessage(string header, string message)
