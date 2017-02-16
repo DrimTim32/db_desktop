@@ -4,6 +4,7 @@
     using System.Configuration;
     using System.Net;
     using System.Threading;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Threading;
     using DatabaseProxy.Models;
@@ -30,7 +31,7 @@
         {
             var password = PasswordBox.Password;
             var login = LoginBox.Text;
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => { LogIn(login, password); }));
+            Task.Factory.StartNew(() => { LogIn(login, password); });
 
         }
 
@@ -47,7 +48,7 @@
 
         private void ProgressBarStart()
         {
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(
+            Application.Current.Dispatcher.Invoke(DispatcherPriority.Background, new Action(
                 () =>
                 {
                     Progress.Visibility = Visibility.Visible;
@@ -57,7 +58,7 @@
 
         private void ProgressBarStop()
         {
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(
+            Application.Current.Dispatcher.Invoke(DispatcherPriority.Background, new Action(
                 () =>
                 {
                     Progress.Visibility = Visibility.Hidden;
@@ -90,75 +91,81 @@
 
         private void AfterLogin()
         {
-           Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(DoAfterLogin));
-         
+            Application.Current.Dispatcher.Invoke(DoAfterLogin);
+
         }
         private void LogIn(string login, string password)
         {
-           Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => { DoLogin(login, password); }));
+            Application.Current.Dispatcher.Invoke(DispatcherPriority.Background, new Action(() => { DoLogin(login, password); }));
         }
         private void DoAfterLogin()
         {
-            try
+            Task.Factory.StartNew(() =>
             {
-                var text = "";
-                text = LoginBox.Text;
-                var response = Library.RestHelpers.RestClient.Client().GetUserCredentials(text); 
-                if (response.ResponseStatus == ResponseStatus.TimedOut)
+                try
                 {
-                    MessageBoxesHelper.ShowWindowInformation("Request timed out",
-                        "Problem connecting to the server");
-                }
-                else if (response.StatusCode != HttpStatusCode.OK)
-                {
-                    MessageBoxesHelper.ShowWindowInformation("Problem with login",
-                        "Make sure that both password and login are correct");
-                }
-                else
-                {
+                    var text = "";
+                    text = LoginBox.Text;
+                    var response = Library.RestHelpers.RestClient.Client().GetUserCredentials(text);
+                    if (response.ResponseStatus == ResponseStatus.TimedOut)
+                    {
+                        MessageBoxesHelper.ShowWindowInformation("Request timed out",
+                            "Problem connecting to the server");
+                    }
+                    else if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        MessageBoxesHelper.ShowWindowInformation("Problem with login",
+                            "Make sure that both password and login are correct");
+                    }
+                    else
+                    {
 
-                    var privlidges = response.Data;
-                    ChooseWindow(privlidges);
-                }
-                ProgressBarStop();
+                        var privlidges = response.Data;
+                        ChooseWindow(privlidges);
+                    }
+                    ProgressBarStop();
 
-            }
-            catch (Exception ex)
-            {
-                LoginError(ex);
-            }
+                }
+                catch (Exception ex)
+                {
+                    LoginError(ex);
+                }
+            });
 
         }
 
         private void DoLogin(string login, string password)
         {
             ProgressBarStart();
-            try
+            Task.Factory.StartNew(() =>
             {
-                Library.RestHelpers.RestClient.Client(ConfigurationManager.AppSettings["apiUrl"])
-                    .AutenticateMe(login, password, (response) =>
-                    {
-                        if (response.ResponseStatus == ResponseStatus.TimedOut)
+                try
+                {
+                    Library.RestHelpers.RestClient.Client(ConfigurationManager.AppSettings["apiUrl"])
+                        .AutenticateMe(login, password, (response) =>
                         {
-                            MessageBoxesHelper.ShowWindowInformation("Request timed out",
-                                "Problem connecting to the server");
-                        }
-                        else if (response.StatusCode != HttpStatusCode.OK)
-                        {
-                            MessageBoxesHelper.ShowWindowInformation("Problem with login",
-                                "Make sure that both password and login are correct");
-                        }
-                        else
-                        {
-                            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(AfterLogin));
-                        }
-                    });
+                            if (response.ResponseStatus == ResponseStatus.TimedOut)
+                            {
+                                MessageBoxesHelper.ShowWindowInformation("Request timed out",
+                                    "Problem connecting to the server");
+                            }
+                            else if (response.StatusCode != HttpStatusCode.OK)
+                            {
+                                MessageBoxesHelper.ShowWindowInformation("Problem with login",
+                                    "Make sure that both password and login are correct");
+                            }
+                            else
+                            {
+                                Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(AfterLogin));
+                            }
+                        });
 
-            }
-            catch (Exception ex)
-            {
-                LoginError(ex);
-            }
+                }
+                catch (Exception ex)
+                {
+                    LoginError(ex);
+                }
+            });
 
         }
     }

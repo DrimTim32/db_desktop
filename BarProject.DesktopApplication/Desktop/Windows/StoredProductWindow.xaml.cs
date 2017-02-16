@@ -20,11 +20,12 @@ namespace BarProject.DesktopApplication.Desktop.Windows
     using DatabaseProxy.Functions;
     using DatabaseProxy.Models.ReadModels;
     using Library.RestHelpers;
+    using MahApps.Metro.Controls;
 
     /// <summary>
     /// Interaction logic for StoredProductWindow.xaml
     /// </summary>
-    public partial class StoredProductWindow : Window
+    public partial class StoredProductWindow : MetroWindow
     {
         private object productIdLocker = new object();
         private object simpleproductLocker = new object();
