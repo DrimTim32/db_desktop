@@ -18,6 +18,7 @@ namespace BarProject.DatabaseConnector
         public EmployePermission()
         {
             this.Users = new HashSet<User>();
+            this.Workstations = new HashSet<Workstation>();
         }
     
         public byte id { get; set; }
@@ -26,5 +27,7 @@ namespace BarProject.DatabaseConnector
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Workstation> Workstations { get; set; }
     }
 }

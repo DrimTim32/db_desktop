@@ -45,7 +45,7 @@
                 </StackPanel>
                 <StackPanel>
                     <Label Content="Tax value" Target="{Binding ElementName=TextTaxValue}"/>
-                    <TextBox x:Name="TextTaxValue" Width="150" Text="{Binding Path=TaxValue, Mode=TwoWay, ValidatesOnDataErrors=True}" />
+                    <TextBox x:Name="TextTaxValue" Width="150" Text="{Binding Path=TaxValue, Mode=TwoWay, ValidatesOnDataErrors=True}" IsReadOnly="True" />
                 </StackPanel>
             </StackPanel>
             <Button Content="Show price history" Margin="0,0,4,0" />

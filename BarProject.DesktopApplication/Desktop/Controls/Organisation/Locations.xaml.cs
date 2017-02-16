@@ -13,53 +13,53 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
+namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
 {
     using System.Collections.ObjectModel;
     using System.Diagnostics;
     using System.Net;
     using System.Windows.Threading;
     using Common.Utils;
-    using DatabaseProxy.Functions;
     using DatabaseProxy.Models.ReadModels;
     using MahApps.Metro.Controls.Dialogs;
     using RestSharp;
     using RestClient = Library.RestHelpers.RestClient;
 
     /// <summary>
-    /// Interaction logic for Units.xaml
+    /// Interaction logic for Locations.xaml
     /// </summary>
-    public partial class Units : UserControl
+    public partial class Locations : UserControl
     {
-        public Units()
-        {
-            InitializeComponent();
-            Loaded += Units_Loaded;
-            DataGrid.RowEditEnding += DataGrid_RowEditEnding;
-            DataGrid.PreviewKeyDown += DataGrid_PreviewKeyDown;
-        }
-        private void Units_Loaded(object sender, RoutedEventArgs e)
-        {
-            RefreshData();
-        }
-        private ObservableCollection<ShowableUnit> _unitsList;
-        private readonly object UnitsDataLock = new object();
-        public ObservableCollection<ShowableUnit> UnitsLits
+        private ObservableCollection<ShowableLocation> _productsList;
+        private readonly object LocationsLock = new object();
+
+        public ObservableCollection<ShowableLocation> LocationsList
         {
             get
             {
-                lock (UnitsDataLock)
+                lock (LocationsLock)
                 {
-                    if (_unitsList == null)
-                        _unitsList = new ObservableCollection<ShowableUnit>();
-                    return _unitsList;
+                    if (_productsList == null)
+                        _productsList =
+                            new ObservableCollection<ShowableLocation>();
+                    return _productsList;
                 }
             }
-            set
-            {
-                lock (UnitsDataLock) { _unitsList = value; }
-            }
+            set { lock (LocationsLock) { _productsList = value; } }
         }
+        public Locations()
+        {
+            InitializeComponent();
+            Loaded += Locations_Loaded;
+            DataGrid.RowEditEnding += DataGrid_RowEditEnding;
+            DataGrid.PreviewKeyDown += DataGrid_PreviewKeyDown;
+        }
+
+        private void Locations_Loaded(object sender, RoutedEventArgs e)
+        {
+            RefreshData();
+        }
+
         private void ProgressBarStart()
         {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => Progress.Visibility = Visibility.Visible));
@@ -72,11 +72,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         }
         private void RefreshData()
         {
-
-            this.Dispatcher.Invoke(DispatcherPriority.Background,
-                  new Action(
-                  DoRefreshData
-                  ));
+            this.Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoRefreshData));
         }
 
         private async void DoRefreshData()
@@ -84,11 +80,11 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             try
             {
                 ProgressBarStart();
-                var tmp = await RestClient.Client().GetUnits();
-                UnitsLits.Clear();
-                foreach (var unit in tmp.Data)
+                var tmp = await RestClient.Client().GetLocations();
+                LocationsList.Clear();
+                foreach (var location in tmp.Data)
                 {
-                    UnitsLits.Add(unit);
+                    LocationsList.Add(location);
                 }
                 DataGrid.Items.Refresh();
                 ProgressBarStop();
@@ -98,11 +94,10 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 Debug.WriteLine("Exception in do refresh data" + ex.Message);
             }
         }
-
-
-        private bool IsTaxEmpty(ShowableUnit tax)
+        private bool IsLocationEmpty(ShowableLocation location)
         {
-            return tax.Name == null && tax.Type == null;
+            return location.Name == null && location.City == null && location.Country == null && location.City == null &&
+                   location.Phone == null && location.Address == null && location.PostalCode == null;
         }
         private void DataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
@@ -110,23 +105,19 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             if (DataGrid.SelectedItem != null && grid != null)
             {
 
-                var tax = (ShowableUnit)e.Row.Item;
+                var location = (ShowableLocation)e.Row.Item;
                 grid.RowEditEnding -= DataGrid_RowEditEnding;
                 grid.CommitEdit();
-                string message = "";
                 ProgressBarStart();
-                if (IsTaxEmpty(tax))
+                if (IsLocationEmpty(location))
                 {
                     grid.CancelEdit();
                     grid.RowEditEnding += DataGrid_RowEditEnding;
                     return;
                 }
-                if (string.IsNullOrEmpty(tax.Name))
-                    message = "You cannot create tax with empty name";
-                if (string.IsNullOrEmpty(tax.Type))
-                    message = "You cannot create tax with empty type";
-                if (message != "")
+                if (string.IsNullOrEmpty(location.Name))
                 {
+                    var message = "You cannot create location with empty name";
                     grid.CancelEdit();
                     grid.RowEditEnding += DataGrid_RowEditEnding;
                     MessageBoxesHelper.ShowWindowInformationAsync("Problem with new item!", message);
@@ -136,17 +127,32 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                     return;
                 }
                 grid.RowEditEnding += DataGrid_RowEditEnding;
-                RestClient.Client().AddUnit(tax, (response, handle) =>
+                if (location.Id == null)
                 {
-                    if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
+                    RestClient.Client().AddLocation(location, (response, handle) =>
                     {
-                        if (response.Content.Contains("INSERT") && response.Content.Contains("CHECK"))
-                            MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database", "Tax value must be between 0 and 1");
-                        else
-                            MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database", response.Content.Replace("Reason", ""));
-                    }
-                    RefreshData();
-                });
+                        if (response.ResponseStatus != ResponseStatus.Completed ||
+                            response.StatusCode != HttpStatusCode.OK)
+                        {
+                            MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
+                                response.Content.Replace("Reason", ""));
+                        }
+                        RefreshData();
+                    });
+                }
+                else
+                {
+                    RestClient.Client().UpdateLocation(location, (response, handle) =>
+                     {
+                         if (response.ResponseStatus != ResponseStatus.Completed ||
+                             response.StatusCode != HttpStatusCode.OK)
+                         {
+                             MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
+                                 response.Content.Replace("Reason", ""));
+                         }
+                         RefreshData();
+                     });
+                }
 
             }
         }
@@ -166,8 +172,8 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                     }
                     else
                     {
-                        var cat = (ShowableUnit)dgr.Item;
-                        RestClient.Client().RemoveUnit(cat.Id,
+                        var cat = (ShowableLocation)dgr.Item;
+                        RestClient.Client().RemoveLocation(cat.Id,
                             (response, handle) =>
                             {
                                 if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
@@ -184,6 +190,5 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 }
             }
         }
-
     }
 }

@@ -122,6 +122,12 @@
     <Compile Include="Category.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Client_orders.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Client_order_details.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="database_firewall_rules.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
@@ -132,6 +138,9 @@
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="InternalError.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Location.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Price.cs">
@@ -168,6 +177,12 @@
     <Compile Include="soldProductDetails_Result.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Spot.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Supplier.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Tax.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
@@ -178,6 +193,18 @@
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Warehouse.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Warehouse_orders.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Warehouse_order_details.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Workstation.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
   </ItemGroup>

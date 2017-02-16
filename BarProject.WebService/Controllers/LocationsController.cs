@@ -13,63 +13,62 @@ namespace BarProject.WebService.Controllers
     using DatabaseProxy.Models.ReadModels;
     using DatabaseProxy.Models.Utilities;
 
-    [RoutePrefix("api/products")]
-    public class ProductsController : ApiController
+    [RoutePrefix("api/locations")]
+    public class LocationsController : ApiController
     {
         [HttpGet]
         [Authorize(Roles = "Admin,Owner")]
-        [ResponseType(typeof(IEnumerable<ShowableSimpleProduct>))]
+        [ResponseType(typeof(List<ShowableLocation>))]
         [Route("")]
         public IHttpActionResult Get()
         {
             try
             {
-                return Ok(ProductsFunctions.GetProductView());
+                return Ok(LocationsFunctions.GetLocations());
             }
             catch (Exception ex)
             {
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
-        [HttpGet]
+        [HttpPost, Route("")]
         [Authorize(Roles = "Admin,Owner")]
-        [ResponseType(typeof(IEnumerable<ShowableSimpleProduct>))]
-        [Route("stored/{id}")]
-        public IHttpActionResult GetStored(int id)
+        public IHttpActionResult Post(ShowableLocation location)
         {
             try
             {
-                return Ok(ProductsFunctions.GetStoredProduct(id));
+                LocationsFunctions.AddLocation(location);
+                return Ok();
             }
             catch (Exception ex)
             {
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
-        [HttpGet]
+        [HttpDelete]
         [Authorize(Roles = "Admin,Owner")]
-        [ResponseType(typeof(ShowableSoldProduct))]
-        [Route("sold/{id}")]
-        public IHttpActionResult GetSold(int id)
+        [Route("{id}")]
+        public IHttpActionResult Delete(int id)
         {
             try
             {
-                return Ok(ProductsFunctions.GetSoldProductData(id));
+                LocationsFunctions.RemoveLocation(id);
+                return Ok();
             }
             catch (Exception ex)
             {
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
-        [HttpGet]
+        [HttpPatch]
         [Authorize(Roles = "Admin,Owner")]
-        [ResponseType(typeof(List<ShowablePricesHistory>))]
-        [Route("history/{id}")]
-        public IHttpActionResult GetHistory(int id)
+        [Route("{id}")]
+        public IHttpActionResult Patch(int id, [FromBody]ShowableLocation location)
         {
             try
             {
-                return Ok(ProductsFunctions.GetPricesHistory(id));
+                LocationsFunctions.UpdateLocation(id, location);
+                return Ok();
             }
             catch (Exception ex)
             {

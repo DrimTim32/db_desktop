@@ -33,6 +33,28 @@
         <AssociationConnector Association="BarProjectModel.FK__ProductsS__recei__3E723F9C" ManuallyRouted="false" />
         <AssociationConnector Association="BarProjectModel.FK__Units__unit_type__12C8C788" ManuallyRouted="false" />
         <EntityTypeShape EntityType="BarProjectModel.InternalError" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="BarProjectModel.Client_order_details" Width="1.5" PointX="14.5" PointY="6.625" />
+        <EntityTypeShape EntityType="BarProjectModel.Client_orders" Width="1.5" PointX="12.25" PointY="11" />
+        <EntityTypeShape EntityType="BarProjectModel.Location" Width="1.5" PointX="13" PointY="2.875" />
+        <EntityTypeShape EntityType="BarProjectModel.Spot" Width="1.5" PointX="10" PointY="18.375" />
+        <EntityTypeShape EntityType="BarProjectModel.Supplier" Width="1.5" PointX="13" PointY="14.375" />
+        <EntityTypeShape EntityType="BarProjectModel.Warehouse" Width="1.5" PointX="15.25" PointY="3" />
+        <EntityTypeShape EntityType="BarProjectModel.Warehouse_order_details" Width="1.5" PointX="17.5" PointY="7.625" />
+        <EntityTypeShape EntityType="BarProjectModel.Warehouse_orders" Width="1.5" PointX="15.25" PointY="10.625" />
+        <EntityTypeShape EntityType="BarProjectModel.Workstation" Width="1.5" PointX="10" PointY="15.375" />
+        <AssociationConnector Association="BarProjectModel.FK__Client_or__clien__32CB82C6" />
+        <AssociationConnector Association="BarProjectModel.FK__Client_or__produ__33BFA6FF" />
+        <AssociationConnector Association="BarProjectModel.FK__Client_or__spot___34B3CB38" />
+        <AssociationConnector Association="BarProjectModel.FK__Client_or__emplo__2E06CDA9" />
+        <AssociationConnector Association="BarProjectModel.FK__Client_or__spot___2D12A970" />
+        <AssociationConnector Association="BarProjectModel.FK__Warehouse__locat__190BB0C3" />
+        <AssociationConnector Association="BarProjectModel.FK__Warehouse__locat__21A0F6C4" />
+        <AssociationConnector Association="BarProjectModel.FK__Warehouse__produ__19FFD4FC" />
+        <AssociationConnector Association="BarProjectModel.FK__Warehouse__produ__2759D01A" />
+        <AssociationConnector Association="BarProjectModel.FK__Warehouse__suppl__20ACD28B" />
+        <AssociationConnector Association="BarProjectModel.FK__Warehouse__emplo__1FB8AE52" />
+        <AssociationConnector Association="BarProjectModel.FK__Warehouse__wareh__2665ABE1" />
+        <AssociationConnector Association="BarProjectModel.Workstation_rights" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

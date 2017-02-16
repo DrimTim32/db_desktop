@@ -14,6 +14,13 @@ namespace BarProject.DatabaseConnector
     
     public partial class Product
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Product()
+        {
+            this.Warehouses = new HashSet<Warehouse>();
+            this.Warehouse_order_details = new HashSet<Warehouse_order_details>();
+        }
+    
         public int id { get; set; }
         public Nullable<int> category_id { get; set; }
         public Nullable<int> unit_id { get; set; }
@@ -26,5 +33,9 @@ namespace BarProject.DatabaseConnector
         public virtual ProductsStored ProductsStored { get; set; }
         public virtual ProductsSold ProductsSold { get; set; }
         public virtual ProductsStored ProductsStored1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Warehouse> Warehouses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Warehouse_order_details> Warehouse_order_details { get; set; }
     }
 }

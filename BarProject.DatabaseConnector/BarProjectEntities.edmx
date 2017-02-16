@@ -14,6 +14,27 @@
           <Property Name="category_name" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="overriding_category" Type="int" />
         </EntityType>
+        <EntityType Name="Client_order_details">
+          <Key>
+            <PropertyRef Name="client_order_id" />
+            <PropertyRef Name="products_sold_id" />
+          </Key>
+          <Property Name="client_order_id" Type="int" Nullable="false" />
+          <Property Name="products_sold_id" Type="int" Nullable="false" />
+          <Property Name="unit_price" Type="money" Nullable="false" />
+          <Property Name="quantity" Type="smallint" Nullable="false" />
+          <Property Name="spot_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Client_orders">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="spot_id" Type="int" Nullable="false" />
+          <Property Name="employee_id" Type="int" Nullable="false" />
+          <Property Name="order_time" Type="datetime" />
+          <Property Name="payment_time" Type="datetime" />
+        </EntityType>
         <EntityType Name="EmployePermissions">
           <Key>
             <PropertyRef Name="id" />
@@ -42,6 +63,18 @@
           <Property Name="stack_trace" Type="nvarchar" MaxLength="1000" Nullable="false" />
           <Property Name="context" Type="nvarchar" MaxLength="900" Nullable="false" />
           <Property Name="inner_message" Type="nvarchar" MaxLength="400" />
+        </EntityType>
+        <EntityType Name="Locations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="60" />
+          <Property Name="city" Type="nvarchar" MaxLength="15" />
+          <Property Name="postal_code" Type="nvarchar" MaxLength="10" />
+          <Property Name="country" Type="nvarchar" MaxLength="15" />
+          <Property Name="phone" Type="nvarchar" MaxLength="25" />
         </EntityType>
         <EntityType Name="Prices">
           <Key>
@@ -82,6 +115,28 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="description" Type="nvarchar" MaxLength="512" />
         </EntityType>
+        <EntityType Name="Spots">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Suppliers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="60" />
+          <Property Name="city" Type="nvarchar" MaxLength="15" />
+          <Property Name="postal_code" Type="nvarchar" MaxLength="10" />
+          <Property Name="country" Type="nvarchar" MaxLength="15" />
+          <Property Name="contact_name" Type="nvarchar" MaxLength="30" />
+          <Property Name="phone" Type="nvarchar" MaxLength="25" />
+          <Property Name="fax" Type="nvarchar" MaxLength="25" />
+          <Property Name="website" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Taxes">
           <Key>
             <PropertyRef Name="id" />
@@ -117,6 +172,52 @@
           <Property Name="name" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="surname" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="permission" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="location_id" />
+            <PropertyRef Name="product_in_stock_id" />
+          </Key>
+          <Property Name="location_id" Type="int" Nullable="false" />
+          <Property Name="product_in_stock_id" Type="int" Nullable="false" />
+          <Property Name="quantity" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Warehouse_order_details">
+          <Key>
+            <PropertyRef Name="warehouse_order_id" />
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="warehouse_order_id" Type="int" Nullable="false" />
+          <Property Name="product_id" Type="int" Nullable="false" />
+          <Property Name="unit_price" Type="money" Nullable="false" />
+          <Property Name="quantity" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Warehouse_orders">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="employee_id" Type="int" Nullable="false" />
+          <Property Name="supplier_id" Type="int" Nullable="false" />
+          <Property Name="location_id" Type="int" Nullable="false" />
+          <Property Name="order_date" Type="datetime" />
+          <Property Name="required_date" Type="datetime" />
+          <Property Name="delivery_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Workstation_rights">
+          <Key>
+            <PropertyRef Name="workstation_id" />
+            <PropertyRef Name="employe_permissions" />
+          </Key>
+          <Property Name="workstation_id" Type="int" Nullable="false" />
+          <Property Name="employe_permissions" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Workstations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="40" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'BarProject.dbo.productSimple' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -159,6 +260,66 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </Principal>
             <Dependent Role="Categories1">
               <PropertyRef Name="overriding_category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Client_or__clien__32CB82C6">
+          <End Role="Client_orders" Type="Self.Client_orders" Multiplicity="1" />
+          <End Role="Client_order_details" Type="Self.Client_order_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client_orders">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Client_order_details">
+              <PropertyRef Name="client_order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Client_or__emplo__2E06CDA9">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Client_orders" Type="Self.Client_orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Client_orders">
+              <PropertyRef Name="employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Client_or__produ__33BFA6FF">
+          <End Role="ProductsSold" Type="Self.ProductsSold" Multiplicity="1" />
+          <End Role="Client_order_details" Type="Self.Client_order_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductsSold">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Client_order_details">
+              <PropertyRef Name="products_sold_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Client_or__spot___2D12A970">
+          <End Role="Spots" Type="Self.Spots" Multiplicity="1" />
+          <End Role="Client_orders" Type="Self.Client_orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Spots">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Client_orders">
+              <PropertyRef Name="spot_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Client_or__spot___34B3CB38">
+          <End Role="Spots" Type="Self.Spots" Multiplicity="1" />
+          <End Role="Client_order_details" Type="Self.Client_order_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Spots">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Client_order_details">
+              <PropertyRef Name="spot_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -282,6 +443,116 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Warehouse__emplo__1FB8AE52">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Warehouse_orders" Type="Self.Warehouse_orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Warehouse_orders">
+              <PropertyRef Name="employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Warehouse__locat__190BB0C3">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Warehouse">
+              <PropertyRef Name="location_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Warehouse__locat__21A0F6C4">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+          <End Role="Warehouse_orders" Type="Self.Warehouse_orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Warehouse_orders">
+              <PropertyRef Name="location_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Warehouse__produ__19FFD4FC">
+          <End Role="Products" Type="Self.Products" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Warehouse">
+              <PropertyRef Name="product_in_stock_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Warehouse__produ__2759D01A">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Warehouse_order_details" Type="Self.Warehouse_order_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Warehouse_order_details">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Warehouse__suppl__20ACD28B">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
+          <End Role="Warehouse_orders" Type="Self.Warehouse_orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Warehouse_orders">
+              <PropertyRef Name="supplier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Warehouse__wareh__2665ABE1">
+          <End Role="Warehouse_orders" Type="Self.Warehouse_orders" Multiplicity="1" />
+          <End Role="Warehouse_order_details" Type="Self.Warehouse_order_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse_orders">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Warehouse_order_details">
+              <PropertyRef Name="warehouse_order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Workstati__emplo__3A6CA48E">
+          <End Role="EmployePermissions" Type="Self.EmployePermissions" Multiplicity="1" />
+          <End Role="Workstation_rights" Type="Self.Workstation_rights" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployePermissions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Workstation_rights">
+              <PropertyRef Name="employe_permissions" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Workstati__works__39788055">
+          <End Role="Workstations" Type="Self.Workstations" Multiplicity="1" />
+          <End Role="Workstation_rights" Type="Self.Workstation_rights" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workstations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Workstation_rights">
+              <PropertyRef Name="workstation_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_sold_base_prod">
           <End Role="Products" Type="Self.Products" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -315,10 +586,31 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           <Parameter Name="slug" Type="nvarchar" Mode="In" />
           <Parameter Name="overriding_category" Type="int" Mode="In" />
         </Function>
+        <Function Name="addClientOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="spot_id" Type="int" Mode="In" />
+          <Parameter Name="employee_id" Type="int" Mode="In" />
+          <Parameter Name="order_time" Type="datetime" Mode="In" />
+          <Parameter Name="payment_time" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="addClientOrderDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="client_order_id" Type="int" Mode="In" />
+          <Parameter Name="products_sold_id" Type="int" Mode="In" />
+          <Parameter Name="unit_price" Type="money" Mode="In" />
+          <Parameter Name="quantity" Type="smallint" Mode="In" />
+          <Parameter Name="spot_id" Type="int" Mode="In" />
+        </Function>
         <Function Name="addIngredient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="receipt_id" Type="int" Mode="In" />
           <Parameter Name="ingredient_id" Type="int" Mode="In" />
           <Parameter Name="quantity" Type="float" Mode="In" />
+        </Function>
+        <Function Name="addLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="address" Type="nvarchar" Mode="In" />
+          <Parameter Name="city" Type="nvarchar" Mode="In" />
+          <Parameter Name="postal_code" Type="nvarchar" Mode="In" />
+          <Parameter Name="country" Type="nvarchar" Mode="In" />
+          <Parameter Name="phone" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="addProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="category_id" Type="int" Mode="In" />
@@ -333,12 +625,31 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           <Parameter Name="product_id" Type="int" Mode="In" />
           <Parameter Name="receipt_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="addSpot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="addStoredProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="product_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="addSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="address" Type="nvarchar" Mode="In" />
+          <Parameter Name="city" Type="nvarchar" Mode="In" />
+          <Parameter Name="postal_code" Type="nvarchar" Mode="In" />
+          <Parameter Name="country" Type="nvarchar" Mode="In" />
+          <Parameter Name="contact_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="phone" Type="nvarchar" Mode="In" />
+          <Parameter Name="fax" Type="nvarchar" Mode="In" />
+          <Parameter Name="website" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="addTax" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="tax_name" Type="nvarchar" Mode="In" />
           <Parameter Name="tax_value" Type="float" Mode="In" />
+        </Function>
+        <Function Name="addToWarehouse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="location_id" Type="int" Mode="In" />
+          <Parameter Name="product_in_stock_id" Type="int" Mode="In" />
+          <Parameter Name="quantity" Type="smallint" Mode="In" />
         </Function>
         <Function Name="addUnit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="unit_name" Type="nvarchar" Mode="In" />
@@ -351,6 +662,27 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           <Parameter Name="name" Type="nvarchar" Mode="In" />
           <Parameter Name="surname" Type="nvarchar" Mode="In" />
           <Parameter Name="permission" Type="tinyint" Mode="In" />
+        </Function>
+        <Function Name="addWarehouseOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="employee_id" Type="int" Mode="In" />
+          <Parameter Name="supplier_id" Type="int" Mode="In" />
+          <Parameter Name="location_id" Type="int" Mode="In" />
+          <Parameter Name="order_date" Type="datetime" Mode="In" />
+          <Parameter Name="required_date" Type="datetime" Mode="In" />
+          <Parameter Name="delivery_date" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="addWarehouseOrderDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="warehouse_order_id" Type="int" Mode="In" />
+          <Parameter Name="product_id" Type="int" Mode="In" />
+          <Parameter Name="unit_price" Type="money" Mode="In" />
+          <Parameter Name="quantity" Type="smallint" Mode="In" />
+        </Function>
+        <Function Name="addWorkstation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="addWorkstationRights" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="workstation_id" Type="int" Mode="In" />
+          <Parameter Name="employe_permission" Type="tinyint" Mode="In" />
         </Function>
         <Function Name="checkCredentials" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="username" Type="nvarchar" Mode="In" />
@@ -433,20 +765,54 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
         <Function Name="removeCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="category_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="removeClientOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="removeClientOrderDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="client_order_id" Type="int" Mode="In" />
+          <Parameter Name="products_sold_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="removeFromWarehouse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="location_id" Type="int" Mode="In" />
+          <Parameter Name="product_in_stock_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="removeLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
         <Function Name="removeProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="product_id" Type="int" Mode="In" />
         </Function>
         <Function Name="removeSoldProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="product_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="removeSpot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
         <Function Name="removeStoredProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="product_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="removeSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <Function Name="removeTax" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="tax_id" Type="int" Mode="In" />
         </Function>
         <Function Name="removeUnit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="unit_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="removeWarehouseOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="removeWarehouseOrderDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="warehouse_order_id" Type="int" Mode="In" />
+          <Parameter Name="product_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="removeWorkstation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="removeWorkstationRights" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="workstation_id" Type="int" Mode="In" />
+          <Parameter Name="employe_permission" Type="tinyint" Mode="In" />
         </Function>
         <Function Name="soldProductDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="product_id" Type="int" Mode="In" />
@@ -469,27 +835,100 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="updateClientOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="new_spot_id" Type="int" Mode="In" />
+          <Parameter Name="new_employee_id" Type="int" Mode="In" />
+          <Parameter Name="new_order_time" Type="datetime" Mode="In" />
+          <Parameter Name="new_payment_time" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="updateClientOrderDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="client_order_id" Type="int" Mode="In" />
+          <Parameter Name="products_sold_id" Type="int" Mode="In" />
+          <Parameter Name="new_unit_price" Type="money" Mode="In" />
+          <Parameter Name="new_quantity" Type="smallint" Mode="In" />
+          <Parameter Name="new_spot_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="updateLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="new_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="new_address" Type="nvarchar" Mode="In" />
+          <Parameter Name="new_city" Type="nvarchar" Mode="In" />
+          <Parameter Name="new_postal_code" Type="nvarchar" Mode="In" />
+          <Parameter Name="new_country" Type="nvarchar" Mode="In" />
+          <Parameter Name="new_phone" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="updatePrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="priduct_id" Type="int" Mode="In" />
           <Parameter Name="new_price" Type="float" Mode="In" />
+        </Function>
+        <Function Name="updateQuantityInWarehouse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="location_id" Type="int" Mode="In" />
+          <Parameter Name="product_in_stock_id" Type="int" Mode="In" />
+          <Parameter Name="quantity_change" Type="smallint" Mode="In" />
+        </Function>
+        <Function Name="updateSpot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="new_name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="updateSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="new_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="new_address" Type="nvarchar" Mode="In" />
+          <Parameter Name="new_city" Type="nvarchar" Mode="In" />
+          <Parameter Name="new_postal_code" Type="nvarchar" Mode="In" />
+          <Parameter Name="new_country" Type="nvarchar" Mode="In" />
+          <Parameter Name="new_contact_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="new_phone" Type="nvarchar" Mode="In" />
+          <Parameter Name="new_fax" Type="nvarchar" Mode="In" />
+          <Parameter Name="new_website" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="updateWarehouseOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="new_employee_id" Type="int" Mode="In" />
+          <Parameter Name="new_supplier_id" Type="int" Mode="In" />
+          <Parameter Name="new_location_id" Type="int" Mode="In" />
+          <Parameter Name="new_order_date" Type="datetime" Mode="In" />
+          <Parameter Name="new_required_date" Type="datetime" Mode="In" />
+          <Parameter Name="new_delivery_date" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="updateWarehouseOrderDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="warehouse_order_id" Type="int" Mode="In" />
+          <Parameter Name="product_id" Type="int" Mode="In" />
+          <Parameter Name="new_unit_price" Type="money" Mode="In" />
+          <Parameter Name="new_quantity" Type="smallint" Mode="In" />
+        </Function>
+        <Function Name="updateWorkstation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="new_name" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="userExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="login" Type="nvarchar" Mode="In" />
         </Function>
         <EntityContainer Name="BarProjectModelStoreContainer">
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client_order_details" EntityType="Self.Client_order_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client_orders" EntityType="Self.Client_orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployePermissions" EntityType="Self.EmployePermissions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ingredients" EntityType="Self.Ingredients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InternalErrors" EntityType="Self.InternalErrors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Prices" EntityType="Self.Prices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductsSold" EntityType="Self.ProductsSold" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductsStored" EntityType="Self.ProductsStored" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Receipts" EntityType="Self.Receipts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Spots" EntityType="Self.Spots" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Taxes" EntityType="Self.Taxes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UnitTypes" EntityType="Self.UnitTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Warehouse_order_details" EntityType="Self.Warehouse_order_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Warehouse_orders" EntityType="Self.Warehouse_orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Workstation_rights" EntityType="Self.Workstation_rights" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Workstations" EntityType="Self.Workstations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="productSimple" EntityType="Self.productSimple" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [productSimple].[id] AS [id], 
@@ -512,6 +951,26 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           <AssociationSet Name="FK__Categorie__overr__5E8A0973" Association="Self.FK__Categorie__overr__5E8A0973">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Categories1" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Client_or__clien__32CB82C6" Association="Self.FK__Client_or__clien__32CB82C6">
+            <End Role="Client_orders" EntitySet="Client_orders" />
+            <End Role="Client_order_details" EntitySet="Client_order_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Client_or__emplo__2E06CDA9" Association="Self.FK__Client_or__emplo__2E06CDA9">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Client_orders" EntitySet="Client_orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Client_or__produ__33BFA6FF" Association="Self.FK__Client_or__produ__33BFA6FF">
+            <End Role="ProductsSold" EntitySet="ProductsSold" />
+            <End Role="Client_order_details" EntitySet="Client_order_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Client_or__spot___2D12A970" Association="Self.FK__Client_or__spot___2D12A970">
+            <End Role="Spots" EntitySet="Spots" />
+            <End Role="Client_orders" EntitySet="Client_orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Client_or__spot___34B3CB38" Association="Self.FK__Client_or__spot___34B3CB38">
+            <End Role="Spots" EntitySet="Spots" />
+            <End Role="Client_order_details" EntitySet="Client_order_details" />
           </AssociationSet>
           <AssociationSet Name="FK__Ingredien__ingre__4336F4B9" Association="Self.FK__Ingredien__ingre__4336F4B9">
             <End Role="ProductsStored" EntitySet="ProductsStored" />
@@ -552,6 +1011,42 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           <AssociationSet Name="FK__Users__permissio__573DED66" Association="Self.FK__Users__permissio__573DED66">
             <End Role="EmployePermissions" EntitySet="EmployePermissions" />
             <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Warehouse__emplo__1FB8AE52" Association="Self.FK__Warehouse__emplo__1FB8AE52">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Warehouse_orders" EntitySet="Warehouse_orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Warehouse__locat__190BB0C3" Association="Self.FK__Warehouse__locat__190BB0C3">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="Warehouse" EntitySet="Warehouse" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Warehouse__locat__21A0F6C4" Association="Self.FK__Warehouse__locat__21A0F6C4">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="Warehouse_orders" EntitySet="Warehouse_orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Warehouse__produ__19FFD4FC" Association="Self.FK__Warehouse__produ__19FFD4FC">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Warehouse" EntitySet="Warehouse" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Warehouse__produ__2759D01A" Association="Self.FK__Warehouse__produ__2759D01A">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Warehouse_order_details" EntitySet="Warehouse_order_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Warehouse__suppl__20ACD28B" Association="Self.FK__Warehouse__suppl__20ACD28B">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Warehouse_orders" EntitySet="Warehouse_orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Warehouse__wareh__2665ABE1" Association="Self.FK__Warehouse__wareh__2665ABE1">
+            <End Role="Warehouse_orders" EntitySet="Warehouse_orders" />
+            <End Role="Warehouse_order_details" EntitySet="Warehouse_order_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Workstati__emplo__3A6CA48E" Association="Self.FK__Workstati__emplo__3A6CA48E">
+            <End Role="EmployePermissions" EntitySet="EmployePermissions" />
+            <End Role="Workstation_rights" EntitySet="Workstation_rights" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Workstati__works__39788055" Association="Self.FK__Workstati__works__39788055">
+            <End Role="Workstations" EntitySet="Workstations" />
+            <End Role="Workstation_rights" EntitySet="Workstation_rights" />
           </AssociationSet>
           <AssociationSet Name="fk_sold_base_prod" Association="Self.fk_sold_base_prod">
             <End Role="Products" EntitySet="Products" />
@@ -625,6 +1120,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           <Property Name="value" Type="Byte" />
           <Property Name="name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Users__permissio__573DED66" FromRole="EmployePermissions" ToRole="Users" />
+          <NavigationProperty Name="Workstations" Relationship="BarProjectModel.Workstation_rights" FromRole="EmployePermission" ToRole="Workstation" />
         </EntityType>
         <EntityType Name="Ingredient">
           <Key>
@@ -662,6 +1158,8 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           <NavigationProperty Name="ProductsStored" Relationship="Self.FK__ProductsStor__id__38B96646" FromRole="Products" ToRole="ProductsStored" />
           <NavigationProperty Name="ProductsSold" Relationship="Self.fk_sold_base_prod" FromRole="Products" ToRole="ProductsSold" />
           <NavigationProperty Name="ProductsStored1" Relationship="Self.fk_stored_base_prod" FromRole="Products" ToRole="ProductsStored" />
+          <NavigationProperty Name="Warehouses" Relationship="BarProjectModel.FK__Warehouse__produ__19FFD4FC" FromRole="Product" ToRole="Warehouse" />
+          <NavigationProperty Name="Warehouse_order_details" Relationship="BarProjectModel.FK__Warehouse__produ__2759D01A" FromRole="Product" ToRole="Warehouse_order_details" />
         </EntityType>
         <EntityType Name="ProductsSold">
           <Key>
@@ -672,6 +1170,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           <NavigationProperty Name="Prices" Relationship="Self.FK__Prices__product___46136164" FromRole="ProductsSold" ToRole="Prices" />
           <NavigationProperty Name="Product" Relationship="Self.fk_sold_base_prod" FromRole="ProductsSold" ToRole="Products" />
           <NavigationProperty Name="Receipt" Relationship="Self.FK__ProductsS__recei__3E723F9C" FromRole="ProductsSold" ToRole="Receipts" />
+          <NavigationProperty Name="Client_order_details" Relationship="BarProjectModel.FK__Client_or__produ__33BFA6FF" FromRole="ProductsSold" ToRole="Client_order_details" />
         </EntityType>
         <EntityType Name="ProductsStored">
           <Key>
@@ -731,6 +1230,8 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           <Property Name="surname" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="permission" Type="Byte" />
           <NavigationProperty Name="EmployePermission" Relationship="Self.FK__Users__permissio__573DED66" FromRole="Users" ToRole="EmployePermissions" />
+          <NavigationProperty Name="Client_orders" Relationship="BarProjectModel.FK__Client_or__emplo__2E06CDA9" FromRole="User" ToRole="Client_orders" />
+          <NavigationProperty Name="Warehouse_orders" Relationship="BarProjectModel.FK__Warehouse__emplo__1FB8AE52" FromRole="User" ToRole="Warehouse_orders" />
         </EntityType>
         <EntityType Name="productSimple">
           <Key>
@@ -1091,6 +1592,225 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             <Parameter Name="context" Mode="In" Type="String" />
             <Parameter Name="inner_message" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="Client_order_details" EntityType="BarProjectModel.Client_order_details" />
+          <EntitySet Name="Client_orders" EntityType="BarProjectModel.Client_orders" />
+          <EntitySet Name="Locations" EntityType="BarProjectModel.Location" />
+          <EntitySet Name="Spots" EntityType="BarProjectModel.Spot" />
+          <EntitySet Name="Suppliers" EntityType="BarProjectModel.Supplier" />
+          <EntitySet Name="Warehouses" EntityType="BarProjectModel.Warehouse" />
+          <EntitySet Name="Warehouse_order_details" EntityType="BarProjectModel.Warehouse_order_details" />
+          <EntitySet Name="Warehouse_orders" EntityType="BarProjectModel.Warehouse_orders" />
+          <EntitySet Name="Workstations" EntityType="BarProjectModel.Workstation" />
+          <AssociationSet Name="FK__Client_or__clien__32CB82C6" Association="BarProjectModel.FK__Client_or__clien__32CB82C6">
+            <End Role="Client_orders" EntitySet="Client_orders" />
+            <End Role="Client_order_details" EntitySet="Client_order_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Client_or__produ__33BFA6FF" Association="BarProjectModel.FK__Client_or__produ__33BFA6FF">
+            <End Role="ProductsSold" EntitySet="ProductsSolds" />
+            <End Role="Client_order_details" EntitySet="Client_order_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Client_or__spot___34B3CB38" Association="BarProjectModel.FK__Client_or__spot___34B3CB38">
+            <End Role="Spot" EntitySet="Spots" />
+            <End Role="Client_order_details" EntitySet="Client_order_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Client_or__emplo__2E06CDA9" Association="BarProjectModel.FK__Client_or__emplo__2E06CDA9">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Client_orders" EntitySet="Client_orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Client_or__spot___2D12A970" Association="BarProjectModel.FK__Client_or__spot___2D12A970">
+            <End Role="Spot" EntitySet="Spots" />
+            <End Role="Client_orders" EntitySet="Client_orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Warehouse__locat__190BB0C3" Association="BarProjectModel.FK__Warehouse__locat__190BB0C3">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="Warehouse" EntitySet="Warehouses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Warehouse__locat__21A0F6C4" Association="BarProjectModel.FK__Warehouse__locat__21A0F6C4">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="Warehouse_orders" EntitySet="Warehouse_orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Warehouse__produ__19FFD4FC" Association="BarProjectModel.FK__Warehouse__produ__19FFD4FC">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Warehouse" EntitySet="Warehouses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Warehouse__produ__2759D01A" Association="BarProjectModel.FK__Warehouse__produ__2759D01A">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Warehouse_order_details" EntitySet="Warehouse_order_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Warehouse__suppl__20ACD28B" Association="BarProjectModel.FK__Warehouse__suppl__20ACD28B">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Warehouse_orders" EntitySet="Warehouse_orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Warehouse__emplo__1FB8AE52" Association="BarProjectModel.FK__Warehouse__emplo__1FB8AE52">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Warehouse_orders" EntitySet="Warehouse_orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Warehouse__wareh__2665ABE1" Association="BarProjectModel.FK__Warehouse__wareh__2665ABE1">
+            <End Role="Warehouse_orders" EntitySet="Warehouse_orders" />
+            <End Role="Warehouse_order_details" EntitySet="Warehouse_order_details" />
+          </AssociationSet>
+          <AssociationSet Name="Workstation_rights" Association="BarProjectModel.Workstation_rights">
+            <End Role="EmployePermission" EntitySet="EmployePermissions" />
+            <End Role="Workstation" EntitySet="Workstations" />
+          </AssociationSet>
+          <FunctionImport Name="addClientOrder">
+            <Parameter Name="spot_id" Mode="In" Type="Int32" />
+            <Parameter Name="employee_id" Mode="In" Type="Int32" />
+            <Parameter Name="order_time" Mode="In" Type="DateTime" />
+            <Parameter Name="payment_time" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="addClientOrderDetail">
+            <Parameter Name="client_order_id" Mode="In" Type="Int32" />
+            <Parameter Name="products_sold_id" Mode="In" Type="Int32" />
+            <Parameter Name="unit_price" Mode="In" Type="Decimal" />
+            <Parameter Name="quantity" Mode="In" Type="Int16" />
+            <Parameter Name="spot_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="addLocation">
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="address" Mode="In" Type="String" />
+            <Parameter Name="city" Mode="In" Type="String" />
+            <Parameter Name="postal_code" Mode="In" Type="String" />
+            <Parameter Name="country" Mode="In" Type="String" />
+            <Parameter Name="phone" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="addSpot">
+            <Parameter Name="name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="addSupplier">
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="address" Mode="In" Type="String" />
+            <Parameter Name="city" Mode="In" Type="String" />
+            <Parameter Name="postal_code" Mode="In" Type="String" />
+            <Parameter Name="country" Mode="In" Type="String" />
+            <Parameter Name="contact_name" Mode="In" Type="String" />
+            <Parameter Name="phone" Mode="In" Type="String" />
+            <Parameter Name="fax" Mode="In" Type="String" />
+            <Parameter Name="website" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="addToWarehouse">
+            <Parameter Name="location_id" Mode="In" Type="Int32" />
+            <Parameter Name="product_in_stock_id" Mode="In" Type="Int32" />
+            <Parameter Name="quantity" Mode="In" Type="Int16" />
+          </FunctionImport>
+          <FunctionImport Name="addWarehouseOrder">
+            <Parameter Name="employee_id" Mode="In" Type="Int32" />
+            <Parameter Name="supplier_id" Mode="In" Type="Int32" />
+            <Parameter Name="location_id" Mode="In" Type="Int32" />
+            <Parameter Name="order_date" Mode="In" Type="DateTime" />
+            <Parameter Name="required_date" Mode="In" Type="DateTime" />
+            <Parameter Name="delivery_date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="addWarehouseOrderDetail">
+            <Parameter Name="warehouse_order_id" Mode="In" Type="Int32" />
+            <Parameter Name="product_id" Mode="In" Type="Int32" />
+            <Parameter Name="unit_price" Mode="In" Type="Decimal" />
+            <Parameter Name="quantity" Mode="In" Type="Int16" />
+          </FunctionImport>
+          <FunctionImport Name="addWorkstation">
+            <Parameter Name="name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="addWorkstationRights">
+            <Parameter Name="workstation_id" Mode="In" Type="Int32" />
+            <Parameter Name="employe_permission" Mode="In" Type="Byte" />
+          </FunctionImport>
+          <FunctionImport Name="removeClientOrder">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="removeClientOrderDetail">
+            <Parameter Name="client_order_id" Mode="In" Type="Int32" />
+            <Parameter Name="products_sold_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="removeFromWarehouse">
+            <Parameter Name="location_id" Mode="In" Type="Int32" />
+            <Parameter Name="product_in_stock_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="removeLocation">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="removeSpot">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="removeSupplier">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="removeWarehouseOrder">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="removeWarehouseOrderDetail">
+            <Parameter Name="warehouse_order_id" Mode="In" Type="Int32" />
+            <Parameter Name="product_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="removeWorkstation">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="removeWorkstationRights">
+            <Parameter Name="workstation_id" Mode="In" Type="Int32" />
+            <Parameter Name="employe_permission" Mode="In" Type="Byte" />
+          </FunctionImport>
+          <FunctionImport Name="updateClientOrder">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="new_spot_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_employee_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_order_time" Mode="In" Type="DateTime" />
+            <Parameter Name="new_payment_time" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="updateClientOrderDetail">
+            <Parameter Name="client_order_id" Mode="In" Type="Int32" />
+            <Parameter Name="products_sold_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_unit_price" Mode="In" Type="Decimal" />
+            <Parameter Name="new_quantity" Mode="In" Type="Int16" />
+            <Parameter Name="new_spot_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="updateLocation">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="new_name" Mode="In" Type="String" />
+            <Parameter Name="new_address" Mode="In" Type="String" />
+            <Parameter Name="new_city" Mode="In" Type="String" />
+            <Parameter Name="new_postal_code" Mode="In" Type="String" />
+            <Parameter Name="new_country" Mode="In" Type="String" />
+            <Parameter Name="new_phone" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="updateQuantityInWarehouse">
+            <Parameter Name="location_id" Mode="In" Type="Int32" />
+            <Parameter Name="product_in_stock_id" Mode="In" Type="Int32" />
+            <Parameter Name="quantity_change" Mode="In" Type="Int16" />
+          </FunctionImport>
+          <FunctionImport Name="updateSpot">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="new_name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="updateSupplier">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="new_name" Mode="In" Type="String" />
+            <Parameter Name="new_address" Mode="In" Type="String" />
+            <Parameter Name="new_city" Mode="In" Type="String" />
+            <Parameter Name="new_postal_code" Mode="In" Type="String" />
+            <Parameter Name="new_country" Mode="In" Type="String" />
+            <Parameter Name="new_contact_name" Mode="In" Type="String" />
+            <Parameter Name="new_phone" Mode="In" Type="String" />
+            <Parameter Name="new_fax" Mode="In" Type="String" />
+            <Parameter Name="new_website" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="updateWarehouseOrder">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="new_employee_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_supplier_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_location_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_order_date" Mode="In" Type="DateTime" />
+            <Parameter Name="new_required_date" Mode="In" Type="DateTime" />
+            <Parameter Name="new_delivery_date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="updateWarehouseOrderDetail">
+            <Parameter Name="warehouse_order_id" Mode="In" Type="Int32" />
+            <Parameter Name="product_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_unit_price" Mode="In" Type="Decimal" />
+            <Parameter Name="new_quantity" Mode="In" Type="Int16" />
+          </FunctionImport>
+          <FunctionImport Name="updateWorkstation">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="new_name" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="InternalError">
           <Key>
@@ -1104,6 +1824,269 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           <Property Name="context" Type="String" Nullable="false" MaxLength="900" FixedLength="false" Unicode="true" />
           <Property Name="inner_message" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Client_order_details">
+          <Key>
+            <PropertyRef Name="client_order_id" />
+            <PropertyRef Name="products_sold_id" />
+          </Key>
+          <Property Name="client_order_id" Type="Int32" Nullable="false" />
+          <Property Name="products_sold_id" Type="Int32" Nullable="false" />
+          <Property Name="unit_price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="quantity" Type="Int16" Nullable="false" />
+          <Property Name="spot_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client_orders" Relationship="BarProjectModel.FK__Client_or__clien__32CB82C6" FromRole="Client_order_details" ToRole="Client_orders" />
+          <NavigationProperty Name="ProductsSold" Relationship="BarProjectModel.FK__Client_or__produ__33BFA6FF" FromRole="Client_order_details" ToRole="ProductsSold" />
+          <NavigationProperty Name="Spot" Relationship="BarProjectModel.FK__Client_or__spot___34B3CB38" FromRole="Client_order_details" ToRole="Spot" />
+        </EntityType>
+        <EntityType Name="Client_orders">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="spot_id" Type="Int32" Nullable="false" />
+          <Property Name="employee_id" Type="Int32" Nullable="false" />
+          <Property Name="order_time" Type="DateTime" Precision="3" />
+          <Property Name="payment_time" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Client_order_details" Relationship="BarProjectModel.FK__Client_or__clien__32CB82C6" FromRole="Client_orders" ToRole="Client_order_details" />
+          <NavigationProperty Name="User" Relationship="BarProjectModel.FK__Client_or__emplo__2E06CDA9" FromRole="Client_orders" ToRole="User" />
+          <NavigationProperty Name="Spot" Relationship="BarProjectModel.FK__Client_or__spot___2D12A970" FromRole="Client_orders" ToRole="Spot" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="postal_code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="country" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Warehouses" Relationship="BarProjectModel.FK__Warehouse__locat__190BB0C3" FromRole="Location" ToRole="Warehouse" />
+          <NavigationProperty Name="Warehouse_orders" Relationship="BarProjectModel.FK__Warehouse__locat__21A0F6C4" FromRole="Location" ToRole="Warehouse_orders" />
+        </EntityType>
+        <EntityType Name="Spot">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Client_order_details" Relationship="BarProjectModel.FK__Client_or__spot___34B3CB38" FromRole="Spot" ToRole="Client_order_details" />
+          <NavigationProperty Name="Client_orders" Relationship="BarProjectModel.FK__Client_or__spot___2D12A970" FromRole="Spot" ToRole="Client_orders" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="postal_code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="country" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="contact_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="fax" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="website" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Warehouse_orders" Relationship="BarProjectModel.FK__Warehouse__suppl__20ACD28B" FromRole="Supplier" ToRole="Warehouse_orders" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="location_id" />
+            <PropertyRef Name="product_in_stock_id" />
+          </Key>
+          <Property Name="location_id" Type="Int32" Nullable="false" />
+          <Property Name="product_in_stock_id" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Location" Relationship="BarProjectModel.FK__Warehouse__locat__190BB0C3" FromRole="Warehouse" ToRole="Location" />
+          <NavigationProperty Name="Product" Relationship="BarProjectModel.FK__Warehouse__produ__19FFD4FC" FromRole="Warehouse" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Warehouse_order_details">
+          <Key>
+            <PropertyRef Name="warehouse_order_id" />
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="warehouse_order_id" Type="Int32" Nullable="false" />
+          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <Property Name="unit_price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="quantity" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="BarProjectModel.FK__Warehouse__produ__2759D01A" FromRole="Warehouse_order_details" ToRole="Product" />
+          <NavigationProperty Name="Warehouse_orders" Relationship="BarProjectModel.FK__Warehouse__wareh__2665ABE1" FromRole="Warehouse_order_details" ToRole="Warehouse_orders" />
+        </EntityType>
+        <EntityType Name="Warehouse_orders">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="employee_id" Type="Int32" Nullable="false" />
+          <Property Name="supplier_id" Type="Int32" Nullable="false" />
+          <Property Name="location_id" Type="Int32" Nullable="false" />
+          <Property Name="order_date" Type="DateTime" Precision="3" />
+          <Property Name="required_date" Type="DateTime" Precision="3" />
+          <Property Name="delivery_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Location" Relationship="BarProjectModel.FK__Warehouse__locat__21A0F6C4" FromRole="Warehouse_orders" ToRole="Location" />
+          <NavigationProperty Name="Supplier" Relationship="BarProjectModel.FK__Warehouse__suppl__20ACD28B" FromRole="Warehouse_orders" ToRole="Supplier" />
+          <NavigationProperty Name="User" Relationship="BarProjectModel.FK__Warehouse__emplo__1FB8AE52" FromRole="Warehouse_orders" ToRole="User" />
+          <NavigationProperty Name="Warehouse_order_details" Relationship="BarProjectModel.FK__Warehouse__wareh__2665ABE1" FromRole="Warehouse_orders" ToRole="Warehouse_order_details" />
+        </EntityType>
+        <EntityType Name="Workstation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EmployePermissions" Relationship="BarProjectModel.Workstation_rights" FromRole="Workstation" ToRole="EmployePermission" />
+        </EntityType>
+        <Association Name="FK__Client_or__clien__32CB82C6">
+          <End Type="BarProjectModel.Client_orders" Role="Client_orders" Multiplicity="1" />
+          <End Type="BarProjectModel.Client_order_details" Role="Client_order_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client_orders">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Client_order_details">
+              <PropertyRef Name="client_order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Client_or__produ__33BFA6FF">
+          <End Type="BarProjectModel.ProductsSold" Role="ProductsSold" Multiplicity="1" />
+          <End Type="BarProjectModel.Client_order_details" Role="Client_order_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductsSold">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Client_order_details">
+              <PropertyRef Name="products_sold_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Client_or__spot___34B3CB38">
+          <End Type="BarProjectModel.Spot" Role="Spot" Multiplicity="1" />
+          <End Type="BarProjectModel.Client_order_details" Role="Client_order_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Spot">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Client_order_details">
+              <PropertyRef Name="spot_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Client_or__emplo__2E06CDA9">
+          <End Type="BarProjectModel.User" Role="User" Multiplicity="1" />
+          <End Type="BarProjectModel.Client_orders" Role="Client_orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Client_orders">
+              <PropertyRef Name="employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Client_or__spot___2D12A970">
+          <End Type="BarProjectModel.Spot" Role="Spot" Multiplicity="1" />
+          <End Type="BarProjectModel.Client_orders" Role="Client_orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Spot">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Client_orders">
+              <PropertyRef Name="spot_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Warehouse__locat__190BB0C3">
+          <End Type="BarProjectModel.Location" Role="Location" Multiplicity="1" />
+          <End Type="BarProjectModel.Warehouse" Role="Warehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Warehouse">
+              <PropertyRef Name="location_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Warehouse__locat__21A0F6C4">
+          <End Type="BarProjectModel.Location" Role="Location" Multiplicity="1" />
+          <End Type="BarProjectModel.Warehouse_orders" Role="Warehouse_orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Warehouse_orders">
+              <PropertyRef Name="location_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Warehouse__produ__19FFD4FC">
+          <End Type="BarProjectModel.Product" Role="Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BarProjectModel.Warehouse" Role="Warehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Warehouse">
+              <PropertyRef Name="product_in_stock_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Warehouse__produ__2759D01A">
+          <End Type="BarProjectModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="BarProjectModel.Warehouse_order_details" Role="Warehouse_order_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Warehouse_order_details">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Warehouse__suppl__20ACD28B">
+          <End Type="BarProjectModel.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="BarProjectModel.Warehouse_orders" Role="Warehouse_orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Warehouse_orders">
+              <PropertyRef Name="supplier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Warehouse__emplo__1FB8AE52">
+          <End Type="BarProjectModel.User" Role="User" Multiplicity="1" />
+          <End Type="BarProjectModel.Warehouse_orders" Role="Warehouse_orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Warehouse_orders">
+              <PropertyRef Name="employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Warehouse__wareh__2665ABE1">
+          <End Type="BarProjectModel.Warehouse_orders" Role="Warehouse_orders" Multiplicity="1" />
+          <End Type="BarProjectModel.Warehouse_order_details" Role="Warehouse_order_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse_orders">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Warehouse_order_details">
+              <PropertyRef Name="warehouse_order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Workstation_rights">
+          <End Type="BarProjectModel.EmployePermission" Role="EmployePermission" Multiplicity="*" />
+          <End Type="BarProjectModel.Workstation" Role="Workstation" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1338,6 +2321,142 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="clearInternalErrors" FunctionName="BarProjectModel.Store.clearInternalErrors" />
           <FunctionImportMapping FunctionImportName="createInternalError" FunctionName="BarProjectModel.Store.createInternalError" />
+          <EntitySetMapping Name="Client_order_details">
+            <EntityTypeMapping TypeName="BarProjectModel.Client_order_details">
+              <MappingFragment StoreEntitySet="Client_order_details">
+                <ScalarProperty Name="spot_id" ColumnName="spot_id" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="unit_price" ColumnName="unit_price" />
+                <ScalarProperty Name="products_sold_id" ColumnName="products_sold_id" />
+                <ScalarProperty Name="client_order_id" ColumnName="client_order_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Client_orders">
+            <EntityTypeMapping TypeName="BarProjectModel.Client_orders">
+              <MappingFragment StoreEntitySet="Client_orders">
+                <ScalarProperty Name="payment_time" ColumnName="payment_time" />
+                <ScalarProperty Name="order_time" ColumnName="order_time" />
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="spot_id" ColumnName="spot_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="BarProjectModel.Location">
+              <MappingFragment StoreEntitySet="Locations">
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="postal_code" ColumnName="postal_code" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Spots">
+            <EntityTypeMapping TypeName="BarProjectModel.Spot">
+              <MappingFragment StoreEntitySet="Spots">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="BarProjectModel.Supplier">
+              <MappingFragment StoreEntitySet="Suppliers">
+                <ScalarProperty Name="website" ColumnName="website" />
+                <ScalarProperty Name="fax" ColumnName="fax" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="contact_name" ColumnName="contact_name" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="postal_code" ColumnName="postal_code" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Warehouses">
+            <EntityTypeMapping TypeName="BarProjectModel.Warehouse">
+              <MappingFragment StoreEntitySet="Warehouse">
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="product_in_stock_id" ColumnName="product_in_stock_id" />
+                <ScalarProperty Name="location_id" ColumnName="location_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Warehouse_order_details">
+            <EntityTypeMapping TypeName="BarProjectModel.Warehouse_order_details">
+              <MappingFragment StoreEntitySet="Warehouse_order_details">
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="unit_price" ColumnName="unit_price" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="warehouse_order_id" ColumnName="warehouse_order_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Warehouse_orders">
+            <EntityTypeMapping TypeName="BarProjectModel.Warehouse_orders">
+              <MappingFragment StoreEntitySet="Warehouse_orders">
+                <ScalarProperty Name="delivery_date" ColumnName="delivery_date" />
+                <ScalarProperty Name="required_date" ColumnName="required_date" />
+                <ScalarProperty Name="order_date" ColumnName="order_date" />
+                <ScalarProperty Name="location_id" ColumnName="location_id" />
+                <ScalarProperty Name="supplier_id" ColumnName="supplier_id" />
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Workstations">
+            <EntityTypeMapping TypeName="BarProjectModel.Workstation">
+              <MappingFragment StoreEntitySet="Workstations">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Workstation_rights" TypeName="BarProjectModel.Workstation_rights" StoreEntitySet="Workstation_rights">
+            <EndProperty Name="Workstation">
+              <ScalarProperty Name="id" ColumnName="workstation_id" />
+            </EndProperty>
+            <EndProperty Name="EmployePermission">
+              <ScalarProperty Name="id" ColumnName="employe_permissions" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="addClientOrder" FunctionName="BarProjectModel.Store.addClientOrder" />
+          <FunctionImportMapping FunctionImportName="addClientOrderDetail" FunctionName="BarProjectModel.Store.addClientOrderDetail" />
+          <FunctionImportMapping FunctionImportName="addLocation" FunctionName="BarProjectModel.Store.addLocation" />
+          <FunctionImportMapping FunctionImportName="addSpot" FunctionName="BarProjectModel.Store.addSpot" />
+          <FunctionImportMapping FunctionImportName="addSupplier" FunctionName="BarProjectModel.Store.addSupplier" />
+          <FunctionImportMapping FunctionImportName="addToWarehouse" FunctionName="BarProjectModel.Store.addToWarehouse" />
+          <FunctionImportMapping FunctionImportName="addWarehouseOrder" FunctionName="BarProjectModel.Store.addWarehouseOrder" />
+          <FunctionImportMapping FunctionImportName="addWarehouseOrderDetail" FunctionName="BarProjectModel.Store.addWarehouseOrderDetail" />
+          <FunctionImportMapping FunctionImportName="addWorkstation" FunctionName="BarProjectModel.Store.addWorkstation" />
+          <FunctionImportMapping FunctionImportName="addWorkstationRights" FunctionName="BarProjectModel.Store.addWorkstationRights" />
+          <FunctionImportMapping FunctionImportName="removeClientOrder" FunctionName="BarProjectModel.Store.removeClientOrder" />
+          <FunctionImportMapping FunctionImportName="removeClientOrderDetail" FunctionName="BarProjectModel.Store.removeClientOrderDetail" />
+          <FunctionImportMapping FunctionImportName="removeFromWarehouse" FunctionName="BarProjectModel.Store.removeFromWarehouse" />
+          <FunctionImportMapping FunctionImportName="removeLocation" FunctionName="BarProjectModel.Store.removeLocation" />
+          <FunctionImportMapping FunctionImportName="removeSpot" FunctionName="BarProjectModel.Store.removeSpot" />
+          <FunctionImportMapping FunctionImportName="removeSupplier" FunctionName="BarProjectModel.Store.removeSupplier" />
+          <FunctionImportMapping FunctionImportName="removeWarehouseOrder" FunctionName="BarProjectModel.Store.removeWarehouseOrder" />
+          <FunctionImportMapping FunctionImportName="removeWarehouseOrderDetail" FunctionName="BarProjectModel.Store.removeWarehouseOrderDetail" />
+          <FunctionImportMapping FunctionImportName="removeWorkstation" FunctionName="BarProjectModel.Store.removeWorkstation" />
+          <FunctionImportMapping FunctionImportName="removeWorkstationRights" FunctionName="BarProjectModel.Store.removeWorkstationRights" />
+          <FunctionImportMapping FunctionImportName="updateClientOrder" FunctionName="BarProjectModel.Store.updateClientOrder" />
+          <FunctionImportMapping FunctionImportName="updateClientOrderDetail" FunctionName="BarProjectModel.Store.updateClientOrderDetail" />
+          <FunctionImportMapping FunctionImportName="updateLocation" FunctionName="BarProjectModel.Store.updateLocation" />
+          <FunctionImportMapping FunctionImportName="updateQuantityInWarehouse" FunctionName="BarProjectModel.Store.updateQuantityInWarehouse" />
+          <FunctionImportMapping FunctionImportName="updateSpot" FunctionName="BarProjectModel.Store.updateSpot" />
+          <FunctionImportMapping FunctionImportName="updateSupplier" FunctionName="BarProjectModel.Store.updateSupplier" />
+          <FunctionImportMapping FunctionImportName="updateWarehouseOrder" FunctionName="BarProjectModel.Store.updateWarehouseOrder" />
+          <FunctionImportMapping FunctionImportName="updateWarehouseOrderDetail" FunctionName="BarProjectModel.Store.updateWarehouseOrderDetail" />
+          <FunctionImportMapping FunctionImportName="updateWorkstation" FunctionName="BarProjectModel.Store.updateWorkstation" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

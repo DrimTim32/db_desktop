@@ -14,19 +14,19 @@ namespace BarProject.DatabaseConnector
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-
+    
     public partial class BarProjectEntities : DbContext
     {
         public BarProjectEntities()
             : base("name=BarProjectEntities")
         {
         }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-
+    
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<EmployePermission> EmployePermissions { get; set; }
         public virtual DbSet<Ingredient> Ingredients { get; set; }
@@ -42,334 +42,887 @@ namespace BarProject.DatabaseConnector
         public virtual DbSet<productSimple> productSimples { get; set; }
         public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
         public virtual DbSet<InternalError> InternalErrors { get; set; }
-
+        public virtual DbSet<Client_order_details> Client_order_details { get; set; }
+        public virtual DbSet<Client_orders> Client_orders { get; set; }
+        public virtual DbSet<Location> Locations { get; set; }
+        public virtual DbSet<Spot> Spots { get; set; }
+        public virtual DbSet<Supplier> Suppliers { get; set; }
+        public virtual DbSet<Warehouse> Warehouses { get; set; }
+        public virtual DbSet<Warehouse_order_details> Warehouse_order_details { get; set; }
+        public virtual DbSet<Warehouse_orders> Warehouse_orders { get; set; }
+        public virtual DbSet<Workstation> Workstations { get; set; }
+    
         [DbFunction("BarProjectEntities", "pricesHistory")]
         public virtual IQueryable<pricesHistory_Result> pricesHistory(Nullable<int> product_id)
         {
             var product_idParameter = product_id.HasValue ?
                 new ObjectParameter("product_id", product_id) :
                 new ObjectParameter("product_id", typeof(int));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<pricesHistory_Result>("[BarProjectEntities].[pricesHistory](@product_id)", product_idParameter);
         }
-
+    
         [DbFunction("BarProjectEntities", "productDetails")]
         public virtual IQueryable<productDetails_Result> productDetails(Nullable<int> product_id)
         {
             var product_idParameter = product_id.HasValue ?
                 new ObjectParameter("product_id", product_id) :
                 new ObjectParameter("product_id", typeof(int));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<productDetails_Result>("[BarProjectEntities].[productDetails](@product_id)", product_idParameter);
         }
-
+    
         [DbFunction("BarProjectEntities", "productsByCategory")]
         public virtual IQueryable<productsByCategory_Result> productsByCategory(Nullable<int> category_id)
         {
             var category_idParameter = category_id.HasValue ?
                 new ObjectParameter("category_id", category_id) :
                 new ObjectParameter("category_id", typeof(int));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<productsByCategory_Result>("[BarProjectEntities].[productsByCategory](@category_id)", category_idParameter);
         }
-
+    
         [DbFunction("BarProjectEntities", "receiptDetails")]
         public virtual IQueryable<receiptDetails_Result> receiptDetails(Nullable<int> receipt_id)
         {
             var receipt_idParameter = receipt_id.HasValue ?
                 new ObjectParameter("receipt_id", receipt_id) :
                 new ObjectParameter("receipt_id", typeof(int));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<receiptDetails_Result>("[BarProjectEntities].[receiptDetails](@receipt_id)", receipt_idParameter);
         }
-
-
+    
         [DbFunction("BarProjectEntities", "soldProductDetails")]
         public virtual IQueryable<soldProductDetails_Result> soldProductDetails(Nullable<int> product_id)
         {
             var product_idParameter = product_id.HasValue ?
                 new ObjectParameter("product_id", product_id) :
                 new ObjectParameter("product_id", typeof(int));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<soldProductDetails_Result>("[BarProjectEntities].[soldProductDetails](@product_id)", product_idParameter);
         }
-
+    
         public virtual int addCategory(string category_name, string slug, Nullable<int> overriding_category)
         {
             var category_nameParameter = category_name != null ?
                 new ObjectParameter("category_name", category_name) :
                 new ObjectParameter("category_name", typeof(string));
-
+    
             var slugParameter = slug != null ?
                 new ObjectParameter("slug", slug) :
                 new ObjectParameter("slug", typeof(string));
-
+    
             var overriding_categoryParameter = overriding_category.HasValue ?
                 new ObjectParameter("overriding_category", overriding_category) :
                 new ObjectParameter("overriding_category", typeof(int));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addCategory", category_nameParameter, slugParameter, overriding_categoryParameter);
         }
-
+    
         public virtual int addIngredient(Nullable<int> receipt_id, Nullable<int> ingredient_id, Nullable<double> quantity)
         {
             var receipt_idParameter = receipt_id.HasValue ?
                 new ObjectParameter("receipt_id", receipt_id) :
                 new ObjectParameter("receipt_id", typeof(int));
-
+    
             var ingredient_idParameter = ingredient_id.HasValue ?
                 new ObjectParameter("ingredient_id", ingredient_id) :
                 new ObjectParameter("ingredient_id", typeof(int));
-
+    
             var quantityParameter = quantity.HasValue ?
                 new ObjectParameter("quantity", quantity) :
                 new ObjectParameter("quantity", typeof(double));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addIngredient", receipt_idParameter, ingredient_idParameter, quantityParameter);
         }
-
+    
         public virtual int addProduct(Nullable<int> category_id, Nullable<int> unit_id, Nullable<int> tax_id, string name)
         {
             var category_idParameter = category_id.HasValue ?
                 new ObjectParameter("category_id", category_id) :
                 new ObjectParameter("category_id", typeof(int));
-
+    
             var unit_idParameter = unit_id.HasValue ?
                 new ObjectParameter("unit_id", unit_id) :
                 new ObjectParameter("unit_id", typeof(int));
-
+    
             var tax_idParameter = tax_id.HasValue ?
                 new ObjectParameter("tax_id", tax_id) :
                 new ObjectParameter("tax_id", typeof(int));
-
+    
             var nameParameter = name != null ?
                 new ObjectParameter("name", name) :
                 new ObjectParameter("name", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addProduct", category_idParameter, unit_idParameter, tax_idParameter, nameParameter);
         }
-
+    
         public virtual int addReceipt(string description)
         {
             var descriptionParameter = description != null ?
                 new ObjectParameter("description", description) :
                 new ObjectParameter("description", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addReceipt", descriptionParameter);
         }
-
+    
         public virtual int addSoldProduct(Nullable<int> product_id, Nullable<int> receipt_id)
         {
             var product_idParameter = product_id.HasValue ?
                 new ObjectParameter("product_id", product_id) :
                 new ObjectParameter("product_id", typeof(int));
-
+    
             var receipt_idParameter = receipt_id.HasValue ?
                 new ObjectParameter("receipt_id", receipt_id) :
                 new ObjectParameter("receipt_id", typeof(int));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addSoldProduct", product_idParameter, receipt_idParameter);
         }
-
+    
         public virtual int addStoredProduct(Nullable<int> product_id)
         {
             var product_idParameter = product_id.HasValue ?
                 new ObjectParameter("product_id", product_id) :
                 new ObjectParameter("product_id", typeof(int));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addStoredProduct", product_idParameter);
         }
-
+    
         public virtual int addTax(string tax_name, Nullable<double> tax_value)
         {
             var tax_nameParameter = tax_name != null ?
                 new ObjectParameter("tax_name", tax_name) :
                 new ObjectParameter("tax_name", typeof(string));
-
+    
             var tax_valueParameter = tax_value.HasValue ?
                 new ObjectParameter("tax_value", tax_value) :
                 new ObjectParameter("tax_value", typeof(double));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addTax", tax_nameParameter, tax_valueParameter);
         }
-
+    
         public virtual int addUnit(string unit_name, Nullable<double> convert_factor, Nullable<int> unit_type)
         {
             var unit_nameParameter = unit_name != null ?
                 new ObjectParameter("unit_name", unit_name) :
                 new ObjectParameter("unit_name", typeof(string));
-
+    
             var convert_factorParameter = convert_factor.HasValue ?
                 new ObjectParameter("convert_factor", convert_factor) :
                 new ObjectParameter("convert_factor", typeof(double));
-
+    
             var unit_typeParameter = unit_type.HasValue ?
                 new ObjectParameter("unit_type", unit_type) :
                 new ObjectParameter("unit_type", typeof(int));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addUnit", unit_nameParameter, convert_factorParameter, unit_typeParameter);
         }
-
-        public virtual int addUser(string password, string username, string name, string surname, Nullable<int> permission)
+    
+        public virtual int addUser(string password, string username, string name, string surname, Nullable<byte> permission)
         {
             var passwordParameter = password != null ?
                 new ObjectParameter("password", password) :
                 new ObjectParameter("password", typeof(string));
-
+    
             var usernameParameter = username != null ?
                 new ObjectParameter("username", username) :
                 new ObjectParameter("username", typeof(string));
-
+    
             var nameParameter = name != null ?
                 new ObjectParameter("name", name) :
                 new ObjectParameter("name", typeof(string));
-
+    
             var surnameParameter = surname != null ?
                 new ObjectParameter("surname", surname) :
                 new ObjectParameter("surname", typeof(string));
-
+    
             var permissionParameter = permission.HasValue ?
                 new ObjectParameter("permission", permission) :
-                new ObjectParameter("permission", typeof(int));
-
+                new ObjectParameter("permission", typeof(byte));
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addUser", passwordParameter, usernameParameter, nameParameter, surnameParameter, permissionParameter);
         }
-
+    
         public virtual int checkCredentials(string username, string password, ObjectParameter tmp_credentials)
         {
             var usernameParameter = username != null ?
                 new ObjectParameter("username", username) :
                 new ObjectParameter("username", typeof(string));
-
+    
             var passwordParameter = password != null ?
                 new ObjectParameter("password", password) :
                 new ObjectParameter("password", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("checkCredentials", usernameParameter, passwordParameter, tmp_credentials);
         }
-
+    
         public virtual int getRandom(Nullable<int> seed, ObjectParameter random)
         {
             var seedParameter = seed.HasValue ?
                 new ObjectParameter("Seed", seed) :
                 new ObjectParameter("Seed", typeof(int));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("getRandom", seedParameter, random);
         }
-
+    
         public virtual int getSalt(ObjectParameter salt)
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("getSalt", salt);
         }
-
+    
         public virtual int removeCategory(Nullable<int> category_id)
         {
             var category_idParameter = category_id.HasValue ?
                 new ObjectParameter("category_id", category_id) :
                 new ObjectParameter("category_id", typeof(int));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeCategory", category_idParameter);
         }
-
+    
         public virtual int removeProduct(Nullable<int> product_id)
         {
             var product_idParameter = product_id.HasValue ?
                 new ObjectParameter("product_id", product_id) :
                 new ObjectParameter("product_id", typeof(int));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeProduct", product_idParameter);
         }
-
+    
         public virtual int removeSoldProduct(Nullable<int> product_id)
         {
             var product_idParameter = product_id.HasValue ?
                 new ObjectParameter("product_id", product_id) :
                 new ObjectParameter("product_id", typeof(int));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeSoldProduct", product_idParameter);
         }
-
+    
         public virtual int removeStoredProduct(Nullable<int> product_id)
         {
             var product_idParameter = product_id.HasValue ?
                 new ObjectParameter("product_id", product_id) :
                 new ObjectParameter("product_id", typeof(int));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeStoredProduct", product_idParameter);
         }
-
+    
         public virtual int removeTax(Nullable<int> tax_id)
         {
             var tax_idParameter = tax_id.HasValue ?
                 new ObjectParameter("tax_id", tax_id) :
                 new ObjectParameter("tax_id", typeof(int));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeTax", tax_idParameter);
         }
-
+    
         public virtual int removeUnit(Nullable<int> unit_id)
         {
             var unit_idParameter = unit_id.HasValue ?
                 new ObjectParameter("unit_id", unit_id) :
                 new ObjectParameter("unit_id", typeof(int));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeUnit", unit_idParameter);
         }
-
+    
         public virtual int updatePrice(Nullable<int> priduct_id, Nullable<double> new_price)
         {
             var priduct_idParameter = priduct_id.HasValue ?
                 new ObjectParameter("priduct_id", priduct_id) :
                 new ObjectParameter("priduct_id", typeof(int));
-
+    
             var new_priceParameter = new_price.HasValue ?
                 new ObjectParameter("new_price", new_price) :
                 new ObjectParameter("new_price", typeof(double));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updatePrice", priduct_idParameter, new_priceParameter);
         }
-
+    
         public virtual int userExists(string login)
         {
             var loginParameter = login != null ?
                 new ObjectParameter("login", login) :
                 new ObjectParameter("login", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("userExists", loginParameter);
         }
-
+    
         public virtual int clearInternalErrors()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("clearInternalErrors");
         }
-
-        public virtual int createInternalError(string error_name, Nullable<DateTime> error_time, string message, string stack_trace, string context, string inner_message)
+    
+        public virtual int createInternalError(string error_name, Nullable<System.DateTime> error_time, string message, string stack_trace, string context, string inner_message)
         {
             var error_nameParameter = error_name != null ?
                 new ObjectParameter("error_name", error_name) :
                 new ObjectParameter("error_name", typeof(string));
-
+    
             var error_timeParameter = error_time.HasValue ?
                 new ObjectParameter("error_time", error_time) :
-                new ObjectParameter("error_time", typeof(DateTime));
-
+                new ObjectParameter("error_time", typeof(System.DateTime));
+    
             var messageParameter = message != null ?
                 new ObjectParameter("message", message) :
                 new ObjectParameter("message", typeof(string));
-
+    
             var stack_traceParameter = stack_trace != null ?
                 new ObjectParameter("stack_trace", stack_trace) :
                 new ObjectParameter("stack_trace", typeof(string));
-
+    
             var contextParameter = context != null ?
                 new ObjectParameter("context", context) :
                 new ObjectParameter("context", typeof(string));
-
+    
             var inner_messageParameter = inner_message != null ?
                 new ObjectParameter("inner_message", inner_message) :
                 new ObjectParameter("inner_message", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("createInternalError", error_nameParameter, error_timeParameter, messageParameter, stack_traceParameter, contextParameter, inner_messageParameter);
+        }
+    
+        public virtual int addClientOrder(Nullable<int> spot_id, Nullable<int> employee_id, Nullable<System.DateTime> order_time, Nullable<System.DateTime> payment_time)
+        {
+            var spot_idParameter = spot_id.HasValue ?
+                new ObjectParameter("spot_id", spot_id) :
+                new ObjectParameter("spot_id", typeof(int));
+    
+            var employee_idParameter = employee_id.HasValue ?
+                new ObjectParameter("employee_id", employee_id) :
+                new ObjectParameter("employee_id", typeof(int));
+    
+            var order_timeParameter = order_time.HasValue ?
+                new ObjectParameter("order_time", order_time) :
+                new ObjectParameter("order_time", typeof(System.DateTime));
+    
+            var payment_timeParameter = payment_time.HasValue ?
+                new ObjectParameter("payment_time", payment_time) :
+                new ObjectParameter("payment_time", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addClientOrder", spot_idParameter, employee_idParameter, order_timeParameter, payment_timeParameter);
+        }
+    
+        public virtual int addClientOrderDetail(Nullable<int> client_order_id, Nullable<int> products_sold_id, Nullable<decimal> unit_price, Nullable<short> quantity, Nullable<int> spot_id)
+        {
+            var client_order_idParameter = client_order_id.HasValue ?
+                new ObjectParameter("client_order_id", client_order_id) :
+                new ObjectParameter("client_order_id", typeof(int));
+    
+            var products_sold_idParameter = products_sold_id.HasValue ?
+                new ObjectParameter("products_sold_id", products_sold_id) :
+                new ObjectParameter("products_sold_id", typeof(int));
+    
+            var unit_priceParameter = unit_price.HasValue ?
+                new ObjectParameter("unit_price", unit_price) :
+                new ObjectParameter("unit_price", typeof(decimal));
+    
+            var quantityParameter = quantity.HasValue ?
+                new ObjectParameter("quantity", quantity) :
+                new ObjectParameter("quantity", typeof(short));
+    
+            var spot_idParameter = spot_id.HasValue ?
+                new ObjectParameter("spot_id", spot_id) :
+                new ObjectParameter("spot_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addClientOrderDetail", client_order_idParameter, products_sold_idParameter, unit_priceParameter, quantityParameter, spot_idParameter);
+        }
+    
+        public virtual int addLocation(string name, string address, string city, string postal_code, string country, string phone)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var addressParameter = address != null ?
+                new ObjectParameter("address", address) :
+                new ObjectParameter("address", typeof(string));
+    
+            var cityParameter = city != null ?
+                new ObjectParameter("city", city) :
+                new ObjectParameter("city", typeof(string));
+    
+            var postal_codeParameter = postal_code != null ?
+                new ObjectParameter("postal_code", postal_code) :
+                new ObjectParameter("postal_code", typeof(string));
+    
+            var countryParameter = country != null ?
+                new ObjectParameter("country", country) :
+                new ObjectParameter("country", typeof(string));
+    
+            var phoneParameter = phone != null ?
+                new ObjectParameter("phone", phone) :
+                new ObjectParameter("phone", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addLocation", nameParameter, addressParameter, cityParameter, postal_codeParameter, countryParameter, phoneParameter);
+        }
+    
+        public virtual int addSpot(string name)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addSpot", nameParameter);
+        }
+    
+        public virtual int addSupplier(string name, string address, string city, string postal_code, string country, string contact_name, string phone, string fax, string website)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var addressParameter = address != null ?
+                new ObjectParameter("address", address) :
+                new ObjectParameter("address", typeof(string));
+    
+            var cityParameter = city != null ?
+                new ObjectParameter("city", city) :
+                new ObjectParameter("city", typeof(string));
+    
+            var postal_codeParameter = postal_code != null ?
+                new ObjectParameter("postal_code", postal_code) :
+                new ObjectParameter("postal_code", typeof(string));
+    
+            var countryParameter = country != null ?
+                new ObjectParameter("country", country) :
+                new ObjectParameter("country", typeof(string));
+    
+            var contact_nameParameter = contact_name != null ?
+                new ObjectParameter("contact_name", contact_name) :
+                new ObjectParameter("contact_name", typeof(string));
+    
+            var phoneParameter = phone != null ?
+                new ObjectParameter("phone", phone) :
+                new ObjectParameter("phone", typeof(string));
+    
+            var faxParameter = fax != null ?
+                new ObjectParameter("fax", fax) :
+                new ObjectParameter("fax", typeof(string));
+    
+            var websiteParameter = website != null ?
+                new ObjectParameter("website", website) :
+                new ObjectParameter("website", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addSupplier", nameParameter, addressParameter, cityParameter, postal_codeParameter, countryParameter, contact_nameParameter, phoneParameter, faxParameter, websiteParameter);
+        }
+    
+        public virtual int addToWarehouse(Nullable<int> location_id, Nullable<int> product_in_stock_id, Nullable<short> quantity)
+        {
+            var location_idParameter = location_id.HasValue ?
+                new ObjectParameter("location_id", location_id) :
+                new ObjectParameter("location_id", typeof(int));
+    
+            var product_in_stock_idParameter = product_in_stock_id.HasValue ?
+                new ObjectParameter("product_in_stock_id", product_in_stock_id) :
+                new ObjectParameter("product_in_stock_id", typeof(int));
+    
+            var quantityParameter = quantity.HasValue ?
+                new ObjectParameter("quantity", quantity) :
+                new ObjectParameter("quantity", typeof(short));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addToWarehouse", location_idParameter, product_in_stock_idParameter, quantityParameter);
+        }
+    
+        public virtual int addWarehouseOrder(Nullable<int> employee_id, Nullable<int> supplier_id, Nullable<int> location_id, Nullable<System.DateTime> order_date, Nullable<System.DateTime> required_date, Nullable<System.DateTime> delivery_date)
+        {
+            var employee_idParameter = employee_id.HasValue ?
+                new ObjectParameter("employee_id", employee_id) :
+                new ObjectParameter("employee_id", typeof(int));
+    
+            var supplier_idParameter = supplier_id.HasValue ?
+                new ObjectParameter("supplier_id", supplier_id) :
+                new ObjectParameter("supplier_id", typeof(int));
+    
+            var location_idParameter = location_id.HasValue ?
+                new ObjectParameter("location_id", location_id) :
+                new ObjectParameter("location_id", typeof(int));
+    
+            var order_dateParameter = order_date.HasValue ?
+                new ObjectParameter("order_date", order_date) :
+                new ObjectParameter("order_date", typeof(System.DateTime));
+    
+            var required_dateParameter = required_date.HasValue ?
+                new ObjectParameter("required_date", required_date) :
+                new ObjectParameter("required_date", typeof(System.DateTime));
+    
+            var delivery_dateParameter = delivery_date.HasValue ?
+                new ObjectParameter("delivery_date", delivery_date) :
+                new ObjectParameter("delivery_date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addWarehouseOrder", employee_idParameter, supplier_idParameter, location_idParameter, order_dateParameter, required_dateParameter, delivery_dateParameter);
+        }
+    
+        public virtual int addWarehouseOrderDetail(Nullable<int> warehouse_order_id, Nullable<int> product_id, Nullable<decimal> unit_price, Nullable<short> quantity)
+        {
+            var warehouse_order_idParameter = warehouse_order_id.HasValue ?
+                new ObjectParameter("warehouse_order_id", warehouse_order_id) :
+                new ObjectParameter("warehouse_order_id", typeof(int));
+    
+            var product_idParameter = product_id.HasValue ?
+                new ObjectParameter("product_id", product_id) :
+                new ObjectParameter("product_id", typeof(int));
+    
+            var unit_priceParameter = unit_price.HasValue ?
+                new ObjectParameter("unit_price", unit_price) :
+                new ObjectParameter("unit_price", typeof(decimal));
+    
+            var quantityParameter = quantity.HasValue ?
+                new ObjectParameter("quantity", quantity) :
+                new ObjectParameter("quantity", typeof(short));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addWarehouseOrderDetail", warehouse_order_idParameter, product_idParameter, unit_priceParameter, quantityParameter);
+        }
+    
+        public virtual int addWorkstation(string name)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addWorkstation", nameParameter);
+        }
+    
+        public virtual int addWorkstationRights(Nullable<int> workstation_id, Nullable<byte> employe_permission)
+        {
+            var workstation_idParameter = workstation_id.HasValue ?
+                new ObjectParameter("workstation_id", workstation_id) :
+                new ObjectParameter("workstation_id", typeof(int));
+    
+            var employe_permissionParameter = employe_permission.HasValue ?
+                new ObjectParameter("employe_permission", employe_permission) :
+                new ObjectParameter("employe_permission", typeof(byte));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addWorkstationRights", workstation_idParameter, employe_permissionParameter);
+        }
+    
+        public virtual int removeClientOrder(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeClientOrder", idParameter);
+        }
+    
+        public virtual int removeClientOrderDetail(Nullable<int> client_order_id, Nullable<int> products_sold_id)
+        {
+            var client_order_idParameter = client_order_id.HasValue ?
+                new ObjectParameter("client_order_id", client_order_id) :
+                new ObjectParameter("client_order_id", typeof(int));
+    
+            var products_sold_idParameter = products_sold_id.HasValue ?
+                new ObjectParameter("products_sold_id", products_sold_id) :
+                new ObjectParameter("products_sold_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeClientOrderDetail", client_order_idParameter, products_sold_idParameter);
+        }
+    
+        public virtual int removeFromWarehouse(Nullable<int> location_id, Nullable<int> product_in_stock_id)
+        {
+            var location_idParameter = location_id.HasValue ?
+                new ObjectParameter("location_id", location_id) :
+                new ObjectParameter("location_id", typeof(int));
+    
+            var product_in_stock_idParameter = product_in_stock_id.HasValue ?
+                new ObjectParameter("product_in_stock_id", product_in_stock_id) :
+                new ObjectParameter("product_in_stock_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeFromWarehouse", location_idParameter, product_in_stock_idParameter);
+        }
+    
+        public virtual int removeLocation(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeLocation", idParameter);
+        }
+    
+        public virtual int removeSpot(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeSpot", idParameter);
+        }
+    
+        public virtual int removeSupplier(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeSupplier", idParameter);
+        }
+    
+        public virtual int removeWarehouseOrder(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeWarehouseOrder", idParameter);
+        }
+    
+        public virtual int removeWarehouseOrderDetail(Nullable<int> warehouse_order_id, Nullable<int> product_id)
+        {
+            var warehouse_order_idParameter = warehouse_order_id.HasValue ?
+                new ObjectParameter("warehouse_order_id", warehouse_order_id) :
+                new ObjectParameter("warehouse_order_id", typeof(int));
+    
+            var product_idParameter = product_id.HasValue ?
+                new ObjectParameter("product_id", product_id) :
+                new ObjectParameter("product_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeWarehouseOrderDetail", warehouse_order_idParameter, product_idParameter);
+        }
+    
+        public virtual int removeWorkstation(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeWorkstation", idParameter);
+        }
+    
+        public virtual int removeWorkstationRights(Nullable<int> workstation_id, Nullable<byte> employe_permission)
+        {
+            var workstation_idParameter = workstation_id.HasValue ?
+                new ObjectParameter("workstation_id", workstation_id) :
+                new ObjectParameter("workstation_id", typeof(int));
+    
+            var employe_permissionParameter = employe_permission.HasValue ?
+                new ObjectParameter("employe_permission", employe_permission) :
+                new ObjectParameter("employe_permission", typeof(byte));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeWorkstationRights", workstation_idParameter, employe_permissionParameter);
+        }
+    
+        public virtual int updateClientOrder(Nullable<int> id, Nullable<int> new_spot_id, Nullable<int> new_employee_id, Nullable<System.DateTime> new_order_time, Nullable<System.DateTime> new_payment_time)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var new_spot_idParameter = new_spot_id.HasValue ?
+                new ObjectParameter("new_spot_id", new_spot_id) :
+                new ObjectParameter("new_spot_id", typeof(int));
+    
+            var new_employee_idParameter = new_employee_id.HasValue ?
+                new ObjectParameter("new_employee_id", new_employee_id) :
+                new ObjectParameter("new_employee_id", typeof(int));
+    
+            var new_order_timeParameter = new_order_time.HasValue ?
+                new ObjectParameter("new_order_time", new_order_time) :
+                new ObjectParameter("new_order_time", typeof(System.DateTime));
+    
+            var new_payment_timeParameter = new_payment_time.HasValue ?
+                new ObjectParameter("new_payment_time", new_payment_time) :
+                new ObjectParameter("new_payment_time", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateClientOrder", idParameter, new_spot_idParameter, new_employee_idParameter, new_order_timeParameter, new_payment_timeParameter);
+        }
+    
+        public virtual int updateClientOrderDetail(Nullable<int> client_order_id, Nullable<int> products_sold_id, Nullable<decimal> new_unit_price, Nullable<short> new_quantity, Nullable<int> new_spot_id)
+        {
+            var client_order_idParameter = client_order_id.HasValue ?
+                new ObjectParameter("client_order_id", client_order_id) :
+                new ObjectParameter("client_order_id", typeof(int));
+    
+            var products_sold_idParameter = products_sold_id.HasValue ?
+                new ObjectParameter("products_sold_id", products_sold_id) :
+                new ObjectParameter("products_sold_id", typeof(int));
+    
+            var new_unit_priceParameter = new_unit_price.HasValue ?
+                new ObjectParameter("new_unit_price", new_unit_price) :
+                new ObjectParameter("new_unit_price", typeof(decimal));
+    
+            var new_quantityParameter = new_quantity.HasValue ?
+                new ObjectParameter("new_quantity", new_quantity) :
+                new ObjectParameter("new_quantity", typeof(short));
+    
+            var new_spot_idParameter = new_spot_id.HasValue ?
+                new ObjectParameter("new_spot_id", new_spot_id) :
+                new ObjectParameter("new_spot_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateClientOrderDetail", client_order_idParameter, products_sold_idParameter, new_unit_priceParameter, new_quantityParameter, new_spot_idParameter);
+        }
+    
+        public virtual int updateLocation(Nullable<int> id, string new_name, string new_address, string new_city, string new_postal_code, string new_country, string new_phone)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var new_nameParameter = new_name != null ?
+                new ObjectParameter("new_name", new_name) :
+                new ObjectParameter("new_name", typeof(string));
+    
+            var new_addressParameter = new_address != null ?
+                new ObjectParameter("new_address", new_address) :
+                new ObjectParameter("new_address", typeof(string));
+    
+            var new_cityParameter = new_city != null ?
+                new ObjectParameter("new_city", new_city) :
+                new ObjectParameter("new_city", typeof(string));
+    
+            var new_postal_codeParameter = new_postal_code != null ?
+                new ObjectParameter("new_postal_code", new_postal_code) :
+                new ObjectParameter("new_postal_code", typeof(string));
+    
+            var new_countryParameter = new_country != null ?
+                new ObjectParameter("new_country", new_country) :
+                new ObjectParameter("new_country", typeof(string));
+    
+            var new_phoneParameter = new_phone != null ?
+                new ObjectParameter("new_phone", new_phone) :
+                new ObjectParameter("new_phone", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateLocation", idParameter, new_nameParameter, new_addressParameter, new_cityParameter, new_postal_codeParameter, new_countryParameter, new_phoneParameter);
+        }
+    
+        public virtual int updateQuantityInWarehouse(Nullable<int> location_id, Nullable<int> product_in_stock_id, Nullable<short> quantity_change)
+        {
+            var location_idParameter = location_id.HasValue ?
+                new ObjectParameter("location_id", location_id) :
+                new ObjectParameter("location_id", typeof(int));
+    
+            var product_in_stock_idParameter = product_in_stock_id.HasValue ?
+                new ObjectParameter("product_in_stock_id", product_in_stock_id) :
+                new ObjectParameter("product_in_stock_id", typeof(int));
+    
+            var quantity_changeParameter = quantity_change.HasValue ?
+                new ObjectParameter("quantity_change", quantity_change) :
+                new ObjectParameter("quantity_change", typeof(short));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateQuantityInWarehouse", location_idParameter, product_in_stock_idParameter, quantity_changeParameter);
+        }
+    
+        public virtual int updateSpot(Nullable<int> id, string new_name)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var new_nameParameter = new_name != null ?
+                new ObjectParameter("new_name", new_name) :
+                new ObjectParameter("new_name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateSpot", idParameter, new_nameParameter);
+        }
+    
+        public virtual int updateSupplier(Nullable<int> id, string new_name, string new_address, string new_city, string new_postal_code, string new_country, string new_contact_name, string new_phone, string new_fax, string new_website)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var new_nameParameter = new_name != null ?
+                new ObjectParameter("new_name", new_name) :
+                new ObjectParameter("new_name", typeof(string));
+    
+            var new_addressParameter = new_address != null ?
+                new ObjectParameter("new_address", new_address) :
+                new ObjectParameter("new_address", typeof(string));
+    
+            var new_cityParameter = new_city != null ?
+                new ObjectParameter("new_city", new_city) :
+                new ObjectParameter("new_city", typeof(string));
+    
+            var new_postal_codeParameter = new_postal_code != null ?
+                new ObjectParameter("new_postal_code", new_postal_code) :
+                new ObjectParameter("new_postal_code", typeof(string));
+    
+            var new_countryParameter = new_country != null ?
+                new ObjectParameter("new_country", new_country) :
+                new ObjectParameter("new_country", typeof(string));
+    
+            var new_contact_nameParameter = new_contact_name != null ?
+                new ObjectParameter("new_contact_name", new_contact_name) :
+                new ObjectParameter("new_contact_name", typeof(string));
+    
+            var new_phoneParameter = new_phone != null ?
+                new ObjectParameter("new_phone", new_phone) :
+                new ObjectParameter("new_phone", typeof(string));
+    
+            var new_faxParameter = new_fax != null ?
+                new ObjectParameter("new_fax", new_fax) :
+                new ObjectParameter("new_fax", typeof(string));
+    
+            var new_websiteParameter = new_website != null ?
+                new ObjectParameter("new_website", new_website) :
+                new ObjectParameter("new_website", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateSupplier", idParameter, new_nameParameter, new_addressParameter, new_cityParameter, new_postal_codeParameter, new_countryParameter, new_contact_nameParameter, new_phoneParameter, new_faxParameter, new_websiteParameter);
+        }
+    
+        public virtual int updateWarehouseOrder(Nullable<int> id, Nullable<int> new_employee_id, Nullable<int> new_supplier_id, Nullable<int> new_location_id, Nullable<System.DateTime> new_order_date, Nullable<System.DateTime> new_required_date, Nullable<System.DateTime> new_delivery_date)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var new_employee_idParameter = new_employee_id.HasValue ?
+                new ObjectParameter("new_employee_id", new_employee_id) :
+                new ObjectParameter("new_employee_id", typeof(int));
+    
+            var new_supplier_idParameter = new_supplier_id.HasValue ?
+                new ObjectParameter("new_supplier_id", new_supplier_id) :
+                new ObjectParameter("new_supplier_id", typeof(int));
+    
+            var new_location_idParameter = new_location_id.HasValue ?
+                new ObjectParameter("new_location_id", new_location_id) :
+                new ObjectParameter("new_location_id", typeof(int));
+    
+            var new_order_dateParameter = new_order_date.HasValue ?
+                new ObjectParameter("new_order_date", new_order_date) :
+                new ObjectParameter("new_order_date", typeof(System.DateTime));
+    
+            var new_required_dateParameter = new_required_date.HasValue ?
+                new ObjectParameter("new_required_date", new_required_date) :
+                new ObjectParameter("new_required_date", typeof(System.DateTime));
+    
+            var new_delivery_dateParameter = new_delivery_date.HasValue ?
+                new ObjectParameter("new_delivery_date", new_delivery_date) :
+                new ObjectParameter("new_delivery_date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateWarehouseOrder", idParameter, new_employee_idParameter, new_supplier_idParameter, new_location_idParameter, new_order_dateParameter, new_required_dateParameter, new_delivery_dateParameter);
+        }
+    
+        public virtual int updateWarehouseOrderDetail(Nullable<int> warehouse_order_id, Nullable<int> product_id, Nullable<decimal> new_unit_price, Nullable<short> new_quantity)
+        {
+            var warehouse_order_idParameter = warehouse_order_id.HasValue ?
+                new ObjectParameter("warehouse_order_id", warehouse_order_id) :
+                new ObjectParameter("warehouse_order_id", typeof(int));
+    
+            var product_idParameter = product_id.HasValue ?
+                new ObjectParameter("product_id", product_id) :
+                new ObjectParameter("product_id", typeof(int));
+    
+            var new_unit_priceParameter = new_unit_price.HasValue ?
+                new ObjectParameter("new_unit_price", new_unit_price) :
+                new ObjectParameter("new_unit_price", typeof(decimal));
+    
+            var new_quantityParameter = new_quantity.HasValue ?
+                new ObjectParameter("new_quantity", new_quantity) :
+                new ObjectParameter("new_quantity", typeof(short));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateWarehouseOrderDetail", warehouse_order_idParameter, product_idParameter, new_unit_priceParameter, new_quantityParameter);
+        }
+    
+        public virtual int updateWorkstation(Nullable<int> id, string new_name)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var new_nameParameter = new_name != null ?
+                new ObjectParameter("new_name", new_name) :
+                new ObjectParameter("new_name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateWorkstation", idParameter, new_nameParameter);
         }
     }
 }

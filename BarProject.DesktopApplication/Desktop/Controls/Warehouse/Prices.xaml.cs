@@ -15,14 +15,13 @@ using System.Windows.Shapes;
 
 namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
 {
-    /// <summary>
-    /// Interaction logic for Prices.xaml
-    /// </summary>
+
     public partial class Prices : UserControl
     {
         public Prices()
         {
-            InitializeComponent();
+            InitializeComponent(); 
         }
+         
     }
 }

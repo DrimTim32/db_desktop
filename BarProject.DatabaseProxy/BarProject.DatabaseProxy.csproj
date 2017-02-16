@@ -107,6 +107,8 @@
     <Compile Include="Extensions\HttpRequestMessageExtensions.cs" />
     <Compile Include="Functions\CategoriesFunctions.cs" />
     <Compile Include="Functions\InternalErrorsFunctions.cs" />
+    <Compile Include="Functions\LocationsFunctions.cs" />
+    <Compile Include="Functions\PricesFunctions.cs" />
     <Compile Include="Functions\ProductsFunctions.cs" />
     <Compile Include="Functions\TaxesFunctions.cs" />
     <Compile Include="Functions\UnitsFunctions.cs" />
@@ -115,6 +117,7 @@
     <Compile Include="Models\ExceptionHandlers\CustomExceptionLogger.cs" />
     <Compile Include="Models\ExceptionHandlers\ResponseException.cs" />
     <Compile Include="Models\ReadModels\ShowableCategory.cs" />
+    <Compile Include="Models\ReadModels\ShowableLocation.cs" />
     <Compile Include="Models\ReadModels\ShowablePricesHistory.cs" />
     <Compile Include="Models\ReadModels\ShowableSimpleProduct.cs" />
     <Compile Include="Models\ReadModels\ShowableSoldProduct.cs" />

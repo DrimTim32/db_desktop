@@ -12,23 +12,26 @@ namespace BarProject.DatabaseConnector
     using System;
     using System.Collections.Generic;
     
-    public partial class ProductsSold
+    public partial class Warehouse_orders
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ProductsSold()
+        public Warehouse_orders()
         {
-            this.Prices = new HashSet<Price>();
-            this.Client_order_details = new HashSet<Client_order_details>();
+            this.Warehouse_order_details = new HashSet<Warehouse_order_details>();
         }
     
         public int id { get; set; }
-        public Nullable<int> receipt_id { get; set; }
+        public int employee_id { get; set; }
+        public int supplier_id { get; set; }
+        public int location_id { get; set; }
+        public Nullable<System.DateTime> order_date { get; set; }
+        public Nullable<System.DateTime> required_date { get; set; }
+        public Nullable<System.DateTime> delivery_date { get; set; }
     
+        public virtual Location Location { get; set; }
+        public virtual Supplier Supplier { get; set; }
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Price> Prices { get; set; }
-        public virtual Product Product { get; set; }
-        public virtual Receipt Receipt { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Client_order_details> Client_order_details { get; set; }
+        public virtual ICollection<Warehouse_order_details> Warehouse_order_details { get; set; }
     }
 }
