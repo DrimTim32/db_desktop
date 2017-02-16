@@ -11,6 +11,7 @@
     using Desktop;
     using MahApps.Metro.Controls;
     using MahApps.Metro.Controls.Dialogs;
+    using Remote;
     using RestSharp;
     using Utils;
 
@@ -74,7 +75,13 @@
             }
             else if (privileges < UserPrivileges.WarehouseAdministrator)
             {
-                //TODO: bar app
+                var window = new MainRemoteWindow() { ShowActivated = true };
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Application.Current.MainWindow = window;
+                    window.Show();
+                });
+                Close();
             }
             else
             {
@@ -150,13 +157,13 @@
                         if (response.ResponseStatus == ResponseStatus.TimedOut)
                         {
                             MessageBoxesHelper.ShowWindowInformation("Request timed out",
-                                "Problem connecting to the server"); 
+                                "Problem connecting to the server");
                             Application.Current.Dispatcher.Invoke(ProgressBarStop);
                         }
                         else if (response.StatusCode != HttpStatusCode.OK)
                         {
                             MessageBoxesHelper.ShowWindowInformation("Problem with login",
-                                "Make sure that both password and login are correct"); 
+                                "Make sure that both password and login are correct");
                             Application.Current.Dispatcher.Invoke(ProgressBarStop);
                         }
                         else
