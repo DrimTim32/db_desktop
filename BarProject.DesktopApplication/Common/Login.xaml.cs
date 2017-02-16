@@ -99,43 +99,43 @@
         }
         private void DoAfterLogin()
         {
-            Application.Current.Dispatcher.Invoke(new Action(() =>
+            Application.Current.Dispatcher.Invoke(DispatcherPriority.Send, new Action(() =>
             {
                 try
                 {
                     var text = "";
                     text = LoginBox.Text;
                     LoggingMessage.Text = "Checking credentials...";
-                    Library.RestHelpers.RestClient.Client().GetUserCredentialsAsync(text, (response, mess) =>
-                    {
-                        if (response.ResponseStatus == ResponseStatus.TimedOut)
+                    Library.RestHelpers.RestClient.Client().GetUserCredentialsAsync(text,
+                        (response, mess) =>
                         {
-                            MessageBoxesHelper.ShowWindowInformation("Request timed out",
-                                "Problem connecting to the server");
-                        }
-                        else if (response.StatusCode != HttpStatusCode.OK)
-                        {
-                            MessageBoxesHelper.ShowWindowInformation("Problem with login",
-                                "Make sure that both password and login are correct");
-                        }
-                        else
-                        {
+                            if (response.ResponseStatus == ResponseStatus.TimedOut)
+                            {
+                                MessageBoxesHelper.ShowWindowInformation("Request timed out",
+                                    "Problem connecting to the server");
+                            }
+                            else if (response.StatusCode != HttpStatusCode.OK)
+                            {
+                                MessageBoxesHelper.ShowWindowInformation("Problem with login",
+                                    "Make sure that both password and login are correct");
+                            }
+                            else
+                            {
 
-                            var privlidges = response.Data;
-                            Application.Current.Dispatcher.Invoke(DispatcherPriority.Send,
-                                new Action(() => { ChooseWindow(privlidges); }));
+                                var privlidges = response.Data;
+                                Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal,
+                                    new Action(() => { ChooseWindow(privlidges); }));
 
-                        }
-                        Application.Current.Dispatcher.Invoke(ProgressBarStop);
-                    });
+                            }
+                            Application.Current.Dispatcher.Invoke(ProgressBarStop);
+                        });
 
                 }
                 catch (Exception ex)
                 {
                     LoginError(ex);
                 }
-            }))
-        ;
+            }));
 
         }
 
@@ -150,16 +150,18 @@
                         if (response.ResponseStatus == ResponseStatus.TimedOut)
                         {
                             MessageBoxesHelper.ShowWindowInformation("Request timed out",
-                                "Problem connecting to the server");
+                                "Problem connecting to the server"); 
+                            Application.Current.Dispatcher.Invoke(ProgressBarStop);
                         }
                         else if (response.StatusCode != HttpStatusCode.OK)
                         {
                             MessageBoxesHelper.ShowWindowInformation("Problem with login",
-                                "Make sure that both password and login are correct");
+                                "Make sure that both password and login are correct"); 
+                            Application.Current.Dispatcher.Invoke(ProgressBarStop);
                         }
                         else
                         {
-                            Application.Current.Dispatcher.Invoke(DispatcherPriority.Send, new Action(AfterLogin));
+                            Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(AfterLogin));
                         }
                     });
 
