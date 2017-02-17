@@ -19,6 +19,21 @@ namespace BarProject.WebService.Controllers
     {
         [HttpGet]
         [Authorize(Roles = "Admin,Owner")]
+        [ResponseType(typeof(IEnumerable<string>))]
+        [Route("types")]
+        public IHttpActionResult GetTypes()
+        {
+            try
+            {
+                return Ok(UnitsFunctions.GetTypes());
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+        [HttpGet]
+        [Authorize(Roles = "Admin,Owner")]
         [ResponseType(typeof(IEnumerable<ShowableUnit>))]
         [Route("")]
         public IHttpActionResult Get()
@@ -31,8 +46,8 @@ namespace BarProject.WebService.Controllers
             {
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
-        } 
-        [Authorize(Roles = "Admin,Owner")] 
+        }
+        [Authorize(Roles = "Admin,Owner")]
         [HttpPost, Route(""), ActionName("Add product as admin")]
         public IHttpActionResult Post([FromBody]ShowableUnit unit)
         {

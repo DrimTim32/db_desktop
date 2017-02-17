@@ -15,7 +15,7 @@
         }
         public string Type { get; set; }
         public string Name { get; set; }
-        public double Factor { get; set; }
+        public double? Factor { get; set; }
         public int Id { get; set; }
     }
 }

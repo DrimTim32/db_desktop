@@ -36,11 +36,27 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             InitializeComponent();
             Loaded += Units_Loaded;
             DataGrid.RowEditEnding += DataGrid_RowEditEnding;
-            DataGrid.PreviewKeyDown += DataGrid_PreviewKeyDown;
+            DataGrid.PreviewKeyDown += DataGrid_PreviewKeyDown; 
         }
         private void Units_Loaded(object sender, RoutedEventArgs e)
         {
+            GetSources();
             RefreshData();
+
+        }
+
+        private void GetSources()
+        {
+            this.Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoGetSources));
+        }
+
+        private async void DoGetSources()
+        {
+
+            ProgressBarStart();
+            var tmp = await RestClient.Client().GetUnitsTypes();
+            DataGridCombo.ItemsSource = tmp.Data;
+            ProgressBarStop();
         }
         private ObservableCollection<ShowableUnit> _unitsList;
         private readonly object UnitsDataLock = new object();
@@ -72,37 +88,26 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         }
         private void RefreshData()
         {
-
-            this.Dispatcher.Invoke(DispatcherPriority.Background,
-                  new Action(
-                  DoRefreshData
-                  ));
+            this.Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoRefreshData));
         }
 
         private async void DoRefreshData()
         {
-            try
+            ProgressBarStart();
+            var tmp = await RestClient.Client().GetUnits();
+            UnitsLits.Clear();
+            foreach (var unit in tmp.Data)
             {
-                ProgressBarStart();
-                var tmp = await RestClient.Client().GetUnits();
-                UnitsLits.Clear();
-                foreach (var unit in tmp.Data)
-                {
-                    UnitsLits.Add(unit);
-                }
-                DataGrid.Items.Refresh();
-                ProgressBarStop();
+                UnitsLits.Add(unit);
             }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Exception in do refresh data" + ex.Message);
-            }
+            DataGrid.Items.Refresh();
+            ProgressBarStop();
         }
 
 
-        private bool IsTaxEmpty(ShowableUnit tax)
+        private bool IsUnitEmpty(ShowableUnit tax)
         {
-            return tax.Name == null && tax.Type == null;
+            return tax.Name == null && tax.Type == null && tax.Factor == null;
         }
         private void DataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
@@ -115,16 +120,18 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 grid.CommitEdit();
                 string message = "";
                 ProgressBarStart();
-                if (IsTaxEmpty(tax))
+                if (IsUnitEmpty(tax))
                 {
                     grid.CancelEdit();
                     grid.RowEditEnding += DataGrid_RowEditEnding;
                     return;
                 }
                 if (string.IsNullOrEmpty(tax.Name))
-                    message = "You cannot create tax with empty name";
+                    message = "You cannot create unit with empty name";
                 if (string.IsNullOrEmpty(tax.Type))
-                    message = "You cannot create tax with empty type";
+                    message = "You cannot create unit with empty type";
+                if (tax.Factor == null)
+                    message = "You cannot create unit with empty factor";
                 if (message != "")
                 {
                     grid.CancelEdit();

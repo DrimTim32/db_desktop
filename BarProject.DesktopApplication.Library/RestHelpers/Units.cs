@@ -20,6 +20,14 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
             var data = await client.ExecuteGetTaskAsync<List<ShowableUnit>>(request);
             return data;
         }
+        public async Task<IRestResponse<List<string>>> GetUnitsTypes()
+        {
+            var request = new RestRequest("api/units/types", Method.GET);
+            request.AddHeader("Authorization", $"bearer {token}");
+            request.AddHeader("Content-Type", "application/json");
+            var data = await client.ExecuteGetTaskAsync<List<string>>(request);
+            return data;
+        }
         public void RemoveUnit(int? id, Action<IRestResponse, RestRequestAsyncHandle> callback)
         {
             var request = new RestRequest($"api/units/{id}", Method.DELETE);
