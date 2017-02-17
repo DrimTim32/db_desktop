@@ -91,13 +91,13 @@
     <Compile Include="Desktop\Controls\Menagement\Suppliers.xaml.cs">
       <DependentUpon>Suppliers.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Desktop\Controls\Warehouse\Prices.xaml.cs">
+    <Compile Include="Desktop\Controls\Menagement\Prices.xaml.cs">
       <DependentUpon>Prices.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Desktop\Controls\Warehouse\Products.xaml.cs">
+    <Compile Include="Desktop\Controls\Menagement\Products.xaml.cs">
       <DependentUpon>Products.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Desktop\Controls\Warehouse\Recipies.xaml.cs">
+    <Compile Include="Desktop\Controls\Menagement\Recipies.xaml.cs">
       <DependentUpon>Recipies.xaml</DependentUpon>
     </Compile>
     <Compile Include="Desktop\Controls\Warehouse\WarehouseUserControl.xaml.cs">
@@ -149,15 +149,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Desktop\Controls\Warehouse\Prices.xaml">
+    <Page Include="Desktop\Controls\Menagement\Prices.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Desktop\Controls\Warehouse\Products.xaml">
+    <Page Include="Desktop\Controls\Menagement\Products.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Desktop\Controls\Warehouse\Recipies.xaml">
+    <Page Include="Desktop\Controls\Menagement\Recipies.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

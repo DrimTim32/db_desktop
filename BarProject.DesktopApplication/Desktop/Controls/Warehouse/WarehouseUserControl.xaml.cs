@@ -30,29 +30,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
         }
         public void SetTabs()
         {
-            var prices = new MetroTabItem()
-            {
-                Header = "Prices",
-                Content = new Prices()
-            };
-
-            var products = new MetroTabItem()
-            {
-                Header = "Products",
-                Content = new Products()
-            };
-            var recipies = new MetroTabItem()
-            {
-                Header = "Recipies",
-                Content = new Recipies()
-            };
-            prices.SetResourceReference(StyleProperty, "MenuLevel2");
-            products.SetResourceReference(StyleProperty, "MenuLevel2");
-            recipies.SetResourceReference(StyleProperty, "MenuLevel2");
-            TabControl.Items.Clear();
-            TabControl.Items.Add(prices);
-            TabControl.Items.Add(products);
-            TabControl.Items.Add(recipies);
+           
         }
     }
 }

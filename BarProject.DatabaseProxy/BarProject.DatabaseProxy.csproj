@@ -114,6 +114,7 @@
     <Compile Include="Functions\TaxesFunctions.cs" />
     <Compile Include="Functions\UnitsFunctions.cs" />
     <Compile Include="Functions\UserFunctions.cs" />
+    <Compile Include="Functions\WorkstationsFunctions.cs" />
     <Compile Include="Models\ExceptionHandlers\CustomExceptionHandler.cs" />
     <Compile Include="Models\ExceptionHandlers\CustomExceptionLogger.cs" />
     <Compile Include="Models\ExceptionHandlers\ResponseException.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Models\ReadModels\ShowableTax.cs" />
     <Compile Include="Models\ReadModels\ShowableUnit.cs" />
     <Compile Include="Models\ReadModels\ShowableUser.cs" />
+    <Compile Include="Models\ReadModels\ShowableWorkstation.cs" />
     <Compile Include="Models\UserPrivileges.cs" />
     <Compile Include="Models\Utilities\ExceptionData.cs" />
     <Compile Include="Models\Utilities\Utilities.cs" />

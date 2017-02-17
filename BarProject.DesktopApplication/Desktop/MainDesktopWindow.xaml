@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:BarProject.DesktopApplication"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="700">
+        Title="MainWindow" Height="900" Width="1024">
     <Grid>
         <Controls:MetroAnimatedSingleRowTabControl x:Name="TabControl"/>
     </Grid>
