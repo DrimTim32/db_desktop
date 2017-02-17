@@ -16,13 +16,8 @@ using System.Windows.Shapes;
 namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
 {
     using MahApps.Metro.Controls;
-    using Organisation;
-    using Warehouse;
 
-    /// <summary>
-    /// Interaction logic for MenagementUserControl.xaml
-    /// </summary>
-    public partial class MenagementUserControl : System.Windows.Controls.UserControl
+    public partial class MenagementUserControl : UserControl
     {
         public MenagementUserControl()
         {
@@ -69,6 +64,11 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 Header = "Recipies",
                 Content = new Recipies()
             };
+            var workstations = new MetroTabItem()
+            {
+                Header = "Recipies",
+                Content = new Workstations()
+            };
             categories.SetResourceReference(StyleProperty, "MenuLevel2");
             taxes.SetResourceReference(StyleProperty, "MenuLevel2");
             units.SetResourceReference(StyleProperty, "MenuLevel2");
@@ -76,11 +76,13 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             prices.SetResourceReference(StyleProperty, "MenuLevel2");
             products.SetResourceReference(StyleProperty, "MenuLevel2");
             recipies.SetResourceReference(StyleProperty, "MenuLevel2");
+            workstations.SetResourceReference(StyleProperty, "MenuLevel2");
             TabControl.Items.Clear();
             TabControl.Items.Add(categories);
             TabControl.Items.Add(taxes);
             TabControl.Items.Add(units);
             TabControl.Items.Add(suppliers);
+            TabControl.Items.Add(workstations);
             TabControl.Items.Add(prices);
             TabControl.Items.Add(products);
             TabControl.Items.Add(recipies);

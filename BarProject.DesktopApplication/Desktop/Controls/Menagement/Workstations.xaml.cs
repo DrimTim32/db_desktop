@@ -13,10 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
+namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
 {
     using System.Collections.ObjectModel;
-    using System.Diagnostics;
     using System.Net;
     using System.Windows.Threading;
     using Common.Utils;
@@ -26,14 +25,14 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
     using RestClient = Library.RestHelpers.RestClient;
 
     /// <summary>
-    /// Interaction logic for Locations.xaml
+    /// Interaction logic for Workstations.xaml
     /// </summary>
-    public partial class Locations : UserControl
+    public partial class Workstations : UserControl
     {
-        private ObservableCollection<ShowableLocation> _productsList;
+        private ObservableCollection<ShowableWorkstation> _productsList;
         private readonly object LocationsLock = new object();
 
-        public ObservableCollection<ShowableLocation> LocationsList
+        public ObservableCollection<ShowableWorkstation> WorksationsList
         {
             get
             {
@@ -41,25 +40,23 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
                 {
                     if (_productsList == null)
                         _productsList =
-                            new ObservableCollection<ShowableLocation>();
+                            new ObservableCollection<ShowableWorkstation>();
                     return _productsList;
                 }
             }
             set { lock (LocationsLock) { _productsList = value; } }
         }
-        public Locations()
+        public Workstations()
         {
             InitializeComponent();
-            Loaded += Locations_Loaded;
+            Loaded += ItemsLoaded;
             DataGrid.RowEditEnding += DataGrid_RowEditEnding;
             DataGrid.PreviewKeyDown += DataGrid_PreviewKeyDown;
         }
-
-        private void Locations_Loaded(object sender, RoutedEventArgs e)
+        private void ItemsLoaded(object sender, RoutedEventArgs e)
         {
             RefreshData();
         }
-
         private void ProgressBarStart()
         {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => Progress.Visibility = Visibility.Visible));
@@ -76,21 +73,21 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
         }
 
         private async void DoRefreshData()
-        { 
-                ProgressBarStart();
-                var tmp = await RestClient.Client().GetLocations();
-                LocationsList.Clear();
-                foreach (var location in tmp.Data)
-                {
-                    LocationsList.Add(location);
-                }
-                DataGrid.Items.Refresh();
-                ProgressBarStop(); 
-        }
-        private bool IsLocationEmpty(ShowableLocation location)
         {
-            return location.Name == null && location.City == null && location.Country == null && location.City == null &&
-                   location.Phone == null && location.Address == null && location.PostalCode == null;
+            ProgressBarStart();
+            var tmp = await RestClient.Client().GetWorkstations();
+            WorksationsList.Clear();
+            foreach (var location in tmp.Data)
+            {
+                WorksationsList.Add(location);
+            }
+            DataGrid.Items.Refresh();
+            ProgressBarStop();
+        }
+
+        private bool IsWorkstationEmpty(ShowableWorkstation workstation)
+        {
+            return workstation.Name == null;
         }
         private void DataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
@@ -98,17 +95,17 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
             if (DataGrid.SelectedItem != null && grid != null)
             {
 
-                var location = (ShowableLocation)e.Row.Item;
+                var workstation = (ShowableWorkstation)e.Row.Item;
                 grid.RowEditEnding -= DataGrid_RowEditEnding;
                 grid.CommitEdit();
                 ProgressBarStart();
-                if (IsLocationEmpty(location))
+                if (IsWorkstationEmpty(workstation))
                 {
                     grid.CancelEdit();
                     grid.RowEditEnding += DataGrid_RowEditEnding;
                     return;
                 }
-                if (string.IsNullOrEmpty(location.Name))
+                if (string.IsNullOrEmpty(workstation.Name))
                 {
                     var message = "You cannot create location with empty name";
                     grid.CancelEdit();
@@ -120,9 +117,9 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
                     return;
                 }
                 grid.RowEditEnding += DataGrid_RowEditEnding;
-                if (location.Id == null)
+                if (workstation.Id == null)
                 {
-                    RestClient.Client().AddLocation(location, (response, handle) =>
+                    RestClient.Client().AddWorkstation(workstation, (response, handle) =>
                     {
                         if (response.ResponseStatus != ResponseStatus.Completed ||
                             response.StatusCode != HttpStatusCode.OK)
@@ -135,16 +132,16 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
                 }
                 else
                 {
-                    RestClient.Client().UpdateLocation(location, (response, handle) =>
-                     {
-                         if (response.ResponseStatus != ResponseStatus.Completed ||
-                             response.StatusCode != HttpStatusCode.OK)
-                         {
-                             MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
-                                 response.Content.Replace("Reason", ""));
-                         }
-                         RefreshData();
-                     });
+                    RestClient.Client().UpdateWorkstation(workstation, (response, handle) =>
+                    {
+                        if (response.ResponseStatus != ResponseStatus.Completed ||
+                            response.StatusCode != HttpStatusCode.OK)
+                        {
+                            MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
+                                response.Content.Replace("Reason", ""));
+                        }
+                        RefreshData();
+                    });
                 }
 
             }
@@ -165,8 +162,8 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
                     }
                     else
                     {
-                        var cat = (ShowableLocation)dgr.Item;
-                        RestClient.Client().RemoveLocation(cat.Id,
+                        var cat = (ShowableWorkstation)dgr.Item;
+                        RestClient.Client().RemoveWorkstation(cat.Id,
                             (response, handle) =>
                             {
                                 if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)

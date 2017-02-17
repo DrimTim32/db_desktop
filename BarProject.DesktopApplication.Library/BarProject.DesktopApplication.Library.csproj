@@ -54,6 +54,7 @@
     <Compile Include="RestHelpers\Taxes.cs" />
     <Compile Include="RestHelpers\Units.cs" />
     <Compile Include="RestHelpers\Users.cs" />
+    <Compile Include="RestHelpers\Workstations.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
