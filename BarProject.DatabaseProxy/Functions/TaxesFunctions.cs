@@ -11,14 +11,14 @@
     {
         public static IEnumerable<ShowableTax> GetAllTaxes()
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 return db.Taxes.Select(x => x).ToAnotherType<Tax, ShowableTax>().ToList();
             }
         }
         public static void AddTax(ShowableTax tax)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 db.addTax(tax.TaxName, tax.TaxValue);
             }
@@ -27,7 +27,7 @@
 
         public static void RemoveTax(int id)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 db.removeTax(id);
             }

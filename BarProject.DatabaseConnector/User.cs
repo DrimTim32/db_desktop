@@ -29,9 +29,9 @@ namespace BarProject.DatabaseConnector
         public string surname { get; set; }
         public Nullable<byte> permission { get; set; }
     
-        public virtual EmployePermission EmployePermission { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Client_orders> Client_orders { get; set; }
+        public virtual EmployePermission EmployePermission { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Warehouse_orders> Warehouse_orders { get; set; }
     }

@@ -23,12 +23,12 @@ namespace BarProject.DesktopApplication.Remote
         public MainPage()
         {
             InitializeComponent();
-        }
-
+        } 
         private void Tile_Click(object sender, RoutedEventArgs e)
         {
             var page = new CategoriesPage();
             NavigationService.Navigate(page);
+
         }
     }
 }

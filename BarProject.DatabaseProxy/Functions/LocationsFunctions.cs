@@ -15,7 +15,7 @@ namespace BarProject.DatabaseProxy.Functions
     {
         public static List<ShowableLocation> GetLocations()
         {
-            using (var db = new DatabaseConnector.BarProjectEntities())
+            using (var db = new Entities())
             {
                 return db.Locations.ToAnotherType<Location, ShowableLocation>().ToList();
             }
@@ -23,14 +23,14 @@ namespace BarProject.DatabaseProxy.Functions
 
         public static void RemoveLocation(int id)
         {
-            using (var db = new DatabaseConnector.BarProjectEntities())
+            using (var db = new Entities())
             {
                 db.removeLocation(id);
             }
         }
         public static void AddLocation(ShowableLocation location)
         {
-            using (var db = new DatabaseConnector.BarProjectEntities())
+            using (var db = new Entities())
             {
                 db.addLocation(location.Name, location.Address, location.City, location.PostalCode, location.Country,
                     location.Phone);
@@ -38,7 +38,7 @@ namespace BarProject.DatabaseProxy.Functions
         }
         public static void UpdateLocation(int id, ShowableLocation location)
         {
-            using (var db = new DatabaseConnector.BarProjectEntities())
+            using (var db = new Entities())
             {
                 db.updateLocation(id, location.Name, location.Address, location.City, location.PostalCode, location.Country,
                     location.Phone);

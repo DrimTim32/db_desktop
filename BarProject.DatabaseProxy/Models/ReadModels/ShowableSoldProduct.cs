@@ -7,7 +7,7 @@
 
     public class ShowableSoldProduct : INotifyPropertyChanged
     {
-        private int id;
+        private int? id;
         private decimal _price;
         private DateTime _periodStart;
         private int? _recepitId;
@@ -16,6 +16,12 @@
         private string _unitName;
         private string _categoryName;
         private string _name;
+
+        public int? Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
 
         public string Name
         {
@@ -66,7 +72,7 @@
             set
             {
                 _taxValue = value;
-                OnPropertyChanged(nameof(TaxValue));
+                OnPropertyChanged();
             }
         }
 
@@ -76,7 +82,7 @@
             set
             {
                 _recepitId = value;
-                OnPropertyChanged(nameof(RecepitId));
+                OnPropertyChanged();
             }
         }
 
@@ -100,7 +106,10 @@
 
             }
         }
-        public ShowableSoldProduct() { }
+        public ShowableSoldProduct()
+        {
+            id = null;
+        }
         public ShowableSoldProduct(productDetails_Result product)
         {
             id = product.id;
@@ -108,7 +117,7 @@
             CategoryName = product.category_name;
             UnitName = product.unit_name;
             TaxName = product.tax_name;
-            TaxValue = product.tax_value; 
+            TaxValue = product.tax_value;
         }
         public ShowableSoldProduct(soldProductDetails_Result product)
         {
@@ -121,6 +130,13 @@
             RecepitId = product.receipt_id;
             PeriodStart = product.period_start;
             Price = product.price;
+
+        }
+        public ShowableSoldProduct(productsByCategory_Result product)
+        {
+            id = product.id;
+            Price = product.price;
+            Name = product.name;
 
         }
 
@@ -137,8 +153,9 @@
             Price = product.Price;
         }
 
+
         public event PropertyChangedEventHandler PropertyChanged;
-          
+
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

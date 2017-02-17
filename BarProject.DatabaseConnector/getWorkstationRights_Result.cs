@@ -11,10 +11,8 @@ namespace BarProject.DatabaseConnector
 {
     using System;
     
-    public partial class productsByCategory_Result
+    public partial class getWorkstationRights_Result
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public decimal price { get; set; }
+        public byte employe_permissions { get; set; }
     }
 }

@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:BarProject.DesktopApplication.Remote"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
-        Title="MainRemoteWindow" WindowState="Maximized">
+        Title="MainRemoteWindow" WindowState="Maximized" Height="900" Width="1024">
     <Window.Resources>
 
-        <ResourceDictionary> 
-            <ResourceDictionary.MergedDictionaries> 
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
@@ -18,12 +18,21 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>
+    <Grid  DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:MainRemoteWindow}}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="35"></RowDefinition>
         </Grid.RowDefinitions>
-        <Frame Source="MainPage.xaml" NavigationUIVisibility="Hidden"/>
-        <Label x:Name="InfoLabel" Grid.Row="1"/>
+        <StackPanel x:Name="OrderDetails" Orientation="Horizontal" Visibility="Hidden">
+            <Label Content="New order details:    " FontSize="30"/>
+            <StackPanel Orientation="Horizontal" DataContext="{Binding Order}" x:Name="StackPanel">
+                <Label Content="Current sum " FontSize="30" />
+                <Label Content="{Binding Sum, Mode=OneWay}" FontSize="30"/>
+            </StackPanel>
+            <mah:Tile Content="Close order" Width="250" Height="50" FontSize="30" Click="CloseOrder_Click"/>
+        </StackPanel>
+        <Frame Source="MainPage.xaml" NavigationUIVisibility="Hidden" Grid.Row="1"/>
+        <Label x:Name="InfoLabel" Grid.Row="2"/>
     </Grid>
 </mah:MetroWindow>

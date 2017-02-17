@@ -17,18 +17,18 @@ namespace BarProject.DatabaseConnector
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ProductsSold()
         {
-            this.Prices = new HashSet<Price>();
             this.Client_order_details = new HashSet<Client_order_details>();
+            this.Prices = new HashSet<Price>();
         }
     
         public int id { get; set; }
         public Nullable<int> receipt_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Client_order_details> Client_order_details { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Price> Prices { get; set; }
         public virtual Product Product { get; set; }
         public virtual Receipt Receipt { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Client_order_details> Client_order_details { get; set; }
     }
 }

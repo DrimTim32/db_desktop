@@ -9,7 +9,7 @@
       Title="MainCategories" KeepAlive="False">
     <Grid>
         <StackPanel>
-            <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
+            <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress" Height="150"/>
             <WrapPanel x:Name="WrapPanel"/>
         </StackPanel>
     </Grid>

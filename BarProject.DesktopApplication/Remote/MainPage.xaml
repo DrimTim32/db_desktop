@@ -4,8 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-      mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      mc:Ignorable="d"  
       Title="Subpages">  
     <Grid> 
         <controls:Tile Title="NEW ORDER" Style="{StaticResource LargeTileStyle}" Background="Red" Height="450" Width="450" Click="Tile_Click">

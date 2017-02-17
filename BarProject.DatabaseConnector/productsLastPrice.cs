@@ -10,11 +10,12 @@
 namespace BarProject.DatabaseConnector
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class productsByCategory_Result
+    public partial class productsLastPrice
     {
-        public int id { get; set; }
-        public string name { get; set; }
+        public int product_id { get; set; }
         public decimal price { get; set; }
+        public System.DateTime period_start { get; set; }
     }
 }

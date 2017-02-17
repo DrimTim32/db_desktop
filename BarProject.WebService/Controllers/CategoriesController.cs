@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using BarProject.DatabaseConnector;
 
 namespace BarProject.WebService.Controllers
 {
@@ -35,12 +36,12 @@ namespace BarProject.WebService.Controllers
 
         [HttpGet, Route("{id}/products")]
         [Authorize]
-        [ResponseType(typeof(IEnumerable<ShowableCategory>))]
+        [ResponseType(typeof(IEnumerable<ShowableSoldProduct>))]
         public IHttpActionResult GetProducts(int id)
         {
             try
             {
-                var categories = ProductsFunctions.GetByCategory(id);
+                var categories = ProductsFunctions.GetSoldableProductsByCategory(id);
                 return Ok(categories);
             }
             catch (Exception ex)

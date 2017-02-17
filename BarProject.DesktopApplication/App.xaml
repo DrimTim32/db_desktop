@@ -9,7 +9,7 @@
              mc:Ignorable="options"
              StartupUri="Common/Login.xaml">
     <Application.Resources>
-        
+
         <ResourceDictionary>
 
             <ResourceDictionary.MergedDictionaries>
@@ -25,8 +25,18 @@
 
             <Style x:Key="LargeTileStyle" TargetType="mah:Tile">
                 <Setter Property="Width" Value="300" />
-                <Setter Property="Height" Value="125" />
-                <Setter Property="TitleFontSize" Value="50" />
+                <Setter Property="Height" Value="300" />
+                <Setter Property="TitleFontSize" Value="40" />
+            </Style>
+            <Style x:Key="MediumTileStyle" TargetType="mah:Tile">
+                <Setter Property="Width" Value="150" />
+                <Setter Property="Height" Value="150" />
+                <Setter Property="TitleFontSize" Value="30" />
+            </Style>
+            <Style x:Key="SmallTileStyle" TargetType="mah:Tile">
+                <Setter Property="Width" Value="50" />
+                <Setter Property="Height" Value="50" />
+                <Setter Property="TitleFontSize" Value="10" />
             </Style>
             <Style x:Key="MenuLevel2" BasedOn="{StaticResource MetroTabItem}" TargetType="{x:Type TabItem}">
                 <Setter Property="mah:ControlsHelper.HeaderFontSize" Value="15"></Setter>

@@ -134,6 +134,27 @@
     <Compile Include="EmployePermission.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="getClientOrderDetails_Result.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="getClientOrder_Result.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="getLocation_Result.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="getSupplier_Result.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="getWarehouseOrderDetails_Result.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="getWarehouseOrder_Result.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="getWorkstationRights_Result.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Ingredient.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
@@ -159,6 +180,9 @@
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="productSimple.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="productsLastPrice.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="ProductsSold.cs">
@@ -221,6 +245,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="BarProjectEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>BarProjectEntities.edmx</DependentUpon>
@@ -231,9 +258,6 @@
       <DependentUpon>BarProjectEntities.edmx</DependentUpon>
       <LastGenOutput>BarProjectEntities.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

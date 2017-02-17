@@ -51,7 +51,7 @@ namespace BarProject.DatabaseProxy.Functions
         {
             try
             {
-                using (var db = new BarProjectEntities())
+                using (var db = new Entities())
                 {
                     db.createInternalError(errorName, errorTime, message, stackTrace, context, innerMessage);
                 }

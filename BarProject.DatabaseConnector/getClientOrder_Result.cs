@@ -11,10 +11,11 @@ namespace BarProject.DatabaseConnector
 {
     using System;
     
-    public partial class productsByCategory_Result
+    public partial class getClientOrder_Result
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public decimal price { get; set; }
+        public int spot_id { get; set; }
+        public int employee_id { get; set; }
+        public Nullable<System.DateTime> order_time { get; set; }
+        public Nullable<System.DateTime> payment_time { get; set; }
     }
 }

@@ -60,11 +60,15 @@ namespace BarProject.DesktopApplication.Remote
             public int Id { get; set; }
             public string Title { get; set; }
         }
-        private void AddProductTile(string title, int id)
+        private void AddProductTile(string title, ShowableSoldProduct product)
         {
-            var tile = new TileWithId(id) { Title = title };
+            var tile = new Tile { Title = title };
             tile.SetResourceReference(StyleProperty, "LargeTileStyle");
             tile.Background = Brushes.CadetBlue;
+            tile.Click += (s, e) =>
+            {
+                NavigationService.Navigate(new ProductPage(product));
+            };
             WrapPanel.Children.Add(tile);
         }
         private void AddCategoryTile(string title, int id)
@@ -115,10 +119,10 @@ namespace BarProject.DesktopApplication.Remote
             if (currId != null)
             {
                 var tmp = await RestClient.Client().GetProductsByCategory(currId.Value);
-                IEnumerable<ShowableSimpleProduct> products = tmp.Data;
+                IEnumerable<ShowableSoldProduct> products = tmp.Data;
                 foreach (var product in products)
                 {
-                    AddProductTile(product.Name, product.Id);
+                    AddProductTile(product.Name, product);
                 }
             }
             ProgressBarStop();

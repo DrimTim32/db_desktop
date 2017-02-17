@@ -10,7 +10,7 @@
     {
         public static List<ShowableSimpleProduct> GetProductView()
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 return db.productSimples.ToAnotherType<productSimple, ShowableSimpleProduct>().ToList();
             }
@@ -18,7 +18,7 @@
 
         public static ShowableSoldProduct GetSoldProductData(int id)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 return db.soldProductDetails(id).ToAnotherType<soldProductDetails_Result, ShowableSoldProduct>().FirstOrDefault();
             }
@@ -26,7 +26,7 @@
 
         public static List<ShowablePricesHistory> GetPricesHistory(int id)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 return db.pricesHistory(id).ToAnotherType<pricesHistory_Result, ShowablePricesHistory>().ToList();
             }
@@ -34,19 +34,18 @@
         }
         public static ShowableStoredProduct GetStoredProduct(int id)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 return db.productDetails(id).ToAnotherType<productDetails_Result, ShowableStoredProduct>().FirstOrDefault();
             }
 
         }
 
-        public static List<ShowableSimpleProduct> GetByCategory(int id)
+        public static List<ShowableSoldProduct> GetSoldableProductsByCategory(int id)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
-                return
-                    db.Products.Where(x => x.category_id == id).ToAnotherType<Product, ShowableSimpleProduct>().ToList();
+                return db.productsByCategory(id).ToAnotherType<productsByCategory_Result, ShowableSoldProduct>().ToList();
             }
         }
     }

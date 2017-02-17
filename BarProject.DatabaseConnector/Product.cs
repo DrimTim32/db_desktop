@@ -31,11 +31,11 @@ namespace BarProject.DatabaseConnector
         public virtual Tax Tax { get; set; }
         public virtual Unit Unit { get; set; }
         public virtual ProductsStored ProductsStored { get; set; }
-        public virtual ProductsSold ProductsSold { get; set; }
-        public virtual ProductsStored ProductsStored1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Warehouse> Warehouses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Warehouse_order_details> Warehouse_order_details { get; set; }
+        public virtual ProductsSold ProductsSold { get; set; }
+        public virtual ProductsStored ProductsStored1 { get; set; }
     }
 }

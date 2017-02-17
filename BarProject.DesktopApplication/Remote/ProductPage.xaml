@@ -1,0 +1,35 @@
+﻿<Page x:Class="BarProject.DesktopApplication.Remote.ProductPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BarProject.DesktopApplication.Remote"
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+      mc:Ignorable="d"  
+      Title="ProductPage" d:DesignHeight="835" d:DesignWidth="1024" Background="White">
+    <Grid  DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:ProductPage}}">
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <Label FontSize="50">You are about to add:</Label>
+                <Label x:Name="ProductNameBlock" FontSize="50" Content="{Binding Product.Name}"></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="106">
+                <Label FontSize="50">Quantity:</Label>
+                <Label x:Name="QuantityValue" FontSize="50" Content="{Binding Data.Quantity}"/>
+                <StackPanel Orientation="Vertical">
+                    <controls:Tile x:Name="TileUp" Style="{StaticResource SmallTileStyle}" Margin="0">
+                        <Label FontFamily="Marlett" Content="5" FontSize="50"></Label>
+                    </controls:Tile>
+                    <controls:Tile x:Name="TileDown" Style="{StaticResource SmallTileStyle}" Margin="0,5,0,0">
+                        <Label FontFamily="Marlett" Content="6" FontSize="50"></Label>
+                    </controls:Tile>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <controls:Tile Click="AcceptButtonClick" Content="Accept" Style="{StaticResource MediumTileStyle}" FontSize="45"/>
+                <controls:Tile Content="Cancel" Style="{StaticResource MediumTileStyle}" FontSize="45"></controls:Tile>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>
