@@ -20,14 +20,14 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
             var data = await client.ExecuteGetTaskAsync<List<ShowableSupplier>>(request);
             return data;
         }
-        public void RemoveSuppliers(int? id, Action<IRestResponse, RestRequestAsyncHandle> callback)
+        public void RemoveSupplier(int? id, Action<IRestResponse, RestRequestAsyncHandle> callback)
         {
             var request = new RestRequest($"api/suppliers/{id}", Method.DELETE);
             request.AddHeader("Authorization", $"bearer {token}");
             request.AddHeader("Content-Type", "application/json");
             client.ExecuteAsync(request, callback);
         }
-        public void AddSuppliers(ShowableSupplier category, Action<IRestResponse, RestRequestAsyncHandle> callback)
+        public void AddSupplier(ShowableSupplier category, Action<IRestResponse, RestRequestAsyncHandle> callback)
         {
             var request = new RestRequest("api/suppliers/", Method.POST) { RequestFormat = DataFormat.Json };
             request.AddHeader("Authorization", $"bearer {token}");
@@ -35,7 +35,7 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
             request.AddBody(category);
             client.ExecuteAsync(request, callback);
         }
-        public void UpdateSuppliers(ShowableSupplier category, Action<IRestResponse, RestRequestAsyncHandle> callback)
+        public void UpdateSupplier(ShowableSupplier category, Action<IRestResponse, RestRequestAsyncHandle> callback)
         {
             var request = new RestRequest($"api/suppliers/{category.Id}", Method.PATCH) { RequestFormat = DataFormat.Json };
             request.AddHeader("Authorization", $"bearer {token}");

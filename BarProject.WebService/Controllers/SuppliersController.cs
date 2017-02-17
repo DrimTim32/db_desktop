@@ -30,6 +30,7 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
+
         [HttpPost, Route("")]
         [Authorize(Roles = "Admin,Owner")]
         public IHttpActionResult Post(ShowableSupplier category)
@@ -44,6 +45,7 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
+
         [HttpDelete]
         [Authorize(Roles = "Admin,Owner")]
         [Route("{id}")]
@@ -59,6 +61,7 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
+
         [HttpPatch]
         [Authorize(Roles = "Admin,Owner")]
         [Route("{id}")]
@@ -74,6 +77,6 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
+
     }
-}
 }

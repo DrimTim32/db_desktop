@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
 {
     using MahApps.Metro.Controls;
+    using Organisation;
 
     /// <summary>
     /// Interaction logic for MenagementUserControl.xaml
@@ -26,7 +27,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         {
             InitializeComponent();
             SetTabs();
-        } 
+        }
 
         public void SetTabs()
         {
@@ -46,13 +47,20 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 Header = "Units",
                 Content = new Units()
             };
+            var suppliers = new MetroTabItem()
+            {
+                Header = "Suppliers",
+                Content = new Suppliers()
+            };
             categories.SetResourceReference(StyleProperty, "MenuLevel2");
             taxes.SetResourceReference(StyleProperty, "MenuLevel2");
             units.SetResourceReference(StyleProperty, "MenuLevel2");
+            suppliers.SetResourceReference(StyleProperty, "MenuLevel2");
             TabControl.Items.Clear();
             TabControl.Items.Add(categories);
             TabControl.Items.Add(taxes);
             TabControl.Items.Add(units);
+            TabControl.Items.Add(suppliers);
         }
     }
 }

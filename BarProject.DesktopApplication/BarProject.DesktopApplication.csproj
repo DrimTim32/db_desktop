@@ -88,7 +88,7 @@
     <Compile Include="Desktop\Controls\Organisation\OrganisationUserControl.xaml.cs">
       <DependentUpon>OrganisationUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Desktop\Controls\Organisation\Suppliers.xaml.cs">
+    <Compile Include="Desktop\Controls\Menagement\Suppliers.xaml.cs">
       <DependentUpon>Suppliers.xaml</DependentUpon>
     </Compile>
     <Compile Include="Desktop\Controls\Warehouse\Prices.xaml.cs">
@@ -137,7 +137,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Desktop\Controls\Organisation\Suppliers.xaml">
+    <Page Include="Desktop\Controls\Menagement\Suppliers.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
