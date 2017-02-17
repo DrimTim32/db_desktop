@@ -54,7 +54,6 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
             lock (clientLocker)
             {
                 _client = new RestSharp.RestClient(url);
-                //TODO : check json serializer
             }
         }
         public static RestClient Client(string url)

@@ -55,34 +55,74 @@ namespace BarProject.DesktopApplication.Desktop.Windows
         }
         public SoldProductDataWindow(int id)
         {
-            InitializeComponent();
-            Loaded += SoldProductWindow_Loaded; ;
             _productId = id;
+            Loaded += SoldProductWindow_Loaded;
+            InitializeComponent();
+            TextTaxName.SelectionChanged += TextTaxName_SelectionChanged;
+        }
+
+        private void TextTaxName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            FillTaxName();
         }
 
         private void SoldProductWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            ReloadModel();
+            GetSources();
+        }
+        private void GetSources()
+        {
+            this.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+            {
+                TextTaxName.IsReadOnly = true;
+            }));
+            this.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(DoGetSources));
+        }
+
+        private void FillTaxName()
+        {
+            this.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(DoFillTaxName));
+        }
+        private async void DoFillTaxName()
+        {
+            ProgressBarStart();
+            var tmp = await RestClient.Client().GetTaxes();
+            var firstOrDefault = tmp.Data.FirstOrDefault(x => x.TaxName == TextTaxName.Text);
+            if (firstOrDefault != null)
+                TextTaxValue.Text = firstOrDefault.TaxValue.ToString();
+            else
+                TextTaxValue.Text = "";
+            ProgressBarStop();
+        }
+        private async void DoGetSources()
+        {
+            ProgressBarStart();
+            var tmp = await RestClient.Client().GetTaxes();
+            TextTaxName.ItemsSource = tmp.Data.Select(x => x.TaxName); 
+            this.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+            { 
+                ReloadModel();
+            }));
         }
         private void ReloadModel()
         {
-            this.Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoRefreshData));
+            this.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(DoRefreshData));
         }
         private async void DoRefreshData()
         {
             ProgressBarStart();
             var tmp = await RestClient.Client().GetSoldProduct(productId);
-            SoldProduct.LoadFromAnother(tmp.Data);
+            SoldProduct.LoadFromAnother(tmp.Data); 
             ProgressBarStop();
         }
         private void ProgressBarStart()
         {
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => Progress.Visibility = Visibility.Visible));
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => Progress.Visibility = Visibility.Visible));
         }
 
         private void ProgressBarStop()
         {
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => Progress.Visibility = Visibility.Hidden));
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => Progress.Visibility = Visibility.Hidden));
         }
     }
 }

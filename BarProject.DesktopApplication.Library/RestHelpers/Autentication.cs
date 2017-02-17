@@ -22,6 +22,7 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
             string encodedBody = $"grant_type=password&username={login}&password={password}";
             request.AddParameter("application/x-www-form-urlencoded", encodedBody, ParameterType.RequestBody);
             request.AddParameter("Content-Type", "application/x-www-form-urlencoded", ParameterType.HttpHeader);
+            request.Timeout = 7000;
             client.ExecuteAsync(request, resp =>
             {
                 var tmp = resp.Content;

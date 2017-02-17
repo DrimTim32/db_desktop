@@ -63,11 +63,47 @@ namespace BarProject.DesktopApplication.Desktop.Windows
             _productId = id;
             Loaded += StoredProductWindow_Loaded; ;
             InitializeComponent();
+            TextTaxName.SelectionChanged += TextTaxName_SelectionChanged;
         }
+        private void TextTaxName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            FillTaxName();
+        }
+        private void FillTaxName()
+        {
 
+            this.Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoFillTaxName));
+        }
+        private async void DoFillTaxName()
+        {
+
+            ProgressBarStart();
+            var tmp = await RestClient.Client().GetTaxes();
+            var firstOrDefault = tmp.Data.FirstOrDefault(x => x.TaxName == TextTaxName.Text);
+            if (firstOrDefault != null)
+                TextTaxValue.Text = firstOrDefault.TaxValue.ToString();
+            else
+                TextTaxValue.Text = "";
+            ProgressBarStop();
+        }
         private void StoredProductWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            ReloadModel();
+            GetSources();
+        }
+        private void GetSources()
+        {
+            this.Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoGetSources));
+        }
+
+        private async void DoGetSources()
+        {
+            ProgressBarStart();
+            var tmp = await RestClient.Client().GetTaxes();
+            TextTaxName.ItemsSource = tmp.Data.Select(x => x.TaxName);
+            this.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+            {
+                ReloadModel();
+            }));
         }
 
         private void ReloadModel()

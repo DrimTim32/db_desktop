@@ -66,7 +66,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             };
             var workstations = new MetroTabItem()
             {
-                Header = "Recipies",
+                Header = "Workstations",
                 Content = new Workstations()
             };
             categories.SetResourceReference(StyleProperty, "MenuLevel2");

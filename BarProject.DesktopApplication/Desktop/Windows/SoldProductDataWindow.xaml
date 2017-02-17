@@ -8,8 +8,8 @@
         mc:Ignorable="d"
         Title="SoldProductDataWindow" Height="300" Width="300">
     <Grid>
-        <StackPanel MinWidth="200" DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:SoldProductDataWindow}}">
-            <ProgressBar x:Name="Progress" Background="White"/>
+        <StackPanel MinWidth="200" DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:SoldProductDataWindow}}"> 
+            <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
             <StackPanel DataContext="{Binding Path=SoldProduct}" Orientation="Vertical" x:Name="Panel">
                 <StackPanel.Resources>
                     <Style TargetType="StackPanel">
@@ -41,11 +41,11 @@
                 </StackPanel>
                 <StackPanel>
                     <Label Content="Tax name" Target="{Binding ElementName=TextTaxName}"/>
-                    <TextBox x:Name="TextTaxName" Width="150" Text="{Binding Path=TaxName, Mode=TwoWay, ValidatesOnDataErrors=True}" />
+                    <ComboBox x:Name="TextTaxName" Width="150" Text="{Binding Path=TaxName, Mode=TwoWay, ValidatesOnDataErrors=True}" ItemsSource="{Binding}" />
                 </StackPanel>
                 <StackPanel>
                     <Label Content="Tax value" Target="{Binding ElementName=TextTaxValue}"/>
-                    <TextBox x:Name="TextTaxValue" Width="150" Text="{Binding Path=TaxValue, Mode=TwoWay, ValidatesOnDataErrors=True}" />
+                    <TextBlock x:Name="TextTaxValue" Width="150" Text="{Binding Path=TaxValue, Mode=TwoWay,ValidatesOnDataErrors=True}"/>
                 </StackPanel>
                 <StackPanel>
                     <Label Content="Recepit id" Target="{Binding ElementName=TextRecepitid}"/>
