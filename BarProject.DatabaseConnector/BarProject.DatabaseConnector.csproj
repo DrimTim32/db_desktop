@@ -185,6 +185,9 @@
     <Compile Include="productsLastPrice.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="productsLastPricesWithName.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="ProductsSold.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BarProjectEntities.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BarProjectEntities.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="id" />
@@ -242,6 +242,20 @@ warning 6002: The table/view 'BarProject.dbo.productsLastPrices' does not have a
             <PropertyRef Name="period_start" />
           </Key>
           <Property Name="product_id" Type="int" Nullable="false" />
+          <Property Name="price" Type="money" Nullable="false" />
+          <Property Name="period_start" Type="date" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'BarProject.dbo.productsLastPricesWithName' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="productsLastPricesWithName">
+          <Key>
+            <PropertyRef Name="product_id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="price" />
+            <PropertyRef Name="period_start" />
+          </Key>
+          <Property Name="product_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="price" Type="money" Nullable="false" />
           <Property Name="period_start" Type="date" Nullable="false" />
         </EntityType>
@@ -1113,6 +1127,14 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
     [productsLastPrices].[period_start] AS [period_start]
     FROM [dbo].[productsLastPrices] AS [productsLastPrices]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="productsLastPricesWithName" EntityType="Self.productsLastPricesWithName" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [productsLastPricesWithName].[product_id] AS [product_id], 
+    [productsLastPricesWithName].[name] AS [name], 
+    [productsLastPricesWithName].[price] AS [price], 
+    [productsLastPricesWithName].[period_start] AS [period_start]
+    FROM [dbo].[productsLastPricesWithName] AS [productsLastPricesWithName]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
             <DefiningQuery>SELECT 
     [database_firewall_rules].[id] AS [id], 
@@ -1232,11 +1254,10 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             <End Role="ProductsStored" EntitySet="ProductsStored" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="BarProjectEntities" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="ProjectEntities" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <ComplexType Name="getClientOrder_Result">
           <Property Name="spot_id" Type="Int32" Nullable="false" />
           <Property Name="employee_id" Type="Int32" Nullable="false" />
@@ -1929,7 +1950,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           <End Role="EmployePermissions" Type="Self.EmployePermission" Multiplicity="*" />
           <End Role="Workstations" Type="Self.Workstation" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="BarProjectEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Client_order_details" EntityType="Self.Client_order_details" />
           <EntitySet Name="Client_orders" EntityType="Self.Client_orders" />
@@ -2059,41 +2080,41 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             <End Role="EmployePermissions" EntitySet="EmployePermissions" />
             <End Role="Workstations" EntitySet="Workstations" />
           </AssociationSet>
-          <FunctionImport Name="getClientOrder" IsComposable="true" ReturnType="Collection(BarProjectEntities.getClientOrder_Result)">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <FunctionImport Name="getClientOrder" IsComposable="true" ReturnType="Collection(ProjectEntities.getClientOrder_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="getClientOrderDetails" IsComposable="true" ReturnType="Collection(BarProjectEntities.getClientOrderDetails_Result)">
-            <Parameter Name="client_order_id" Mode="In" Type="Int32" />
+          <FunctionImport Name="getClientOrderDetails" IsComposable="true" ReturnType="Collection(ProjectEntities.getClientOrderDetails_Result)">
+          <Parameter Name="client_order_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="getLocation" IsComposable="true" ReturnType="Collection(BarProjectEntities.getLocation_Result)">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <FunctionImport Name="getLocation" IsComposable="true" ReturnType="Collection(ProjectEntities.getLocation_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="getSupplier" IsComposable="true" ReturnType="Collection(BarProjectEntities.getSupplier_Result)">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <FunctionImport Name="getSupplier" IsComposable="true" ReturnType="Collection(ProjectEntities.getSupplier_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="getWarehouseOrder" IsComposable="true" ReturnType="Collection(BarProjectEntities.getWarehouseOrder_Result)">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <FunctionImport Name="getWarehouseOrder" IsComposable="true" ReturnType="Collection(ProjectEntities.getWarehouseOrder_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="getWarehouseOrderDetails" IsComposable="true" ReturnType="Collection(BarProjectEntities.getWarehouseOrderDetails_Result)">
-            <Parameter Name="warehouse_order_id" Mode="In" Type="Int32" />
+          <FunctionImport Name="getWarehouseOrderDetails" IsComposable="true" ReturnType="Collection(ProjectEntities.getWarehouseOrderDetails_Result)">
+          <Parameter Name="warehouse_order_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="getWorkstationRights" IsComposable="true" ReturnType="Collection(BarProjectEntities.getWorkstationRights_Result)">
-            <Parameter Name="workstation_id" Mode="In" Type="Int32" />
+          <FunctionImport Name="getWorkstationRights" IsComposable="true" ReturnType="Collection(ProjectEntities.getWorkstationRights_Result)">
+          <Parameter Name="workstation_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="pricesHistory" IsComposable="true" ReturnType="Collection(BarProjectEntities.pricesHistory_Result)">
-            <Parameter Name="product_id" Mode="In" Type="Int32" />
+          <FunctionImport Name="pricesHistory" IsComposable="true" ReturnType="Collection(ProjectEntities.pricesHistory_Result)">
+          <Parameter Name="product_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="productDetails" IsComposable="true" ReturnType="Collection(BarProjectEntities.productDetails_Result)">
-            <Parameter Name="product_id" Mode="In" Type="Int32" />
+          <FunctionImport Name="productDetails" IsComposable="true" ReturnType="Collection(ProjectEntities.productDetails_Result)">
+          <Parameter Name="product_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="productsByCategory" IsComposable="true" ReturnType="Collection(BarProjectEntities.productsByCategory_Result)">
-            <Parameter Name="category_id" Mode="In" Type="Int32" />
+          <FunctionImport Name="productsByCategory" IsComposable="true" ReturnType="Collection(ProjectEntities.productsByCategory_Result)">
+          <Parameter Name="category_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="receiptDetails" IsComposable="true" ReturnType="Collection(BarProjectEntities.receiptDetails_Result)">
-            <Parameter Name="receipt_id" Mode="In" Type="Int32" />
+          <FunctionImport Name="receiptDetails" IsComposable="true" ReturnType="Collection(ProjectEntities.receiptDetails_Result)">
+          <Parameter Name="receipt_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="soldProductDetails" IsComposable="true" ReturnType="Collection(BarProjectEntities.soldProductDetails_Result)">
-            <Parameter Name="product_id" Mode="In" Type="Int32" />
+          <FunctionImport Name="soldProductDetails" IsComposable="true" ReturnType="Collection(ProjectEntities.soldProductDetails_Result)">
+          <Parameter Name="product_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="addCategory">
             <Parameter Name="category_name" Mode="In" Type="String" />
@@ -2133,17 +2154,17 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             <Parameter Name="name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="addReceipt">
-            <Parameter Name="description" Mode="In" Type="String" />
+          <Parameter Name="description" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="addSoldProduct">
             <Parameter Name="product_id" Mode="In" Type="Int32" />
             <Parameter Name="receipt_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="addSpot">
-            <Parameter Name="name" Mode="In" Type="String" />
+          <Parameter Name="name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="addStoredProduct">
-            <Parameter Name="product_id" Mode="In" Type="Int32" />
+          <Parameter Name="product_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="addSupplier">
             <Parameter Name="name" Mode="In" Type="String" />
@@ -2192,7 +2213,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             <Parameter Name="quantity" Mode="In" Type="Int16" />
           </FunctionImport>
           <FunctionImport Name="addWorkstation">
-            <Parameter Name="name" Mode="In" Type="String" />
+          <Parameter Name="name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="addWorkstationRights">
             <Parameter Name="workstation_id" Mode="In" Type="Int32" />
@@ -2221,13 +2242,13 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             <Parameter Name="Random" Mode="InOut" Type="Double" />
           </FunctionImport>
           <FunctionImport Name="getSalt">
-            <Parameter Name="Salt" Mode="InOut" Type="String" />
+          <Parameter Name="Salt" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="removeCategory">
-            <Parameter Name="category_id" Mode="In" Type="Int32" />
+          <Parameter Name="category_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="removeClientOrder">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="removeClientOrderDetail">
             <Parameter Name="client_order_id" Mode="In" Type="Int32" />
@@ -2242,41 +2263,41 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             <Parameter Name="ingredient_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="removeLocation">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="removeProduct">
-            <Parameter Name="product_id" Mode="In" Type="Int32" />
+          <Parameter Name="product_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="removeReceipt">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="removeSoldProduct">
-            <Parameter Name="product_id" Mode="In" Type="Int32" />
+          <Parameter Name="product_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="removeSpot">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="removeStoredProduct">
-            <Parameter Name="product_id" Mode="In" Type="Int32" />
+          <Parameter Name="product_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="removeSupplier">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="removeTax">
-            <Parameter Name="tax_id" Mode="In" Type="Int32" />
+          <Parameter Name="tax_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="removeUnit">
-            <Parameter Name="unit_id" Mode="In" Type="Int32" />
+          <Parameter Name="unit_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="removeWarehouseOrder">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="removeWarehouseOrderDetail">
             <Parameter Name="warehouse_order_id" Mode="In" Type="Int32" />
             <Parameter Name="product_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="removeWorkstation">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="removeWorkstationRights">
             <Parameter Name="workstation_id" Mode="In" Type="Int32" />
@@ -2383,17 +2404,30 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             <Parameter Name="new_name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="userExists">
-            <Parameter Name="login" Mode="In" Type="String" />
+          <Parameter Name="login" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="productsLastPricesWithNames" EntityType="ProjectEntities.productsLastPricesWithName" />
         </EntityContainer>
+        <EntityType Name="productsLastPricesWithName">
+          <Key>
+            <PropertyRef Name="product_id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="price" />
+            <PropertyRef Name="period_start" />
+          </Key>
+          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="period_start" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="BarProjectEntitiesStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="BarProjectEntitiesStoreContainer" CdmEntityContainer="BarProjectEntities">
           <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="BarProjectEntities.Category">
+            <EntityTypeMapping TypeName="ProjectEntities.Category">
               <MappingFragment StoreEntitySet="Categories">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="slug" ColumnName="slug" />
@@ -2403,7 +2437,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Client_order_details">
-            <EntityTypeMapping TypeName="BarProjectEntities.Client_order_details">
+            <EntityTypeMapping TypeName="ProjectEntities.Client_order_details">
               <MappingFragment StoreEntitySet="Client_order_details">
                 <ScalarProperty Name="client_order_id" ColumnName="client_order_id" />
                 <ScalarProperty Name="products_sold_id" ColumnName="products_sold_id" />
@@ -2414,7 +2448,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Client_orders">
-            <EntityTypeMapping TypeName="BarProjectEntities.Client_orders">
+            <EntityTypeMapping TypeName="ProjectEntities.Client_orders">
               <MappingFragment StoreEntitySet="Client_orders">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="spot_id" ColumnName="spot_id" />
@@ -2425,7 +2459,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EmployePermissions">
-            <EntityTypeMapping TypeName="BarProjectEntities.EmployePermission">
+            <EntityTypeMapping TypeName="ProjectEntities.EmployePermission">
               <MappingFragment StoreEntitySet="EmployePermissions">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="value" ColumnName="value" />
@@ -2434,7 +2468,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Ingredients">
-            <EntityTypeMapping TypeName="BarProjectEntities.Ingredient">
+            <EntityTypeMapping TypeName="ProjectEntities.Ingredient">
               <MappingFragment StoreEntitySet="Ingredients">
                 <ScalarProperty Name="receipt_id" ColumnName="receipt_id" />
                 <ScalarProperty Name="ingredient_id" ColumnName="ingredient_id" />
@@ -2443,7 +2477,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="InternalErrors">
-            <EntityTypeMapping TypeName="BarProjectEntities.InternalError">
+            <EntityTypeMapping TypeName="ProjectEntities.InternalError">
               <MappingFragment StoreEntitySet="InternalErrors">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="error_name" ColumnName="error_name" />
@@ -2456,7 +2490,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Locations">
-            <EntityTypeMapping TypeName="BarProjectEntities.Location">
+            <EntityTypeMapping TypeName="ProjectEntities.Location">
               <MappingFragment StoreEntitySet="Locations">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -2469,7 +2503,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Prices">
-            <EntityTypeMapping TypeName="BarProjectEntities.Price">
+            <EntityTypeMapping TypeName="ProjectEntities.Price">
               <MappingFragment StoreEntitySet="Prices">
                 <ScalarProperty Name="product_id" ColumnName="product_id" />
                 <ScalarProperty Name="period_start" ColumnName="period_start" />
@@ -2478,7 +2512,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="BarProjectEntities.Product">
+            <EntityTypeMapping TypeName="ProjectEntities.Product">
               <MappingFragment StoreEntitySet="Products">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="category_id" ColumnName="category_id" />
@@ -2489,7 +2523,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductsSolds">
-            <EntityTypeMapping TypeName="BarProjectEntities.ProductsSold">
+            <EntityTypeMapping TypeName="ProjectEntities.ProductsSold">
               <MappingFragment StoreEntitySet="ProductsSold">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="receipt_id" ColumnName="receipt_id" />
@@ -2497,14 +2531,14 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductsStoreds">
-            <EntityTypeMapping TypeName="BarProjectEntities.ProductsStored">
+            <EntityTypeMapping TypeName="ProjectEntities.ProductsStored">
               <MappingFragment StoreEntitySet="ProductsStored">
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Receipts">
-            <EntityTypeMapping TypeName="BarProjectEntities.Receipt">
+            <EntityTypeMapping TypeName="ProjectEntities.Receipt">
               <MappingFragment StoreEntitySet="Receipts">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="description" ColumnName="description" />
@@ -2512,7 +2546,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Spots">
-            <EntityTypeMapping TypeName="BarProjectEntities.Spot">
+            <EntityTypeMapping TypeName="ProjectEntities.Spot">
               <MappingFragment StoreEntitySet="Spots">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -2520,7 +2554,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Suppliers">
-            <EntityTypeMapping TypeName="BarProjectEntities.Supplier">
+            <EntityTypeMapping TypeName="ProjectEntities.Supplier">
               <MappingFragment StoreEntitySet="Suppliers">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -2536,7 +2570,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Taxes">
-            <EntityTypeMapping TypeName="BarProjectEntities.Tax">
+            <EntityTypeMapping TypeName="ProjectEntities.Tax">
               <MappingFragment StoreEntitySet="Taxes">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="tax_name" ColumnName="tax_name" />
@@ -2545,7 +2579,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Units">
-            <EntityTypeMapping TypeName="BarProjectEntities.Unit">
+            <EntityTypeMapping TypeName="ProjectEntities.Unit">
               <MappingFragment StoreEntitySet="Units">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="unit_name" ColumnName="unit_name" />
@@ -2555,7 +2589,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UnitTypes">
-            <EntityTypeMapping TypeName="BarProjectEntities.UnitType">
+            <EntityTypeMapping TypeName="ProjectEntities.UnitType">
               <MappingFragment StoreEntitySet="UnitTypes">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="type_name" ColumnName="type_name" />
@@ -2563,7 +2597,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="BarProjectEntities.User">
+            <EntityTypeMapping TypeName="ProjectEntities.User">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="username" ColumnName="username" />
@@ -2576,7 +2610,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Warehouses">
-            <EntityTypeMapping TypeName="BarProjectEntities.Warehouse">
+            <EntityTypeMapping TypeName="ProjectEntities.Warehouse">
               <MappingFragment StoreEntitySet="Warehouse">
                 <ScalarProperty Name="location_id" ColumnName="location_id" />
                 <ScalarProperty Name="product_in_stock_id" ColumnName="product_in_stock_id" />
@@ -2585,7 +2619,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Warehouse_order_details">
-            <EntityTypeMapping TypeName="BarProjectEntities.Warehouse_order_details">
+            <EntityTypeMapping TypeName="ProjectEntities.Warehouse_order_details">
               <MappingFragment StoreEntitySet="Warehouse_order_details">
                 <ScalarProperty Name="warehouse_order_id" ColumnName="warehouse_order_id" />
                 <ScalarProperty Name="product_id" ColumnName="product_id" />
@@ -2595,7 +2629,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Warehouse_orders">
-            <EntityTypeMapping TypeName="BarProjectEntities.Warehouse_orders">
+            <EntityTypeMapping TypeName="ProjectEntities.Warehouse_orders">
               <MappingFragment StoreEntitySet="Warehouse_orders">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="employee_id" ColumnName="employee_id" />
@@ -2608,7 +2642,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Workstations">
-            <EntityTypeMapping TypeName="BarProjectEntities.Workstation">
+            <EntityTypeMapping TypeName="ProjectEntities.Workstation">
               <MappingFragment StoreEntitySet="Workstations">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -2616,7 +2650,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="productSimples">
-            <EntityTypeMapping TypeName="BarProjectEntities.productSimple">
+            <EntityTypeMapping TypeName="ProjectEntities.productSimple">
               <MappingFragment StoreEntitySet="productSimple">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -2627,7 +2661,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="productsLastPrices">
-            <EntityTypeMapping TypeName="BarProjectEntities.productsLastPrice">
+            <EntityTypeMapping TypeName="ProjectEntities.productsLastPrice">
               <MappingFragment StoreEntitySet="productsLastPrices">
                 <ScalarProperty Name="product_id" ColumnName="product_id" />
                 <ScalarProperty Name="price" ColumnName="price" />
@@ -2636,7 +2670,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="database_firewall_rules">
-            <EntityTypeMapping TypeName="BarProjectEntities.database_firewall_rules">
+            <EntityTypeMapping TypeName="ProjectEntities.database_firewall_rules">
               <MappingFragment StoreEntitySet="database_firewall_rules">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -2647,7 +2681,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Workstation_rights" TypeName="BarProjectEntities.Workstation_rights" StoreEntitySet="Workstation_rights">
+          <AssociationSetMapping Name="Workstation_rights" TypeName="ProjectEntities.Workstation_rights" StoreEntitySet="Workstation_rights">
             <EndProperty Name="EmployePermissions">
               <ScalarProperty Name="id" ColumnName="employe_permissions" />
             </EndProperty>
@@ -2657,7 +2691,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           </AssociationSetMapping>
           <FunctionImportMapping FunctionName="BarProjectEntities.Store.getClientOrder" FunctionImportName="getClientOrder">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="BarProjectEntities.getClientOrder_Result">
+              <ComplexTypeMapping TypeName="ProjectEntities.getClientOrder_Result">
                 <ScalarProperty Name="spot_id" ColumnName="spot_id" />
                 <ScalarProperty Name="employee_id" ColumnName="employee_id" />
                 <ScalarProperty Name="order_time" ColumnName="order_time" />
@@ -2667,7 +2701,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           </FunctionImportMapping>
           <FunctionImportMapping FunctionName="BarProjectEntities.Store.getClientOrderDetails" FunctionImportName="getClientOrderDetails">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="BarProjectEntities.getClientOrderDetails_Result">
+              <ComplexTypeMapping TypeName="ProjectEntities.getClientOrderDetails_Result">
                 <ScalarProperty Name="products_sold_id" ColumnName="products_sold_id" />
                 <ScalarProperty Name="unit_price" ColumnName="unit_price" />
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
@@ -2677,7 +2711,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           </FunctionImportMapping>
           <FunctionImportMapping FunctionName="BarProjectEntities.Store.getLocation" FunctionImportName="getLocation">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="BarProjectEntities.getLocation_Result">
+              <ComplexTypeMapping TypeName="ProjectEntities.getLocation_Result">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="address" ColumnName="address" />
                 <ScalarProperty Name="city" ColumnName="city" />
@@ -2689,7 +2723,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           </FunctionImportMapping>
           <FunctionImportMapping FunctionName="BarProjectEntities.Store.getSupplier" FunctionImportName="getSupplier">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="BarProjectEntities.getSupplier_Result">
+              <ComplexTypeMapping TypeName="ProjectEntities.getSupplier_Result">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="address" ColumnName="address" />
                 <ScalarProperty Name="city" ColumnName="city" />
@@ -2704,7 +2738,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           </FunctionImportMapping>
           <FunctionImportMapping FunctionName="BarProjectEntities.Store.getWarehouseOrder" FunctionImportName="getWarehouseOrder">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="BarProjectEntities.getWarehouseOrder_Result">
+              <ComplexTypeMapping TypeName="ProjectEntities.getWarehouseOrder_Result">
                 <ScalarProperty Name="employee_id" ColumnName="employee_id" />
                 <ScalarProperty Name="supplier_id" ColumnName="supplier_id" />
                 <ScalarProperty Name="location_id" ColumnName="location_id" />
@@ -2716,7 +2750,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           </FunctionImportMapping>
           <FunctionImportMapping FunctionName="BarProjectEntities.Store.getWarehouseOrderDetails" FunctionImportName="getWarehouseOrderDetails">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="BarProjectEntities.getWarehouseOrderDetails_Result">
+              <ComplexTypeMapping TypeName="ProjectEntities.getWarehouseOrderDetails_Result">
                 <ScalarProperty Name="product_id" ColumnName="product_id" />
                 <ScalarProperty Name="unit_price" ColumnName="unit_price" />
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
@@ -2725,14 +2759,14 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           </FunctionImportMapping>
           <FunctionImportMapping FunctionName="BarProjectEntities.Store.getWorkstationRights" FunctionImportName="getWorkstationRights">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="BarProjectEntities.getWorkstationRights_Result">
+              <ComplexTypeMapping TypeName="ProjectEntities.getWorkstationRights_Result">
                 <ScalarProperty Name="employe_permissions" ColumnName="employe_permissions" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionName="BarProjectEntities.Store.pricesHistory" FunctionImportName="pricesHistory">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="BarProjectEntities.pricesHistory_Result">
+              <ComplexTypeMapping TypeName="ProjectEntities.pricesHistory_Result">
                 <ScalarProperty Name="price" ColumnName="price" />
                 <ScalarProperty Name="period_start" ColumnName="period_start" />
               </ComplexTypeMapping>
@@ -2740,7 +2774,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           </FunctionImportMapping>
           <FunctionImportMapping FunctionName="BarProjectEntities.Store.productDetails" FunctionImportName="productDetails">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="BarProjectEntities.productDetails_Result">
+              <ComplexTypeMapping TypeName="ProjectEntities.productDetails_Result">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="category_id" ColumnName="category_id" />
@@ -2755,7 +2789,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           </FunctionImportMapping>
           <FunctionImportMapping FunctionName="BarProjectEntities.Store.productsByCategory" FunctionImportName="productsByCategory">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="BarProjectEntities.productsByCategory_Result">
+              <ComplexTypeMapping TypeName="ProjectEntities.productsByCategory_Result">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="price" ColumnName="price" />
@@ -2764,7 +2798,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           </FunctionImportMapping>
           <FunctionImportMapping FunctionName="BarProjectEntities.Store.receiptDetails" FunctionImportName="receiptDetails">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="BarProjectEntities.receiptDetails_Result">
+              <ComplexTypeMapping TypeName="ProjectEntities.receiptDetails_Result">
                 <ScalarProperty Name="receipt_id" ColumnName="receipt_id" />
                 <ScalarProperty Name="ingredient_id" ColumnName="ingredient_id" />
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
@@ -2773,7 +2807,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           </FunctionImportMapping>
           <FunctionImportMapping FunctionName="BarProjectEntities.Store.soldProductDetails" FunctionImportName="soldProductDetails">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="BarProjectEntities.soldProductDetails_Result">
+              <ComplexTypeMapping TypeName="ProjectEntities.soldProductDetails_Result">
                 <ScalarProperty Name="product_id" ColumnName="product_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="category_id" ColumnName="category_id" />
@@ -2849,6 +2883,16 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           <FunctionImportMapping FunctionImportName="updateWarehouseOrderDetail" FunctionName="BarProjectEntities.Store.updateWarehouseOrderDetail" />
           <FunctionImportMapping FunctionImportName="updateWorkstation" FunctionName="BarProjectEntities.Store.updateWorkstation" />
           <FunctionImportMapping FunctionImportName="userExists" FunctionName="BarProjectEntities.Store.userExists" />
+          <EntitySetMapping Name="productsLastPricesWithNames">
+            <EntityTypeMapping TypeName="ProjectEntities.productsLastPricesWithName">
+              <MappingFragment StoreEntitySet="productsLastPricesWithName">
+                <ScalarProperty Name="period_start" ColumnName="period_start" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

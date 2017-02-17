@@ -121,6 +121,7 @@
     <Compile Include="Models\ExceptionHandlers\ResponseException.cs" />
     <Compile Include="Models\ReadModels\ShowableCategory.cs" />
     <Compile Include="Models\ReadModels\ShowableLocation.cs" />
+    <Compile Include="Models\ReadModels\ShowablePrices.cs" />
     <Compile Include="Models\ReadModels\ShowablePricesHistory.cs" />
     <Compile Include="Models\ReadModels\ShowableSimpleProduct.cs" />
     <Compile Include="Models\ReadModels\ShowableSoldProduct.cs" />

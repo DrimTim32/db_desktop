@@ -4,9 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BarProject.DesktopApplication.Desktop.Controls.Menagement"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <TextBlock>tutaj bedo prices</TextBlock>
+        <StackPanel>
+            <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
+            <DataGrid x:Name="DataGrid"  DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:Prices}}"
+                      ItemsSource="{Binding PricesList}" 
+                      AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name"  Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="Price"  Binding="{Binding Price}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
     </Grid>
 </UserControl>

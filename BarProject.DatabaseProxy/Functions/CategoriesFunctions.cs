@@ -11,7 +11,7 @@
     {
         public static List<ShowableCategory> GetAllCategories()
         {
-            using (var db = new Entities())
+            using (var db = new BarProjectEntities())
             {
                 return (from data in db.Categories
                         orderby data.id
@@ -24,7 +24,7 @@
         }
         public static List<ShowableCategory> GetSubCategories(int? id)
         {
-            using (var db = new Entities())
+            using (var db = new BarProjectEntities())
             {
                 return db.Categories.Where(x => x.overriding_category == id).ToAnotherType<Category, ShowableCategory>().ToList();
             }
@@ -33,7 +33,7 @@
 
         public static void AddCategory(ShowableCategory cat)
         {
-            using (var db = new Entities())
+            using (var db = new BarProjectEntities())
             {
                 int? overriding = null;
                 if (cat.Overriding != "")
@@ -49,7 +49,7 @@
         }
         public static void RemoveCategory(int? id)
         {
-            using (var db = new Entities())
+            using (var db = new BarProjectEntities())
             {
                 db.removeCategory(id);
             }

@@ -9,5 +9,15 @@ namespace BarProject.DatabaseProxy.Functions
     using DatabaseConnector;
     using Extensions;
     using Models.ReadModels;
-     
+
+    public static class PricesFunctions
+    {
+        public static List<ShowablePrices> GetPrices()
+        {
+            using (var db = new BarProjectEntities())
+            {
+                return db.productsLastPricesWithNames.Select(x => x).ToAnotherType<productsLastPricesWithName,ShowablePrices>().ToList();
+            }
+        }
+    }
 }

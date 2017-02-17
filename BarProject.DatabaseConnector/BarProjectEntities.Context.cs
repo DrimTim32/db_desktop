@@ -15,9 +15,9 @@ namespace BarProject.DatabaseConnector
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class Entities : DbContext
+    public partial class BarProjectEntities : DbContext
     {
-        public Entities()
+        public BarProjectEntities()
             : base("name=BarProjectEntities")
         {
         }
@@ -52,125 +52,126 @@ namespace BarProject.DatabaseConnector
         public virtual DbSet<productSimple> productSimples { get; set; }
         public virtual DbSet<productsLastPrice> productsLastPrices { get; set; }
         public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
+        public virtual DbSet<productsLastPricesWithName> productsLastPricesWithNames { get; set; }
     
-        [DbFunction("Entities", "getClientOrder")]
+        [DbFunction("BarProjectEntities", "getClientOrder")]
         public virtual IQueryable<getClientOrder_Result> getClientOrder(Nullable<int> id)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<getClientOrder_Result>("[Entities].[getClientOrder](@id)", idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<getClientOrder_Result>("[BarProjectEntities].[getClientOrder](@id)", idParameter);
         }
     
-        [DbFunction("Entities", "getClientOrderDetails")]
+        [DbFunction("BarProjectEntities", "getClientOrderDetails")]
         public virtual IQueryable<getClientOrderDetails_Result> getClientOrderDetails(Nullable<int> client_order_id)
         {
             var client_order_idParameter = client_order_id.HasValue ?
                 new ObjectParameter("client_order_id", client_order_id) :
                 new ObjectParameter("client_order_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<getClientOrderDetails_Result>("[Entities].[getClientOrderDetails](@client_order_id)", client_order_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<getClientOrderDetails_Result>("[BarProjectEntities].[getClientOrderDetails](@client_order_id)", client_order_idParameter);
         }
     
-        [DbFunction("Entities", "getLocation")]
+        [DbFunction("BarProjectEntities", "getLocation")]
         public virtual IQueryable<getLocation_Result> getLocation(Nullable<int> id)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<getLocation_Result>("[Entities].[getLocation](@id)", idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<getLocation_Result>("[BarProjectEntities].[getLocation](@id)", idParameter);
         }
     
-        [DbFunction("Entities", "getSupplier")]
+        [DbFunction("BarProjectEntities", "getSupplier")]
         public virtual IQueryable<getSupplier_Result> getSupplier(Nullable<int> id)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<getSupplier_Result>("[Entities].[getSupplier](@id)", idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<getSupplier_Result>("[BarProjectEntities].[getSupplier](@id)", idParameter);
         }
     
-        [DbFunction("Entities", "getWarehouseOrder")]
+        [DbFunction("BarProjectEntities", "getWarehouseOrder")]
         public virtual IQueryable<getWarehouseOrder_Result> getWarehouseOrder(Nullable<int> id)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<getWarehouseOrder_Result>("[Entities].[getWarehouseOrder](@id)", idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<getWarehouseOrder_Result>("[BarProjectEntities].[getWarehouseOrder](@id)", idParameter);
         }
     
-        [DbFunction("Entities", "getWarehouseOrderDetails")]
+        [DbFunction("BarProjectEntities", "getWarehouseOrderDetails")]
         public virtual IQueryable<getWarehouseOrderDetails_Result> getWarehouseOrderDetails(Nullable<int> warehouse_order_id)
         {
             var warehouse_order_idParameter = warehouse_order_id.HasValue ?
                 new ObjectParameter("warehouse_order_id", warehouse_order_id) :
                 new ObjectParameter("warehouse_order_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<getWarehouseOrderDetails_Result>("[Entities].[getWarehouseOrderDetails](@warehouse_order_id)", warehouse_order_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<getWarehouseOrderDetails_Result>("[BarProjectEntities].[getWarehouseOrderDetails](@warehouse_order_id)", warehouse_order_idParameter);
         }
     
-        [DbFunction("Entities", "getWorkstationRights")]
+        [DbFunction("BarProjectEntities", "getWorkstationRights")]
         public virtual IQueryable<getWorkstationRights_Result> getWorkstationRights(Nullable<int> workstation_id)
         {
             var workstation_idParameter = workstation_id.HasValue ?
                 new ObjectParameter("workstation_id", workstation_id) :
                 new ObjectParameter("workstation_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<getWorkstationRights_Result>("[Entities].[getWorkstationRights](@workstation_id)", workstation_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<getWorkstationRights_Result>("[BarProjectEntities].[getWorkstationRights](@workstation_id)", workstation_idParameter);
         }
     
-        [DbFunction("Entities", "pricesHistory")]
+        [DbFunction("BarProjectEntities", "pricesHistory")]
         public virtual IQueryable<pricesHistory_Result> pricesHistory(Nullable<int> product_id)
         {
             var product_idParameter = product_id.HasValue ?
                 new ObjectParameter("product_id", product_id) :
                 new ObjectParameter("product_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<pricesHistory_Result>("[Entities].[pricesHistory](@product_id)", product_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<pricesHistory_Result>("[BarProjectEntities].[pricesHistory](@product_id)", product_idParameter);
         }
     
-        [DbFunction("Entities", "productDetails")]
+        [DbFunction("BarProjectEntities", "productDetails")]
         public virtual IQueryable<productDetails_Result> productDetails(Nullable<int> product_id)
         {
             var product_idParameter = product_id.HasValue ?
                 new ObjectParameter("product_id", product_id) :
                 new ObjectParameter("product_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<productDetails_Result>("[Entities].[productDetails](@product_id)", product_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<productDetails_Result>("[BarProjectEntities].[productDetails](@product_id)", product_idParameter);
         }
     
-        [DbFunction("Entities", "productsByCategory")]
+        [DbFunction("BarProjectEntities", "productsByCategory")]
         public virtual IQueryable<productsByCategory_Result> productsByCategory(Nullable<int> category_id)
         {
             var category_idParameter = category_id.HasValue ?
                 new ObjectParameter("category_id", category_id) :
                 new ObjectParameter("category_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<productsByCategory_Result>("[Entities].[productsByCategory](@category_id)", category_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<productsByCategory_Result>("[BarProjectEntities].[productsByCategory](@category_id)", category_idParameter);
         }
     
-        [DbFunction("Entities", "receiptDetails")]
+        [DbFunction("BarProjectEntities", "receiptDetails")]
         public virtual IQueryable<receiptDetails_Result> receiptDetails(Nullable<int> receipt_id)
         {
             var receipt_idParameter = receipt_id.HasValue ?
                 new ObjectParameter("receipt_id", receipt_id) :
                 new ObjectParameter("receipt_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<receiptDetails_Result>("[Entities].[receiptDetails](@receipt_id)", receipt_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<receiptDetails_Result>("[BarProjectEntities].[receiptDetails](@receipt_id)", receipt_idParameter);
         }
     
-        [DbFunction("Entities", "soldProductDetails")]
+        [DbFunction("BarProjectEntities", "soldProductDetails")]
         public virtual IQueryable<soldProductDetails_Result> soldProductDetails(Nullable<int> product_id)
         {
             var product_idParameter = product_id.HasValue ?
                 new ObjectParameter("product_id", product_id) :
                 new ObjectParameter("product_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<soldProductDetails_Result>("[Entities].[soldProductDetails](@product_id)", product_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<soldProductDetails_Result>("[BarProjectEntities].[soldProductDetails](@product_id)", product_idParameter);
         }
     
         public virtual int addCategory(string category_name, string slug, Nullable<int> overriding_category)

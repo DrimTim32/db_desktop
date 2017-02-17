@@ -18,7 +18,7 @@
         public static UserPrivileges GetPrivileges(string username, string password)
         {
             var toReturn = UserPrivileges.NoUser;
-            using (var db = new Entities())
+            using (var db = new BarProjectEntities())
             {
                 db.Database.Log = s => Debug.WriteLine(s);
                 var parameter = new ObjectParameter("tmp_credentials", typeof(short));
@@ -40,7 +40,7 @@
         public static UserPrivileges GetPrivileges(string username)
         {
             var toReturn = UserPrivileges.NoUser;
-            using (var db = new Entities())
+            using (var db = new BarProjectEntities())
             {
                 var q = db.Users.First(x => x.username == username).EmployePermission.value;
                 if (q.HasValue)
@@ -54,7 +54,7 @@
 
         public static IEnumerable<ShowableUser> GetAllUsers()
         {
-            using (var db = new Entities())
+            using (var db = new BarProjectEntities())
             {
                 return db.Users.Select(x => x).ToAnotherType<User, ShowableUser>().ToList();//.ToShowableUsers().ToList();
             }
@@ -62,7 +62,7 @@
 
         public static void AddUser(PureWritableUser userData)
         {
-            using (var db = new Entities())
+            using (var db = new BarProjectEntities())
             {
                 var permissionId = db.EmployePermissions.FirstOrDefault(x => x.value == (byte)userData.Permission);
                 if (permissionId == null)
@@ -73,7 +73,7 @@
 
         public static User GetUserFullData(string username)
         {
-            using (var db = new Entities())
+            using (var db = new BarProjectEntities())
             {
                 return db.Users.FirstOrDefault(x => x.username == username);
             }
