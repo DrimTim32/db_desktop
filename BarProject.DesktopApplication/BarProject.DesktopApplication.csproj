@@ -133,6 +133,9 @@
     <Compile Include="Desktop\Controls\Warehouse\WarehouseUserControl.xaml.cs">
       <DependentUpon>WarehouseUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Desktop\Windows\PricesHistory.xaml.cs">
+      <DependentUpon>PricesHistory.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Desktop\Windows\SoldProductDataWindow.xaml.cs">
       <DependentUpon>SoldProductDataWindow.xaml</DependentUpon>
     </Compile>
@@ -240,6 +243,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Desktop\Windows\AddUserWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Desktop\Windows\PricesHistory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -48,7 +48,7 @@
                     <TextBlock x:Name="TextTaxValue" Width="150" Text="{Binding Path=TaxValue, Mode=TwoWay,ValidatesOnDataErrors=True}"/>
                 </StackPanel>
             </StackPanel>
-            <Button Content="Show price history" Margin="0,0,4,0" />
+            <Button Content="Show price history" Click="ShowPricesHistoryClick"/>
         </StackPanel>
     </Grid>
 </controls:MetroWindow>

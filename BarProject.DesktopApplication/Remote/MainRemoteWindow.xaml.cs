@@ -27,8 +27,7 @@ namespace BarProject.DesktopApplication.Remote
         }
 
         private void CloseOrder_Click(object sender, RoutedEventArgs e)
-        {
-            throw new System.NotImplementedException();
+        { 
             AcceptOrder();
         }
     }

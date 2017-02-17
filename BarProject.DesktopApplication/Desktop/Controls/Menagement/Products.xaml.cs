@@ -57,10 +57,7 @@
         private void RefreshData()
         {
 
-            this.Dispatcher.Invoke(DispatcherPriority.Background,
-                  new Action(
-                  DoRefreshData
-                  ));
+            this.Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoRefreshData));
         }
         private async void DoRefreshData()
         {
@@ -94,7 +91,7 @@
                     var window = new StoredProductWindow(product.Id);
                     window.Closed += (s, x) => RefreshData();
                     window.ShowDialog();
-                } 
+                }
             }
         }
     }

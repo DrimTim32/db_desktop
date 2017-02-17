@@ -46,5 +46,15 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
             var data = await task;
             return data;
         }
+
+        public void GetPricesHistory(int id, Action<IRestResponse<List<ShowablePricesHistory>>, RestRequestAsyncHandle> callback)
+        {
+            var request = new RestRequest($"api/products/history/{id}", Method.GET);
+            request.AddHeader("Authorization", $"bearer {token}");
+            request.AddHeader("Content-Type", "application/json");
+            request.JsonSerializer = new JsonSerializer();
+            client.ExecuteAsync(request, callback);
+
+        }
     }
 }

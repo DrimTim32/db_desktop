@@ -99,10 +99,7 @@ namespace BarProject.DesktopApplication.Desktop.Windows
             ProgressBarStart();
             var tmp = await RestClient.Client().GetTaxes();
             TextTaxName.ItemsSource = tmp.Data.Select(x => x.TaxName);
-            this.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
-            {
-                ReloadModel();
-            }));
+            this.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(ReloadModel));
         }
 
         private void ReloadModel()
@@ -124,6 +121,12 @@ namespace BarProject.DesktopApplication.Desktop.Windows
             var tmp = await RestClient.Client().GetStoredProduct(productId);
             StoredProduct.LoadFromAnother(tmp.Data);
             ProgressBarStop();
+        }
+
+        private void ShowPricesHistoryClick(object sender, RoutedEventArgs e)
+        {
+            var window = new PricesHistory(_productId);
+            window.ShowDialog();
         }
     }
 }
