@@ -67,7 +67,7 @@
                 }));
 
         }
-        private void ChooseWindow(UserPrivileges privileges)
+        private void ChooseWindow(UserPrivileges privileges, string userName)
         {
             if (privileges == UserPrivileges.NoUser)
             {
@@ -75,7 +75,7 @@
             }
             else if (privileges < UserPrivileges.WarehouseAdministrator)
             {
-                var window = new MainRemoteWindow() { ShowActivated = true };
+                var window = new MainRemoteWindow(userName) { ShowActivated = true };
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Application.Current.MainWindow = window;
@@ -131,7 +131,7 @@
 
                                 var privlidges = response.Data;
                                 Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal,
-                                    new Action(() => { ChooseWindow(privlidges); }));
+                                    new Action(() => { ChooseWindow(privlidges, text); }));
 
                             }
                             Application.Current.Dispatcher.Invoke(ProgressBarStop);

@@ -36,23 +36,23 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
                 Content = new Locations()
             };
 
-            var products = new MetroTabItem()
-            {
-                Header = "Products",
-               // Content = new Products()
-            };
-            var recipies = new MetroTabItem()
-            {
-                Header = "Recipies",
-                //Content = new Recipies()
-            };
+            //var products = new MetroTabItem()
+            //{
+            //    Header = "Products",
+            //   // Content = new Products()
+            //};
+            //var recipies = new MetroTabItem()
+            //{
+            //    Header = "Recipies",
+            //    //Content = new Recipies()
+            //};
             locations.SetResourceReference(StyleProperty, "MenuLevel2");
-            products.SetResourceReference(StyleProperty, "MenuLevel2");
-            recipies.SetResourceReference(StyleProperty, "MenuLevel2");
+            //products.SetResourceReference(StyleProperty, "MenuLevel2");
+            //recipies.SetResourceReference(StyleProperty, "MenuLevel2");
             TabControl.Items.Clear();
             TabControl.Items.Add(locations);
-            TabControl.Items.Add(products);
-            TabControl.Items.Add(recipies);
+            //TabControl.Items.Add(products);
+            //TabControl.Items.Add(recipies);
         }
     }
 }

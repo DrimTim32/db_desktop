@@ -18,6 +18,18 @@
                         select data).ToAnotherType<Category, ShowableCategory>().ToList();
             }
         }
+        public static List<ShowableCategory> GetMainCategories()
+        {
+            return GetSubCategories(null);
+        }
+        public static List<ShowableCategory> GetSubCategories(int? id)
+        {
+            using (var db = new BarProjectEntities())
+            {
+                return db.Categories.Where(x => x.overriding_category == id).ToAnotherType<Category, ShowableCategory>().ToList();
+            }
+        }
+
 
         public static void AddCategory(ShowableCategory cat)
         {

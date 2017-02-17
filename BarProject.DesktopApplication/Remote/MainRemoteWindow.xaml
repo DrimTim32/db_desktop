@@ -8,23 +8,22 @@
         mc:Ignorable="d"
         Title="MainRemoteWindow" WindowState="Maximized">
     <Window.Resources>
-        <Style x:Key="LargeTileStyle" TargetType="mah:Tile">
-            <Setter Property="Width" Value="300" />
-            <Setter Property="Height" Value="125" />
-            <Setter Property="TitleFontSize" Value="10" />
-        </Style>
 
-        <Style x:Key="SmallTileStyle" TargetType="mah:Tile">
-            <Setter Property="Width" Value="147" />
-            <Setter Property="Height" Value="125" />
-            <Setter Property="TitleFontSize" Value="10" />
-        </Style>
+        <ResourceDictionary> 
+            <ResourceDictionary.MergedDictionaries> 
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <StackPanel>
-            <mah:Tile Title="Mail" Style="{StaticResource LargeTileStyle}" Content="TUTAJ OBRAZEK 1" Background="Teal" Margin="3"/>
-            <mah:Tile Title="Desktop" Style="{StaticResource LargeTileStyle}" Content="TUTAJ OBRAZEK 2" Background="Aqua"/>
-            <mah:Tile Title="Store" Style="{StaticResource SmallTileStyle}" Content="TUTAJ MALUTKI OBRAZEK 2" Background="Green" />
-        </StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Frame Source="MainPage.xaml" NavigationUIVisibility="Hidden"/>
+        <Label x:Name="InfoLabel" Grid.Row="1"/>
     </Grid>
 </mah:MetroWindow>

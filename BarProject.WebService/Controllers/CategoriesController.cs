@@ -17,8 +17,55 @@ namespace BarProject.WebService.Controllers
     public class CategoriesController : ApiController
     {
 
+        [HttpGet, Route("main")]
+        [Authorize]
+        [ResponseType(typeof(IEnumerable<ShowableCategory>))]
+        public IHttpActionResult GetMain()
+        {
+            try
+            {
+                var categories = CategoriesFunctions.GetMainCategories();
+                return Ok(categories);
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+
+        [HttpGet, Route("{id}/products")]
+        [Authorize]
+        [ResponseType(typeof(IEnumerable<ShowableCategory>))]
+        public IHttpActionResult GetProducts(int id)
+        {
+            try
+            {
+                var categories = ProductsFunctions.GetByCategory(id);
+                return Ok(categories);
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+        [HttpGet, Route("{id}")]
+        [Authorize]
+        [ResponseType(typeof(IEnumerable<ShowableCategory>))]
+        public IHttpActionResult GetSubCategories(int id)
+        {
+            try
+            {
+                var categories = CategoriesFunctions.GetSubCategories(id);
+                return Ok(categories);
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+
         [HttpGet, Route("")]
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize]
         [ResponseType(typeof(IEnumerable<ShowableCategory>))]
         public IHttpActionResult Get()
         {

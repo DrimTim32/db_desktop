@@ -21,6 +21,11 @@
             IsStored = product.stored.Value;
             Id = product.id;
         }
-         
+
+        public ShowableSimpleProduct(Product product)
+        {
+            Name = product.name;
+            Id = product.id;
+        }
     }
 }

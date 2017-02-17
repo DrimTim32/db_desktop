@@ -103,6 +103,9 @@
     <Compile Include="Desktop\Controls\Menagement\Recipies.xaml.cs">
       <DependentUpon>Recipies.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Desktop\Controls\Warehouse\Sales.xaml.cs">
+      <DependentUpon>Sales.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Desktop\Controls\Warehouse\WarehouseUserControl.xaml.cs">
       <DependentUpon>WarehouseUserControl.xaml</DependentUpon>
     </Compile>
@@ -113,9 +116,16 @@
       <DependentUpon>StoredProductWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\Utils\MessageBoxesHelper.cs" />
+    <Compile Include="Remote\CategoriesPage.xaml.cs">
+      <DependentUpon>CategoriesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Remote\MainRemoteWindow.xaml.cs">
       <DependentUpon>MainRemoteWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Remote\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Remote\TileWithId.cs" />
     <Page Include="Common\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -168,6 +178,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Desktop\Controls\Warehouse\Sales.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Desktop\Controls\Warehouse\WarehouseUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -210,7 +224,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Remote\CategoriesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Remote\MainRemoteWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Remote\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -265,7 +287,9 @@
       <Name>BarProject.DesktopApplication.Library</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Finance-Purchase-Order-icon.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\WindowsIcons-license.txt" />
   </ItemGroup>

@@ -23,6 +23,11 @@
 
             </ResourceDictionary.MergedDictionaries>
 
+            <Style x:Key="LargeTileStyle" TargetType="mah:Tile">
+                <Setter Property="Width" Value="300" />
+                <Setter Property="Height" Value="125" />
+                <Setter Property="TitleFontSize" Value="50" />
+            </Style>
             <Style x:Key="MenuLevel2" BasedOn="{StaticResource MetroTabItem}" TargetType="{x:Type TabItem}">
                 <Setter Property="mah:ControlsHelper.HeaderFontSize" Value="15"></Setter>
             </Style>

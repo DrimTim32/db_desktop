@@ -66,11 +66,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
 
         private void Categories_Loaded(object sender, RoutedEventArgs e)
         {
-
-            Dispatcher.Invoke(DispatcherPriority.Background,
-                  new Action(
-                  DoRefreshData
-                  ));
+            Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoRefreshData));
         }
 
         private bool CategoryIsEmpty(ShowableCategory cat)
@@ -81,7 +77,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         {
             var grid = sender as DataGrid;
             if (DataGrid.SelectedItem != null && grid != null)
-            { 
+            {
                 var cat = (ShowableCategory)e.Row.Item;
                 grid.RowEditEnding -= DataGrid_RowEditEnding;
                 grid.CommitEdit();
@@ -160,51 +156,31 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
 
         private void ProgressBarStart()
         {
-            Debug.WriteLine("Progress bar start start");
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => Progress.Visibility = Visibility.Visible));
-            Debug.WriteLine("Progress bar start end");
-
         }
 
         private void ProgressBarStop()
         {
-            Debug.WriteLine("Progress bar stop start");
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => Progress.Visibility = Visibility.Hidden));
-            Debug.WriteLine("Progress bar stop done");
         }
 
         private void RefreshData()
         {
-
-            this.Dispatcher.Invoke(DispatcherPriority.Background,
-                  new Action(
-                  DoRefreshData
-                  ));
+            Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoRefreshData));
         }
 
         private async void DoRefreshData()
         {
-            Debug.WriteLine("DoRefreshData inside");
-
-            try
+            ProgressBarStart();
+            var tmp = await RestClient.Client().GetCategories();
+            CategoriesList.Clear();
+            foreach (var showableCategory in tmp.Data)
             {
-                Debug.WriteLine("DoRefreshData inside try");
-                ProgressBarStart();
-                Debug.WriteLine("DoRefreshData after ProgressBarStart");
-                var tmp = await RestClient.Client().GetCategories();
-                CategoriesList.Clear();
-                foreach (var showableCategory in tmp.Data)
-                {
-                    CategoriesList.Add(showableCategory);
-                }
-                RefreshOverridingPossibilities();
-                DataGrid.Items.Refresh();
-                ProgressBarStop();
+                CategoriesList.Add(showableCategory);
             }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Exception in do refresh data" + ex.Message);
-            }
+            RefreshOverridingPossibilities();
+            DataGrid.Items.Refresh();
+            ProgressBarStop();
         }
         private void RefreshOverridingPossibilities()
         {

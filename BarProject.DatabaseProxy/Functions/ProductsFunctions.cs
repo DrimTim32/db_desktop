@@ -4,7 +4,7 @@
     using System.Linq;
     using DatabaseConnector;
     using Extensions;
-    using Models.ReadModels; 
+    using Models.ReadModels;
 
     public static class ProductsFunctions
     {
@@ -39,6 +39,15 @@
                 return db.productDetails(id).ToAnotherType<productDetails_Result, ShowableStoredProduct>().FirstOrDefault();
             }
 
+        }
+
+        public static List<ShowableSimpleProduct> GetByCategory(int id)
+        {
+            using (var db = new BarProjectEntities())
+            {
+                return
+                    db.Products.Where(x => x.category_id == id).ToAnotherType<Product, ShowableSimpleProduct>().ToList();
+            }
         }
     }
 }

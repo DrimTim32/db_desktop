@@ -76,7 +76,6 @@ namespace BarProject.DesktopApplication.Desktop.Windows
         }
         private async void DoFillTaxName()
         {
-
             ProgressBarStart();
             var tmp = await RestClient.Client().GetTaxes();
             var firstOrDefault = tmp.Data.FirstOrDefault(x => x.TaxName == TextTaxName.Text);
