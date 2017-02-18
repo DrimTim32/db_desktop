@@ -10,7 +10,7 @@
     <Grid>
         <StackPanel>
             <Controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
-            <DataGrid Name="DataGrid"                       
+            <DataGrid Name="DataGrid" SelectionMode="Single"  SelectionUnit="FullRow"            
                       DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:Categories}}"
                       ItemsSource="{Binding CategoriesList}" 
                       AutoGenerateColumns="False">

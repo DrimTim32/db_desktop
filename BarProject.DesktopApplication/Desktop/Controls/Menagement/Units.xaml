@@ -12,7 +12,7 @@
             <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
             <DataGrid Name="DataGrid"                       
                       DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:Units}}"
-                      ItemsSource="{Binding UnitsLits}" 
+                      ItemsSource="{Binding UnitsLits}" SelectionMode="Single"  SelectionUnit="FullRow"
                       AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Factor"  Binding="{Binding Factor}"/>

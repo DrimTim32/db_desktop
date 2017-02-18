@@ -13,7 +13,7 @@
             <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
             <DataGrid Name="DataGrid"                       
                       DataContext="{Binding RelativeSource={RelativeSource AncestorType=menagement:Suppliers}}"
-                      ItemsSource="{Binding SuppliersList}" 
+                      ItemsSource="{Binding SuppliersList}"  SelectionMode="Single"  SelectionUnit="FullRow"      
                       AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name"  Binding="{Binding Name}"/>
