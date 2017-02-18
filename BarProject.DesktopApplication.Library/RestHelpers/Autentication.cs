@@ -14,22 +14,32 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
     public partial class RestClient
     {
         static Regex tokenRegex = new Regex("\"access_token\":\"(.*?)\"", RegexOptions.Multiline);
-        public void AutenticateMe(string login, string password, Action<IRestResponse> callback)
+        static Regex UserPrivilegesRegex = new Regex("\"UserPrivileges\":\"(.*?)\"", RegexOptions.Multiline);
+        public void AutenticateMe(string login, string password, Action<IRestResponse, UserPrivileges> callback)
         {
             client.Authenticator = new HttpBasicAuthenticator(login, password);
             var request = new RestRequest("token", Method.POST);
             string encodedBody = $"grant_type=password&username={login}&password={password}";
             request.AddParameter("application/x-www-form-urlencoded", encodedBody, ParameterType.RequestBody);
             request.AddParameter("Content-Type", "application/x-www-form-urlencoded", ParameterType.HttpHeader);
-            //request.Timeout = 7000;
+            request.Timeout = 10000;
             client.ExecuteAsync(request, resp =>
             {
                 var tmp = resp.Content;
+                var privlidges = UserPrivileges.NoUser;
                 if (!tmp.Contains("token"))
                     token = null;
-                var match = tokenRegex.Match(tmp);
-                token = match.Success ? match.Groups[1].Value : null;
-                callback(resp);
+                else
+                {
+                    var match = tokenRegex.Match(tmp);
+                    token = match.Success ? match.Groups[1].Value : null;
+                    match = UserPrivilegesRegex.Match(tmp);
+                    var privlidgesStr = match.Success ? match.Groups[1].Value : null;
+                    if (UserPrivlidgesExtensions.PrivligesNames.ContainsValue(privlidgesStr))
+                        privlidges = UserPrivlidgesExtensions.GetValueFromDescription(privlidgesStr);
+
+                }
+                callback(resp, privlidges);
             });
 
 

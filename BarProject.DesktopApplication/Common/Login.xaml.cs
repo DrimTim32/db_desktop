@@ -43,7 +43,7 @@
         {
             MessageBoxesHelper.ShowWindowInformation("Problem with login", data);
             ProgressBarStop();
-        } 
+        }
 
         private void ProgressBarStart()
         {
@@ -93,65 +93,18 @@
                 Close();
             }
         }
-
-        private void AfterLogin()
-        {
-            DoAfterLogin();
-
-        }
+         
         private void LogIn(string login, string password)
         {
             Dispatcher.Invoke(DispatcherPriority.Background, new Action(() => { DoLogin(login, password); }));
-        }
-        private void DoAfterLogin()
-        {
-            Application.Current.Dispatcher.Invoke(DispatcherPriority.Send, new Action(() =>
-            {
-                try
-                {
-                    var text = "";
-                    text = LoginBox.Text;
-                    LoggingMessage.Text = "Checking credentials...";
-                    Library.RestHelpers.RestClient.Client().GetUserCredentialsAsync(text,
-                        (response, mess) =>
-                        {
-                            if (response.ResponseStatus == ResponseStatus.TimedOut)
-                            {
-                                MessageBoxesHelper.ShowWindowInformation("Request timed out",
-                                    "Problem connecting to the server");
-                            }
-                            else if (response.StatusCode != HttpStatusCode.OK)
-                            {
-                                MessageBoxesHelper.ShowWindowInformation("Problem with login",
-                                    "Make sure that both password and login are correct");
-                            }
-                            else
-                            {
-
-                                var privlidges = response.Data;
-                                Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal,
-                                    new Action(() => { ChooseWindow(privlidges, text); }));
-
-                            }
-                            Application.Current.Dispatcher.Invoke(ProgressBarStop);
-                        });
-
-                }
-                catch (Exception ex)
-                {
-                    LoginError(ex);
-                }
-            }));
-
-        }
-
+        } 
         private void DoLogin(string login, string password)
         {
             ProgressBarStart();
             try
             {
                 Library.RestHelpers.RestClient.Client(ConfigurationManager.AppSettings["apiUrl"])
-                    .AutenticateMe(login, password, (response) =>
+                    .AutenticateMe(login, password, (response, privlidges) =>
                     {
                         if (response.ResponseStatus == ResponseStatus.TimedOut)
                         {
@@ -167,7 +120,7 @@
                         }
                         else
                         {
-                            Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(AfterLogin));
+                            Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() => { ChooseWindow(privlidges, login); }));
                         }
                     });
 
