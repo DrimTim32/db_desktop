@@ -1175,5 +1175,18 @@ namespace BarProject.DatabaseConnector
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("userExists", loginParameter);
         }
+    
+        public virtual int logLogin(string username, Nullable<System.DateTime> login_date)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            var login_dateParameter = login_date.HasValue ?
+                new ObjectParameter("login_date", login_date) :
+                new ObjectParameter("login_date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("logLogin", usernameParameter, login_dateParameter);
+        }
     }
 }

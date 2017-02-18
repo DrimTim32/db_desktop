@@ -15,12 +15,18 @@
 
     public static class UserFunctions
     {
+        public static void LogUserLogin(string username)
+        {
+            using (var db = new BarProjectEntities())
+            {
+                db.logLogin(username, DateTime.Now);
+            }
+        }
         public static UserPrivileges GetPrivileges(string username, string password)
         {
             var toReturn = UserPrivileges.NoUser;
             using (var db = new BarProjectEntities())
             {
-                db.Database.Log = s => Debug.WriteLine(s);
                 var parameter = new ObjectParameter("tmp_credentials", typeof(short));
                 db.checkCredentials(username, password, parameter);
                 if (parameter.Value != null)

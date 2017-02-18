@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BarProject.DatabaseProxy.Models;
 
 namespace BarProject.DesktopApplication.Library.RestHelpers
 {
-    using System.Net.Http;
     using System.Text.RegularExpressions;
-    using DatabaseProxy.Models.ReadModels;
     using RestSharp;
     using RestSharp.Authenticators;
 
@@ -22,7 +21,7 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
             string encodedBody = $"grant_type=password&username={login}&password={password}";
             request.AddParameter("application/x-www-form-urlencoded", encodedBody, ParameterType.RequestBody);
             request.AddParameter("Content-Type", "application/x-www-form-urlencoded", ParameterType.HttpHeader);
-            request.Timeout = 7000;
+            //request.Timeout = 7000;
             client.ExecuteAsync(request, resp =>
             {
                 var tmp = resp.Content;

@@ -47,7 +47,6 @@
         private void ProgressBarStart()
         {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => Progress.Visibility = Visibility.Visible));
-
         }
 
         private void ProgressBarStop()
@@ -56,7 +55,6 @@
         }
         private void RefreshData()
         {
-
             this.Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoRefreshData));
         }
         private async void DoRefreshData()

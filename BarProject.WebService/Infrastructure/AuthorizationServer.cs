@@ -1,4 +1,9 @@
 ﻿
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using BarProject.DatabaseProxy.Functions;
+
 namespace BarProject.WebService.Infrastructure
 {
     using System.Security.Claims;
@@ -15,8 +20,31 @@ namespace BarProject.WebService.Infrastructure
         {
             context.Validated();
         }
-         
-        public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context) 
+        public override Task TokenEndpoint(OAuthTokenEndpointContext context)
+        {
+            foreach (KeyValuePair<string, string> property in context.Properties.Dictionary)
+            {
+                context.AdditionalResponseParameters.Add(property.Key, property.Value);
+            }
+            var username = context.Identity.Claims.FirstOrDefault(x => x.Type == "username");
+            if (username != null)
+            {
+                var firstOrDefault = context.Identity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role);
+                if (firstOrDefault != null)
+                    context.AdditionalResponseParameters.Add("UserPrivileges", firstOrDefault.Value);
+                try
+                {
+                    UserFunctions.LogUserLogin(username.Value);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+            return Task.FromResult<object>(null);
+        }
+        public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
             var userData = DatabaseProxy.Functions.UserFunctions.GetUserFullData(context.UserName);
@@ -25,7 +53,7 @@ namespace BarProject.WebService.Infrastructure
                 context.SetError("invalid_grant", "The user name or password is incorrect.");
                 return;
             }
-            var role = DatabaseProxy.Functions.UserFunctions.GetPrivileges(context.UserName, context.Password);
+            var role = UserFunctions.GetPrivileges(context.UserName, context.Password);
             if (role == UserPrivileges.NoUser)
             {
                 context.SetError("invalid_grant", "You got no power here Gandalf the Grey.");

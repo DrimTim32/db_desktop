@@ -43,8 +43,7 @@
         {
             MessageBoxesHelper.ShowWindowInformation("Problem with login", data);
             ProgressBarStop();
-        }
-
+        } 
 
         private void ProgressBarStart()
         {
