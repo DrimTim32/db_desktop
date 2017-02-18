@@ -11,7 +11,7 @@ namespace BarProject.DesktopApplication.Common.Utils
     public static class MessageBoxesHelper
     {
 
-        public static async void ShowProblemWithRequest(IRestResponse response)
+        public static async void ShowProblemWithRequest(IRestResponse response, MetroWindow baseWindow = null)
         {
             var code = response.StatusCode;
             string header = "";
@@ -49,54 +49,76 @@ namespace BarProject.DesktopApplication.Common.Utils
                     message = response.Content;
                 }
             }
-            await MessageAsync(header, message);
+            MessageAsync(header, message, baseWindow);
         }
-        public static async void ShowWindowInformationAsync(string header, string message)
+        public static void ShowWindowInformationAsync(string header, string message, MetroWindow baseWindow = null)
         {
-            await MessageAsync(header, message);
+            MessageAsync(header, message, baseWindow);
         }
-        public static void ShowWindowInformation(string header, string message)
+        public static void ShowWindowInformation(string header, string message, MetroWindow baseWindow = null)
         {
-            Message(header, message);
+            Message(header, message, baseWindow);
         }
 
-        public static MessageDialogResult ShowYesNoMessage(string header, string message)
+        public static MessageDialogResult ShowYesNoMessage(string header, string message, MetroWindow baseWindow = null)
         {
-            return Message(header, message, MessageDialogStyle.AffirmativeAndNegative);
+            return Message(header, message, baseWindow, MessageDialogStyle.AffirmativeAndNegative);
         }
-        public static Task<MessageDialogResult> ShowYesNoMessageAsync(string header, string message)
-        {
-            return MessageAsync(header, message, MessageDialogStyle.AffirmativeAndNegative);
-        }
-        private static MessageDialogResult Message(string header, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative)
+
+        private static MessageDialogResult Message(string header, string message, MetroWindow baseWindow = null,
+            MessageDialogStyle style = MessageDialogStyle.Affirmative)
         {
             MessageDialogResult data = default(MessageDialogResult);
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                var owner = Application.Current.MainWindow as MetroWindow;
-                owner.Dispatcher.Invoke(() =>
+            if (baseWindow == null)
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    data = owner.ShowModalMessageExternal(header, message, style);
+                    var owner = Application.Current.MainWindow as MetroWindow;
+                    owner.Dispatcher.Invoke(() =>
+                    {
+                        data = owner.ShowModalMessageExternal(header, message, style);
+                    });
+
                 });
+            else
+                baseWindow.Dispatcher.Invoke(() =>
+                {
+                    var owner = baseWindow;
+                    owner.Dispatcher.Invoke(() =>
+                    {
+                        data = owner.ShowModalMessageExternal(header, message, style);
+                    });
 
-            });
-
+                });
             return data;
         }
-        private static async Task<MessageDialogResult> MessageAsync(string header, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative)
+        private static void MessageAsync(string header, string message, MetroWindow baseWindow = null)
         {
             MessageDialogResult data = default(MessageDialogResult);
-            Application.Current.Dispatcher.Invoke(() =>
+            if (baseWindow == null)
             {
-                var owner = Application.Current.MainWindow as MetroWindow;
-                owner.Dispatcher.InvokeAsync(() =>
-                {
-                    data = owner.ShowModalMessageExternal(header, message, style);
-                });
+                Application.Current.Dispatcher.Invoke(() =>
+                  {
+                      var owner = Application.Current.MainWindow as MetroWindow;
+                      owner.Dispatcher.InvokeAsync(() =>
+                      {
+                          owner.ShowModalMessageExternal(header, message);
+                      });
 
-            });
+                  });
+            }
+            else
+            {
+                baseWindow.Dispatcher.Invoke(() =>
+                  {
+                      var owner = baseWindow;
+                      owner.Dispatcher.InvokeAsync(() =>
+                      {
+                          owner.ShowModalMessageExternal(header, message);
+                      });
 
-            return data;
+                  });
+            }
+
         }
     }
 }

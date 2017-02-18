@@ -8,11 +8,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <StackPanel Orientation="Vertical">
-            <Grid x:Name="Progress">
-                <Controls:MetroProgressBar/>
-                <TextBlock>Loading..</TextBlock>
-            </Grid>
+        <StackPanel Orientation="Vertical"> 
+            <Controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
             <DataGrid Name="DataGrid" ItemsSource="{Binding}" IsReadOnly="True"/>
             <StackPanel Orientation="Horizontal">
                 <Button Content="Add new user" Click="AddNewUserButtonClick"/>

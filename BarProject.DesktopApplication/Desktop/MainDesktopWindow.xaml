@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="900" Width="1024">
     <Grid>
-        <Controls:MetroAnimatedSingleRowTabControl x:Name="TabControl"/>
+        <Controls:MetroAnimatedSingleRowTabControl x:Name="TabControl" SelectionChanged="TabControl_SelectionChanged"/>
     </Grid>
 </controls:MetroWindow>
 

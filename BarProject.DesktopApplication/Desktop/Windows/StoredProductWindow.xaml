@@ -33,11 +33,11 @@
                 </StackPanel>
                 <StackPanel>
                     <Label Content="Category name" Target="{Binding ElementName=TextCategoryName}"/>
-                    <TextBox x:Name="TextCategoryName" Width="150" Text="{Binding Path=CategoryName, Mode=TwoWay, ValidatesOnDataErrors=True}" />
+                    <ComboBox x:Name="TextCategoryName" Width="150" Text="{Binding Path=CategoryName, Mode=TwoWay, ValidatesOnDataErrors=True}" ItemsSource="{Binding}" />
                 </StackPanel>
                 <StackPanel>
                     <Label Content="Unit name" Target="{Binding ElementName=TextUnitName}"/>
-                    <TextBox x:Name="TextUnitName" Width="150" Text="{Binding Path=UnitName, Mode=TwoWay, ValidatesOnDataErrors=True}" />
+                    <ComboBox x:Name="TextUnitName" Width="150" Text="{Binding Path=UnitName, Mode=TwoWay, ValidatesOnDataErrors=True}" ItemsSource="{Binding}" />
                 </StackPanel>
                 <StackPanel>
                     <Label Content="Tax name" Target="{Binding ElementName=TextTaxName}"/>
@@ -48,7 +48,10 @@
                     <TextBlock x:Name="TextTaxValue" Width="150" Text="{Binding Path=TaxValue, Mode=TwoWay,ValidatesOnDataErrors=True}"/>
                 </StackPanel>
             </StackPanel>
-            <Button Content="Show price history" Click="ShowPricesHistoryClick"/>
+            <StackPanel>
+                <Button Content="Show price history" Click="ShowPricesHistoryClick"/>
+                <Button Content="Save" Click="SaveClick"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </controls:MetroWindow>

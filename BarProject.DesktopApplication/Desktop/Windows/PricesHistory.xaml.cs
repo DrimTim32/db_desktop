@@ -21,7 +21,7 @@ namespace BarProject.DesktopApplication.Desktop.Windows
             InitializeComponent();
             this.Loaded += PricesHistory_Loaded;
         }
-
+        public MetroWindow Caller { get; set; }
         private void ProgressBarStart()
         {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => Progress.Visibility = Visibility.Visible));
@@ -40,14 +40,13 @@ namespace BarProject.DesktopApplication.Desktop.Windows
                 {
                     if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
                     {
-                        MessageBoxesHelper.ShowProblemWithRequest(response);
+                        MessageBoxesHelper.ShowProblemWithRequest(response, this);
                     }
                     else
                     {
                         if (response.Data.Count == 0)
                         {
-                            MessageBoxesHelper.ShowWindowInformationAsync("This product doesn't have prices history",
-                                response.Content);
+                            MessageBoxesHelper.ShowWindowInformation("This product doesn't have prices history", "   ", this);
                             Close();
                         }
                         else

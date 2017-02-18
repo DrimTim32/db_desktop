@@ -48,5 +48,15 @@
                 return db.productsByCategory(id).ToAnotherType<productsByCategory_Result, ShowableSoldProduct>().ToList();
             }
         }
+        public static void UpdateProduct(int id, ShowableProductBase product)
+        {
+            using (var db = new BarProjectEntities())
+            {
+                var category = db.Categories.FirstOrDefault(x => x.category_name == product.CategoryName);
+                var unit = db.Units.FirstOrDefault(x => x.unit_name == product.UnitName);
+                var tax = db.Taxes.FirstOrDefault(x => x.tax_name == product.TaxName);
+                db.updateProduct(id, category?.id, unit?.id, tax?.id, product.Name);
+            }
+        } 
     }
 }

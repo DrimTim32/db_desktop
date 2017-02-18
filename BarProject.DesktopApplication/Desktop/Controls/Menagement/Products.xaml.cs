@@ -1,4 +1,10 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Net;
+using System.Runtime.CompilerServices;
+using BarProject.DatabaseProxy.Annotations;
 using BarProject.DesktopApplication.Common.Utils;
 using RestSharp;
 
@@ -14,11 +20,57 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
     using DatabaseProxy.Models.ReadModels;
     using Library.RestHelpers;
 
-    /// <summary>
-    /// Interaction logic for Products.xaml
-    /// </summary>
     public partial class Products : UserControl
     {
+        public class SafeCounter
+        {
+            private int _counter = -1;
+            private readonly object locker = new object();
+            public int Counter
+            {
+                get
+                {
+                    lock (locker)
+                    {
+                        return _counter;
+                    }
+                }
+                set
+                {
+                    lock (locker)
+                    {
+                        _counter = value;
+                        if (_counter == 0)
+                        {
+                            OnPropertyChanged();
+                        }
+                    }
+                }
+            }
+
+            public event EventHandler Event;
+
+            [NotifyPropertyChangedInvocator]
+            protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+            {
+                Event?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        public List<string> UnitNames { get; set; }
+        public List<string> TaxesNames { get; set; }
+        public List<string> CategoriesNames { get; set; }
+        private readonly object counterLocker = new object();
+        private readonly SafeCounter _counter = new SafeCounter();
+        public SafeCounter Counter
+        {
+            get
+            {
+                lock (counterLocker)
+                {
+                    return _counter;
+                }
+            }
+        }
         private ObservableCollection<ShowableSimpleProduct> _productsList;
         private readonly object ShowableSimpleProductLock = new object();
 
@@ -39,13 +91,17 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         public Products()
         {
             InitializeComponent();
-            DataGrid.MouseDoubleClick += DataGrid_MouseDoubleClick;
             Loaded += Products_Loaded;
+            DataGrid.MouseDoubleClick += DataGrid_MouseDoubleClick;
         }
 
         private void Products_Loaded(object sender, RoutedEventArgs e)
         {
+            ProgressBarStart();
+            Counter.Counter = 3;
+            Counter.Event += (s, q) => { ProgressBarStop(); Debug.WriteLine("all done"); };
             RefreshData();
+            GetAll();
         }
 
         private void ProgressBarStart()
@@ -97,11 +153,79 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 }
                 else if (product.IsStored)
                 {
-                    var window = new StoredProductWindow(product.Id);
+                    var window = new StoredProductWindow(product.Id, TaxesNames, CategoriesNames, UnitNames);
                     window.Closed += (s, x) => RefreshData();
                     window.ShowDialog();
                 }
             }
         }
+        #region Windows helpers
+
+        private void GetAll()
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                GetSources();
+                GetCategories();
+                GetUnits();
+            }));
+        }
+
+        private void GetUnits()
+        {
+            Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoGetUnits));
+        }
+        private void GetSources()
+        {
+            Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoGetTaxes));
+        }
+        private void GetCategories()
+        {
+            Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoGetCategories));
+        }
+        private async void DoGetUnits()
+        {
+            var tmp = await RestClient.Client().GetUnits();
+            if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
+            {
+                MessageBoxesHelper.ShowProblemWithRequest(tmp);
+            }
+            else
+            {
+                UnitNames = tmp.Data.Select(x => x.Name).ToList();
+                Debug.WriteLine("units done");
+                Counter.Counter -= 1;
+            }
+        }
+        private async void DoGetCategories()
+        {
+            var tmp = await RestClient.Client().GetCategories();
+            if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
+            {
+                MessageBoxesHelper.ShowProblemWithRequest(tmp);
+            }
+            else
+            {
+                CategoriesNames = tmp.Data.Select(x => x.Name).ToList();
+                Debug.WriteLine("categories done");
+                Counter.Counter -= 1;
+            }
+        }
+        private async void DoGetTaxes()
+        {
+            var tmp = await RestClient.Client().GetTaxes();
+            if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
+            {
+                MessageBoxesHelper.ShowProblemWithRequest(tmp);
+            }
+            else
+            {
+                TaxesNames = tmp.Data.Select(x => x.TaxName).ToList();
+                Debug.WriteLine("taxes done");
+                Counter.Counter -= 1;
+            }
+        }
+
+        #endregion
     }
 }

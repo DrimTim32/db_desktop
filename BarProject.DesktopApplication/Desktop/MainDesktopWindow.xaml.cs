@@ -1,4 +1,6 @@
-﻿namespace BarProject.DesktopApplication.Desktop
+﻿using System.Windows.Controls;
+
+namespace BarProject.DesktopApplication.Desktop
 {
     using Controls;
     using Controls.Menagement;
@@ -17,39 +19,44 @@
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             SetCards();
         }
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var tabItem = (((TabControl)sender).SelectedItem as TabItem);
+            if (tabItem.Content == null)
+            {
+                switch ((string)tabItem.Header)
+                {
+                    case "Introduction":
+                        tabItem.Content = new Introduction();
+                        break;
+                    case "Menagement":
+                        tabItem.Content = new MenagementUserControl();
+                        break;
+
+                    case "Warehouse":
+                        tabItem.Content = new WarehouseUserControl();
+                        break;
+
+                    case "Administration":
+                        tabItem.Content = new UsersUserControl();
+                        break;
+
+                    case "Organisation":
+                        tabItem.Content = new OrganisationUserControl();
+                        break;
+                    default:
+                        return;
+                }
+            }
+        }
+
         private void SetCards()
         {
-            var initialisation = new MetroTabItem
+            var cards = new string[] { "Introduction", "Menagement", "Warehouse", "Administration", "Organisation" };
+            foreach (string cardName in cards)
             {
-                Header = "Introduction",
-            };
-            var menagement = new MetroTabItem
-            {
-                Header = "Menagement",
-                Content = new MenagementUserControl()
-            };
-
-            var warehouse = new MetroTabItem
-            {
-                Header = "Warehouse",
-                Content = new WarehouseUserControl()
-            };
-            var administration = new MetroTabItem
-            {
-                Header = "Administration",
-                Content = new UsersUserControl()
-            };
-            var organisation = new MetroTabItem
-            {
-                Header = "Organisation",
-                Content = new OrganisationUserControl()
-            };
-
-            TabControl.Items.Add(initialisation);
-            TabControl.Items.Add(menagement);
-            TabControl.Items.Add(warehouse);
-            TabControl.Items.Add(organisation);
-            TabControl.Items.Add(administration);
+                TabControl.Items.Add(new MetroTabItem() { Header = cardName });
+            } 
         }
 
     }

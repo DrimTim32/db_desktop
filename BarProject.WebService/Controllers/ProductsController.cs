@@ -76,5 +76,19 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
+        [Authorize(Roles = "Admin,Owner")] 
+        [HttpPatch, Route("{id}")]
+        public IHttpActionResult UpdateProduct(int id, [FromBody]ShowableProductBase product)
+        {
+            try
+            {
+                ProductsFunctions.UpdateProduct(id, product);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
     }
 }

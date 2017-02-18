@@ -54,7 +54,14 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
             request.AddHeader("Content-Type", "application/json");
             request.JsonSerializer = new JsonSerializer();
             client.ExecuteAsync(request, callback);
-
+        }
+        public void UpdateProduct(ShowableProductBase product, Action<IRestResponse, RestRequestAsyncHandle> callback)
+        {
+            var request = new RestRequest($"api/products/{product.Id}", Method.PATCH) { RequestFormat = DataFormat.Json };
+            request.AddHeader("Authorization", $"bearer {token}");
+            request.JsonSerializer = new JsonSerializer();
+            request.AddBody(product);
+            client.ExecuteAsync(request, callback);
         }
     }
 }
