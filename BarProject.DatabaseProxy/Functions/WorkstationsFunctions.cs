@@ -23,11 +23,11 @@ namespace BarProject.DatabaseProxy.Functions
                 db.removeWorkstation(id);
             }
         }
-        public static void AddWorkstation(ShowableWorkstation workstation)
+        public static void AddWorkstation(ShowableWorkstation workstation, int locationId)
         {
             using (var db = new BarProjectEntities())
             {
-                db.addWorkstation(workstation.Name);
+                db.addWorkstation(workstation.Name, locationId);
             }
         }
         public static void UpdateWorkstation(int id, ShowableWorkstation workstation)
@@ -35,7 +35,7 @@ namespace BarProject.DatabaseProxy.Functions
             using (var db = new BarProjectEntities())
             {
                 db.updateWorkstation(id, workstation.Name);
-                
+
             }
         }
     }

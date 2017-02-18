@@ -4,59 +4,69 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2ebddd2211fd4e4c87d6f2c6ee13a057" Name="Diagram1">
-        <EntityTypeShape EntityType="ProjectEntities.Category" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.Client_order_details" Width="1.5" PointX="12.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.Client_orders" Width="1.5" PointX="10.5" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.EmployePermission" Width="1.5" PointX="3.75" PointY="22" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.Ingredient" Width="1.5" PointX="9.75" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.InternalError" Width="1.5" PointX="9.75" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.Location" Width="1.5" PointX="5.25" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.Price" Width="1.5" PointX="9.75" PointY="14.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.Product" Width="1.5" PointX="5.25" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.ProductsSold" Width="1.5" PointX="7.5" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.ProductsStored" Width="1.5" PointX="7.5" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.Receipt" Width="1.5" PointX="5.25" PointY="12.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.Spot" Width="1.5" PointX="8.25" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.Supplier" Width="1.5" PointX="6" PointY="17.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.Tax" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.Unit" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.UnitType" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.User" Width="1.5" PointX="6" PointY="21.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.Warehouse" Width="1.5" PointX="7.5" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.Warehouse_order_details" Width="1.5" PointX="10.5" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.Warehouse_orders" Width="1.5" PointX="8.25" PointY="19.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.Workstation" Width="1.5" PointX="6" PointY="26.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.productSimple" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.productsLastPrice" Width="1.5" PointX="11.75" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectEntities.database_firewall_rules" Width="1.5" PointX="11.75" PointY="11.5" IsExpanded="true" />
-        <AssociationConnector Association="ProjectEntities.FK__Categorie__overr__5E8A0973" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__Products__catego__33F4B129" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__Client_or__clien__32CB82C6" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__Client_or__produ__33BFA6FF" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__Client_or__spot___34B3CB38" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__Client_or__emplo__2E06CDA9" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__Client_or__spot___2D12A970" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__Users__permissio__573DED66" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__Ingredien__ingre__4336F4B9" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__Ingredien__recei__4242D080" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__Warehouse__locat__190BB0C3" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__Warehouse__locat__21A0F6C4" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__Prices__product___46136164" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__Products__tax_id__35DCF99B" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__Products__unit_i__34E8D562" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__ProductsStor__id__38B96646" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__Warehouse__produ__19FFD4FC" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__Warehouse__produ__2759D01A" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.fk_sold_base_prod" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.fk_stored_base_prod" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__ProductsS__recei__3E723F9C" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__Warehouse__suppl__20ACD28B" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__Units__unit_type__12C8C788" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__Warehouse__emplo__1FB8AE52" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.FK__Warehouse__wareh__2665ABE1" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectEntities.Workstation_rights" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="ProjectEntities.productsLastPricesWithName" Width="1.5" PointX="3.375" PointY="0.75" />
+      <Diagram DiagramId="5ce68933cd7d443aba727f925632fdd3" Name="Diagram1">
+        <EntityTypeShape EntityType="BarProjectModel.Category" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Client_order_details" Width="1.5" PointX="9.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Client_orders" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.EmployePermission" Width="1.5" PointX="0.75" PointY="25.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Ingredient" Width="1.5" PointX="9.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.InternalError" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Location" Width="1.5" PointX="3" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Price" Width="1.5" PointX="9.75" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Product" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.ProductsSold" Width="1.5" PointX="7.5" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.ProductsStored" Width="1.5" PointX="7.5" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Receipt" Width="1.5" PointX="5.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Spot" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Supplier" Width="1.5" PointX="3" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Tax" Width="1.5" PointX="3" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Unit" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.UnitType" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.User" Width="1.5" PointX="3" PointY="24.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Warehouse" Width="1.5" PointX="10.5" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Warehouse_order_details" Width="1.5" PointX="7.5" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Warehouse_orders" Width="1.5" PointX="5.25" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Workstation" Width="1.5" PointX="8.25" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.LoginLog" Width="1.5" PointX="9.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.ProductsUsage" Width="1.5" PointX="7.5" PointY="20" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Client_order_details_pretty" Width="1.5" PointX="11.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Client_orders_pretty" Width="1.5" PointX="11.75" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.productSimple" Width="1.5" PointX="5.75" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.productsLastPrice" Width="1.5" PointX="12.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.productsLastPricesWithName" Width="1.5" PointX="13.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Warehouse_order_details_pretty" Width="1.5" PointX="13.75" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Warehouse_orders_pretty" Width="1.5" PointX="14.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Warehouse_pretty" Width="1.5" PointX="11.75" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.Workstations_with_rights_pretty" Width="1.5" PointX="13.75" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BarProjectModel.database_firewall_rules" Width="1.5" PointX="15.75" PointY="2.5" IsExpanded="true" />
+        <AssociationConnector Association="BarProjectModel.FK__Categorie__overr__2BE97B0D" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Products__catego__347EC10E" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Client_or__clien__2CDD9F46" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Client_or__produ__2DD1C37F" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Client_or__emplo__2EC5E7B8" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Client_or__spot___2FBA0BF1" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Users__permissio__3E082B48" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Ingredien__ingre__13DCE752" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Ingredien__recei__12E8C319" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Spots__location___3C1FE2D6" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Warehouse__locat__3EFC4F81" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Warehouse__locat__43C1049E" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Workstati__locat__47919582" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Prices__product___17AD7836" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Products__tax_id__3572E547" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Products__unit_i__36670980" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__ProductsStor__id__0E240DFC" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__ProductsU__produ__1C722D53" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Warehouse__produ__3FF073BA" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Warehouse__produ__40E497F3" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.fk_sold_base_prod" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.fk_stored_base_prod" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__ProductsS__recei__375B2DB9" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Warehouse__suppl__44B528D7" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Units__unit_type__3D14070F" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Warehouse__emplo__42CCE065" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Warehouse__wareh__41D8BC2C" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.Workstation_rights" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

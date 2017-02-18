@@ -10,10 +10,15 @@
 namespace BarProject.DatabaseConnector
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class getClientOrderDetails_Result
+    public partial class Workstations_with_rights_pretty
     {
-        public int products_sold_id { get; set; }
-        public short quantity { get; set; }
+        public int workstation_id { get; set; }
+        public string workstation_name { get; set; }
+        public byte employe_permissions { get; set; }
+        public int id { get; set; }
+        public string location_name { get; set; }
+        public string city { get; set; }
     }
 }

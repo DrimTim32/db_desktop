@@ -10,10 +10,14 @@
 namespace BarProject.DatabaseConnector
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class getClientOrderDetails_Result
+    public partial class ProductsUsage
     {
-        public int products_sold_id { get; set; }
-        public short quantity { get; set; }
+        public int product_id { get; set; }
+        public System.DateTime date { get; set; }
+        public double quantity { get; set; }
+    
+        public virtual Product Product { get; set; }
     }
 }

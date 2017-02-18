@@ -12,20 +12,19 @@ namespace BarProject.DatabaseConnector
     using System;
     using System.Collections.Generic;
     
-    public partial class Spot
+    public partial class Client_orders_pretty
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Spot()
-        {
-            this.Client_orders = new HashSet<Client_orders>();
-        }
-    
         public int id { get; set; }
+        public Nullable<System.DateTime> order_time { get; set; }
+        public Nullable<System.DateTime> payment_time { get; set; }
+        public int spot_id { get; set; }
+        public string spot_name { get; set; }
         public int location_id { get; set; }
-        public string name { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Client_orders> Client_orders { get; set; }
-        public virtual Location Location { get; set; }
+        public string location_name { get; set; }
+        public string address { get; set; }
+        public int employee_id { get; set; }
+        public string username { get; set; }
+        public string user_name { get; set; }
+        public string surname { get; set; }
     }
 }

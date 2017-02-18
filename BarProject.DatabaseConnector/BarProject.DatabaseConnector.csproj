@@ -125,7 +125,13 @@
     <Compile Include="Client_orders.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Client_orders_pretty.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Client_order_details.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Client_order_details_pretty.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="database_firewall_rules.cs">
@@ -146,10 +152,19 @@
     <Compile Include="getSupplier_Result.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="getWarehouseOrderDetailsPretty_Result.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="getWarehouseOrderDetails_Result.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="getWarehouseOrderPretty_Result.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="getWarehouseOrder_Result.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="getWarehouseProduct_Result.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="getWorkstationRights_Result.cs">
@@ -162,6 +177,9 @@
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Location.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoginLog.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Price.cs">
@@ -192,6 +210,9 @@
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="ProductsStored.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductsUsage.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -228,10 +249,22 @@
     <Compile Include="Warehouse_orders.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Warehouse_orders_pretty.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Warehouse_order_details.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Warehouse_order_details_pretty.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Warehouse_pretty.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Workstation.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Workstations_with_rights_pretty.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
   </ItemGroup>

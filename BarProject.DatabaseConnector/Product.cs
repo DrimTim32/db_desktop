@@ -17,6 +17,7 @@ namespace BarProject.DatabaseConnector
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
+            this.ProductsUsages = new HashSet<ProductsUsage>();
             this.Warehouses = new HashSet<Warehouse>();
             this.Warehouse_order_details = new HashSet<Warehouse_order_details>();
         }
@@ -31,6 +32,8 @@ namespace BarProject.DatabaseConnector
         public virtual Tax Tax { get; set; }
         public virtual Unit Unit { get; set; }
         public virtual ProductsStored ProductsStored { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductsUsage> ProductsUsages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Warehouse> Warehouses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

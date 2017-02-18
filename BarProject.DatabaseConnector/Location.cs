@@ -17,8 +17,10 @@ namespace BarProject.DatabaseConnector
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Location()
         {
+            this.Spots = new HashSet<Spot>();
             this.Warehouses = new HashSet<Warehouse>();
             this.Warehouse_orders = new HashSet<Warehouse_orders>();
+            this.Workstations = new HashSet<Workstation>();
         }
     
         public int id { get; set; }
@@ -30,8 +32,12 @@ namespace BarProject.DatabaseConnector
         public string phone { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Spot> Spots { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Warehouse> Warehouses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Warehouse_orders> Warehouse_orders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Workstation> Workstations { get; set; }
     }
 }
