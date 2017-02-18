@@ -35,12 +35,20 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
             request.AddHeader("Content-Type", "application/json");
             client.ExecuteAsync(request, callback);
         }
-        public void AddUnit(ShowableUnit category, Action<IRestResponse, RestRequestAsyncHandle> callback)
+        public void AddUnit(ShowableUnit unit, Action<IRestResponse, RestRequestAsyncHandle> callback)
         {
             var request = new RestRequest("api/units/", Method.POST) { RequestFormat = DataFormat.Json };
             request.AddHeader("Authorization", $"bearer {token}");
             request.JsonSerializer = new JsonSerializer();
-            request.AddBody(category);
+            request.AddBody(unit);
+            client.ExecuteAsync(request, callback);
+        }
+        public void UpdateUnit(ShowableUnit unit, Action<IRestResponse, RestRequestAsyncHandle> callback)
+        {
+            var request = new RestRequest($"api/units/{unit.Id}", Method.PATCH) { RequestFormat = DataFormat.Json };
+            request.AddHeader("Authorization", $"bearer {token}");
+            request.JsonSerializer = new JsonSerializer();
+            request.AddBody(unit);
             client.ExecuteAsync(request, callback);
         }
     }

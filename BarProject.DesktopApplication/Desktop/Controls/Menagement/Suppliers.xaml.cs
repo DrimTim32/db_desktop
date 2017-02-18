@@ -84,7 +84,7 @@
             }
             ProgressBarStop();
         }
-        async void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             DataGrid dg = sender as DataGrid;
             if (dg != null)
@@ -101,40 +101,46 @@
                     else
                     {
                         var cat = (ShowableSupplier)dgr.Item;
-                        RestClient.Client().RemoveSupplier(cat.Id,
-                            (response, handle) =>
-                            {
-                                if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
-                                {
-                                    MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
-                                        response.Content);
-                                }
-                                else
-                                {
-                                    RefreshData();
-                                }
-                            });
+                        RemoveSupplier(cat);
                     }
                 }
             }
         }
+
+        private void RemoveSupplier(ShowableSupplier supplier)
+        {
+            RestClient.Client().RemoveSupplier(supplier.Id,
+                              (response, handle) =>
+                              {
+                                  if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
+                                  {
+                                      MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
+                                          response.Content);
+                                  }
+                                  else
+                                  {
+                                      RefreshData();
+                                  }
+                              });
+        }
+
         private void DataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             var grid = sender as DataGrid;
             if (DataGrid.SelectedItem != null && grid != null)
             {
 
-                var location = (ShowableSupplier)e.Row.Item;
+                var supplier = (ShowableSupplier)e.Row.Item;
                 grid.RowEditEnding -= DataGrid_RowEditEnding;
                 grid.CommitEdit();
                 ProgressBarStart();
-                if (IsSupplierEmpty(location))
+                if (IsSupplierEmpty(supplier))
                 {
                     grid.CancelEdit();
                     grid.RowEditEnding += DataGrid_RowEditEnding;
                     return;
                 }
-                if (string.IsNullOrEmpty(location.Name))
+                if (string.IsNullOrEmpty(supplier.Name))
                 {
                     var message = "You cannot create location with empty name";
                     grid.CancelEdit();
@@ -146,34 +152,38 @@
                     return;
                 }
                 grid.RowEditEnding += DataGrid_RowEditEnding;
-                if (location.Id == null)
-                {
-                    RestClient.Client().AddSupplier(location, (response, handle) =>
-                    {
-                        if (response.ResponseStatus != ResponseStatus.Completed ||
-                            response.StatusCode != HttpStatusCode.OK)
-                        {
-                            MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
-                                response.Content.Replace("Reason", ""));
-                        }
-                        RefreshData();
-                    });
-                }
+                if (supplier.Id != null)
+                    UpdateSupplier(supplier);
                 else
-                {
-                    RestClient.Client().UpdateSupplier(location, (response, handle) =>
-                    {
-                        if (response.ResponseStatus != ResponseStatus.Completed ||
-                            response.StatusCode != HttpStatusCode.OK)
-                        {
-                            MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
-                                response.Content.Replace("Reason", ""));
-                        }
-                        RefreshData();
-                    });
-                }
-
+                    AddSupplier(supplier);
             }
+        }
+        private void AddSupplier(ShowableSupplier supplier)
+        {
+            RestClient.Client().AddSupplier(supplier, (response, handle) =>
+            {
+                if (response.ResponseStatus != ResponseStatus.Completed ||
+                    response.StatusCode != HttpStatusCode.OK)
+                {
+                    MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
+                        response.Content.Replace("Reason", ""));
+                }
+                RefreshData();
+            });
+        }
+        private void UpdateSupplier(ShowableSupplier supplier)
+        {
+            RestClient.Client().UpdateSupplier(supplier, (response, handle) =>
+            {
+                if (response.ResponseStatus != ResponseStatus.Completed ||
+                    response.StatusCode != HttpStatusCode.OK)
+                {
+                    MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
+                        response.Content.Replace("Reason", ""));
+                }
+                RefreshData();
+            });
+
         }
 
     }

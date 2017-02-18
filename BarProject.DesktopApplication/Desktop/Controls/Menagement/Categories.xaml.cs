@@ -97,6 +97,10 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 {
                     message = "You cannot create category with empty slug";
                 }
+                if (cat.Overriding == cat.Name)
+                {
+                    message = "Jakis ladny ze tak nie mozna";
+                }
                 if (message != "")
                 {
                     grid.CancelEdit();

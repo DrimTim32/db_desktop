@@ -151,22 +151,58 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 grid.RowEditEnding += DataGrid_RowEditEnding;
                 if (unit.Id != null)
                 {
-
+                    UpdateUnit(unit);
                 }
                 else
                 {
-                    RestClient.Client().AddUnit(unit, (response, handle) =>
-                    {
-                        if (response.ResponseStatus != ResponseStatus.Completed ||
-                            response.StatusCode != HttpStatusCode.OK)
-                        {
-                            MessageBoxesHelper.ShowProblemWithRequest(response);
-                        }
-                        RefreshData();
-                    });
+                    AddUnit(unit);
                 }
 
             }
+        }
+
+        private void UpdateUnit(ShowableUnit unit)
+        {
+            RestClient.Client().UpdateUnit(unit, (response, handle) =>
+            {
+                if (response.ResponseStatus != ResponseStatus.Completed ||
+                    response.StatusCode != HttpStatusCode.OK)
+                {
+                    MessageBoxesHelper.ShowProblemWithRequest(response);
+                }
+                RefreshData();
+            });
+        }
+        private void AddUnit(ShowableUnit unit)
+        {
+            RestClient.Client().AddUnit(unit, (response, handle) =>
+            {
+                if (response.ResponseStatus != ResponseStatus.Completed ||
+                    response.StatusCode != HttpStatusCode.OK)
+                {
+                    MessageBoxesHelper.ShowProblemWithRequest(response);
+                }
+                RefreshData();
+            });
+
+        }
+
+        private void RemoveUnit(ShowableUnit unit)
+        {
+
+            RestClient.Client().RemoveUnit(unit.Id,
+                (response, handle) =>
+                {
+                    if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
+                    {
+                        MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
+                            response.Content);
+                    }
+                    else
+                    {
+                        RefreshData();
+                    }
+                });
         }
         void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -184,20 +220,8 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                     }
                     else
                     {
-                        var cat = (ShowableUnit)dgr.Item;
-                        RestClient.Client().RemoveUnit(cat.Id,
-                            (response, handle) =>
-                            {
-                                if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
-                                {
-                                    MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
-                                        response.Content);
-                                }
-                                else
-                                {
-                                    RefreshData();
-                                }
-                            });
+                        var unit = (ShowableUnit)dgr.Item;
+                        RemoveUnit(unit);
                     }
                 }
             }

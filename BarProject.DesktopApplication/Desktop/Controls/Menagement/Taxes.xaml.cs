@@ -92,6 +92,10 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                     message = "You cannot create tax with empty name";
                 if (tax.TaxValue == null)
                     message = "You cannot create tax with empty value";
+                if (tax.TaxValue < 0 || tax.TaxValue > 1)
+                {
+                    message = "Tax value must be between 0 and 1";
+                }
                 if (message != "")
                 {
                     grid.CancelEdit();
@@ -105,40 +109,44 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 grid.RowEditEnding += DataGrid_RowEditEnding;
                 if (tax.Id != null)
                 {
-                    RestClient.Client().UpdateTax(tax, (response, handle) =>
-                    {
-                        if (response.ResponseStatus != ResponseStatus.Completed ||
-                            response.StatusCode != HttpStatusCode.OK)
-                        {
-                            if (response.Content.Contains("INSERT") && response.Content.Contains("CHECK"))
-                                MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
-                                    "Tax value must be between 0 and 1");
-                            else
-                                MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
-                                    response.Content.Replace("Reason", ""));
-                        }
-                        RefreshData();
-                    });
+                    UpdateTax(tax);
                 }
                 else
                 {
-                    RestClient.Client().AddTax(tax, (response, handle) =>
-                    {
-                        if (response.ResponseStatus != ResponseStatus.Completed ||
-                            response.StatusCode != HttpStatusCode.OK)
-                        {
-                            if (response.Content.Contains("INSERT") && response.Content.Contains("CHECK"))
-                                MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
-                                    "Tax value must be between 0 and 1");
-                            else
-                                MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
-                                    response.Content.Replace("Reason", ""));
-                        }
-                        RefreshData();
-                    });
+                    AddTax(tax);
                 }
 
             }
+        }
+
+        private void UpdateTax(ShowableTax tax)
+        {
+            RestClient.Client().UpdateTax(tax, (response, handle) =>
+            {
+                if (response.ResponseStatus != ResponseStatus.Completed ||
+                    response.StatusCode != HttpStatusCode.OK)
+                {
+                    MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
+                        response.Content.Replace("Reason", ""));
+                }
+                RefreshData();
+            });
+        }
+        private void AddTax(ShowableTax tax)
+        {
+            RestClient.Client().AddTax(tax, (response, handle) =>
+            {
+                if (response.ResponseStatus != ResponseStatus.Completed ||
+                    response.StatusCode != HttpStatusCode.OK)
+                {
+                    if (response.Content.Contains("INSERT") && response.Content.Contains("CHECK"))
+                        MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
+                            "Tax value must be between 0 and 1");
+                    else
+                        MessageBoxesHelper.ShowProblemWithRequest(response);
+                }
+                RefreshData();
+            });
         }
         async void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -156,23 +164,28 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                     }
                     else
                     {
-                        var cat = (ShowableTax)dgr.Item;
-                        RestClient.Client().RemoveTax(cat.Id,
-                            (response, handle) =>
-                            {
-                                if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
-                                {
-                                    MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
-                                        response.Content);
-                                }
-                                else
-                                {
-                                    RefreshData();
-                                }
-                            });
+                        var tax = (ShowableTax)dgr.Item;
+                        RemoveTax(tax);
                     }
                 }
             }
+        }
+
+        private void RemoveTax(ShowableTax tax)
+        {
+            RestClient.Client().RemoveTax(tax.Id,
+                           (response, handle) =>
+                           {
+                               if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
+                               {
+                                   MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
+                                       response.Content);
+                               }
+                               else
+                               {
+                                   RefreshData();
+                               }
+                           });
         }
 
         private void ProgressBarStart()
