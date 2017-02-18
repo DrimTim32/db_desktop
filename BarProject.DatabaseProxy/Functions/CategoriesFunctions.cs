@@ -1,4 +1,8 @@
-﻿namespace BarProject.DatabaseProxy.Functions
+﻿using System.Net;
+using BarProject.DatabaseProxy.Models.ExceptionHandlers;
+using BarProject.DatabaseProxy.Models.Utilities;
+
+namespace BarProject.DatabaseProxy.Functions
 {
     using System;
     using System.Collections.Generic;
@@ -52,6 +56,26 @@
             using (var db = new BarProjectEntities())
             {
                 db.removeCategory(id);
+            }
+        }
+
+        public static void UpdateCategory(int id, ShowableCategory category)
+        {
+            using (var db = new BarProjectEntities())
+            {
+                if (string.IsNullOrEmpty(category.Overriding))
+                {
+                    db.updateCategory(id, category.Slug, category.Name, null);
+                }
+                else
+                {
+                    var tmp = db.Categories.FirstOrDefault(x => x.category_name == category.Overriding);
+                    if (tmp == null)
+                    {
+                        throw new ResponseException(HttpStatusCode.NotFound, "No such overriding category", Utilities.ExceptionType.User);
+                    }
+                    db.updateCategory(id, category.Slug, category.Name, tmp.id);
+                }
             }
         }
     }

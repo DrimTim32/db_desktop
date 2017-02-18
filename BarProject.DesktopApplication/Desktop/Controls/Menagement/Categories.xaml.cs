@@ -102,24 +102,64 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                     grid.CancelEdit();
                     grid.RowEditEnding += DataGrid_RowEditEnding;
                     MessageBoxesHelper.ShowWindowInformationAsync("Problem with new item!", message);
-                    grid.Items.Refresh();
                     RefreshData();
                     ProgressBarStop();
                     return;
                 }
                 grid.RowEditEnding += DataGrid_RowEditEnding;
-                RestClient.Client().AddCategory(cat, (response, handle) =>
+                if (cat.Id == null) // new row added
+                {
+                    AddCategory(cat);
+                }
+                else
+                {
+                    UpdateCategory(cat);
+                }
+            }
+        }
+
+        private void AddCategory(ShowableCategory cat)
+        {
+
+            RestClient.Client().AddCategory(cat, (response, handle) =>
+            {
+                if (response.ResponseStatus != ResponseStatus.Completed ||
+                    response.StatusCode != HttpStatusCode.OK)
+                {
+                    MessageBoxesHelper.ShowProblemWithRequest(response);
+                }
+                RefreshData();
+            });
+        }
+        private void UpdateCategory(ShowableCategory cat)
+        {
+            RestClient.Client().UpdateCategory(cat, (response, handle) =>
+            {
+                if (response.ResponseStatus != ResponseStatus.Completed ||
+                    response.StatusCode != HttpStatusCode.OK)
+                {
+                    MessageBoxesHelper.ShowProblemWithRequest(response);
+                }
+                RefreshData();
+            });
+        }
+
+        private void RemoveCategory(ShowableCategory cat)
+        {
+            RestClient.Client().RemoveCategory(cat.Id,
+                (response, handle) =>
                 {
                     if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
                     {
-                        MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database", response.Content);
+                        MessageBoxesHelper.ShowProblemWithRequest(response);
                     }
-                    RefreshData();
+                    else
+                    {
+                        RefreshData();
+                    }
                 });
-
-            }
         }
-        async void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             DataGrid dg = sender as DataGrid;
             if (dg != null)
@@ -136,19 +176,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                     else
                     {
                         var cat = (ShowableCategory)dgr.Item;
-                        RestClient.Client().RemoveCategory(cat.Id,
-                            (response, handle) =>
-                            {
-                                if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
-                                {
-                                    MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
-                                        response.Content);
-                                }
-                                else
-                                {
-                                    RefreshData();
-                                }
-                            });
+                        RemoveCategory(cat);
                     }
                 }
             }
@@ -179,7 +207,6 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 CategoriesList.Add(showableCategory);
             }
             RefreshOverridingPossibilities();
-            DataGrid.Items.Refresh();
             ProgressBarStop();
         }
         private void RefreshOverridingPossibilities()

@@ -36,7 +36,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             InitializeComponent();
             Loaded += Units_Loaded;
             DataGrid.RowEditEnding += DataGrid_RowEditEnding;
-            DataGrid.PreviewKeyDown += DataGrid_PreviewKeyDown; 
+            DataGrid.PreviewKeyDown += DataGrid_PreviewKeyDown;
         }
         private void Units_Loaded(object sender, RoutedEventArgs e)
         {
@@ -115,22 +115,22 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             if (DataGrid.SelectedItem != null && grid != null)
             {
 
-                var tax = (ShowableUnit)e.Row.Item;
+                var unit = (ShowableUnit)e.Row.Item;
                 grid.RowEditEnding -= DataGrid_RowEditEnding;
                 grid.CommitEdit();
                 string message = "";
                 ProgressBarStart();
-                if (IsUnitEmpty(tax))
+                if (IsUnitEmpty(unit))
                 {
                     grid.CancelEdit();
                     grid.RowEditEnding += DataGrid_RowEditEnding;
                     return;
                 }
-                if (string.IsNullOrEmpty(tax.Name))
+                if (string.IsNullOrEmpty(unit.Name))
                     message = "You cannot create unit with empty name";
-                if (string.IsNullOrEmpty(tax.Type))
+                if (string.IsNullOrEmpty(unit.Type))
                     message = "You cannot create unit with empty type";
-                if (tax.Factor == null)
+                if (unit.Factor == null)
                     message = "You cannot create unit with empty factor";
                 if (message != "")
                 {
@@ -143,21 +143,26 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                     return;
                 }
                 grid.RowEditEnding += DataGrid_RowEditEnding;
-                RestClient.Client().AddUnit(tax, (response, handle) =>
+                if (unit.Id != null)
                 {
-                    if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
+
+                }
+                else
+                {
+                    RestClient.Client().AddUnit(unit, (response, handle) =>
                     {
-                        if (response.Content.Contains("INSERT") && response.Content.Contains("CHECK"))
-                            MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database", "Tax value must be between 0 and 1");
-                        else
-                            MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database", response.Content.Replace("Reason", ""));
-                    }
-                    RefreshData();
-                });
+                        if (response.ResponseStatus != ResponseStatus.Completed ||
+                            response.StatusCode != HttpStatusCode.OK)
+                        { 
+                            MessageBoxesHelper.ShowProblemWithRequest(response); 
+                        }
+                        RefreshData();
+                    });
+                }
 
             }
         }
-        async void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             DataGrid dg = sender as DataGrid;
             if (dg != null)

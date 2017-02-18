@@ -4,7 +4,10 @@
 
     public class ShowableUnit
     {
-        public ShowableUnit() { }
+        public ShowableUnit()
+        {
+            Id = null;
+        }
 
         public ShowableUnit(Unit unit)
         {
@@ -16,7 +19,7 @@
         public string Type { get; set; }
         public string Name { get; set; }
         public double? Factor { get; set; }
-        public int Id { get; set; }
+        public int? Id { get; set; }
     }
 }
 

@@ -32,5 +32,13 @@
                 db.removeTax(id);
             }
         }
+
+        public static void UpdateTax(int id, ShowableTax tax)
+        {
+            using (var db = new BarProjectEntities())
+            {
+                db.updateTax(id, tax.TaxName, tax.TaxValue);
+            }
+        }
     }
 }

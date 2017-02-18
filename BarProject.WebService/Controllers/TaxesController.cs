@@ -46,9 +46,22 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
-        [HttpDelete]
         [Authorize(Roles = "Admin,Owner")]
-        [Route("{id}")]
+        [HttpPatch, Route("{id}")]
+        public IHttpActionResult Patch(int id, [FromBody] ShowableTax tax)
+        {
+            try
+            {
+                TaxesFunctions.UpdateTax(id, tax);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+        [Authorize(Roles = "Admin,Owner")]
+        [HttpDelete, Route("{id}")]
         public IHttpActionResult Delete(int id)
         {
             try

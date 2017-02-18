@@ -19,13 +19,6 @@
             var data = await client.ExecuteGetTaskAsync<List<ShowableCategory>>(request);
             return data;
         }
-        public void GetSubCategories(int id, Action<IRestResponse<List<ShowableCategory>>, RestRequestAsyncHandle> callback)
-        {
-            var request = new RestRequest($"api/categories/{id}", Method.GET);
-            request.AddHeader("Authorization", $"bearer {token}");
-            request.AddHeader("Content-Type", "application/json");
-            client.ExecuteAsync(request, callback);
-        }
         public async Task<IRestResponse<List<ShowableCategory>>> GetSubCategoriesAsync(int id)
         {
             var request = new RestRequest($"api/categories/{id}", Method.GET);
@@ -52,6 +45,14 @@
         public void AddCategory(ShowableCategory category, Action<IRestResponse, RestRequestAsyncHandle> callback)
         {
             var request = new RestRequest("api/categories/", Method.POST) { RequestFormat = DataFormat.Json };
+            request.AddHeader("Authorization", $"bearer {token}");
+            request.JsonSerializer = new JsonSerializer();
+            request.AddBody(category);
+            client.ExecuteAsync(request, callback);
+        }
+        public void UpdateCategory(ShowableCategory category, Action<IRestResponse, RestRequestAsyncHandle> callback)
+        {
+            var request = new RestRequest($"api/categories/{category.Id}", Method.PATCH) { RequestFormat = DataFormat.Json };
             request.AddHeader("Authorization", $"bearer {token}");
             request.JsonSerializer = new JsonSerializer();
             request.AddBody(category);

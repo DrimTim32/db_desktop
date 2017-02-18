@@ -108,5 +108,19 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
+        [Authorize(Roles = "Admin,Owner")]
+        [HttpPatch, Route("{id}")]
+        public IHttpActionResult Patch(int id, [FromBody] ShowableCategory category)
+        {
+            try
+            {
+                CategoriesFunctions.UpdateCategory(id, category);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
     }
 }

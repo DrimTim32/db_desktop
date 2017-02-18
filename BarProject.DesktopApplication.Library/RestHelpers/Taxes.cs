@@ -28,12 +28,20 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
             request.AddHeader("Content-Type", "application/json");
             client.ExecuteAsync(request, callback);
         }
-        public void AddTax(ShowableTax category, Action<IRestResponse, RestRequestAsyncHandle> callback)
+        public void AddTax(ShowableTax tax, Action<IRestResponse, RestRequestAsyncHandle> callback)
         {
             var request = new RestRequest("api/taxes/", Method.POST) { RequestFormat = DataFormat.Json };
             request.AddHeader("Authorization", $"bearer {token}");
             request.JsonSerializer = new JsonSerializer();
-            request.AddBody(category);
+            request.AddBody(tax);
+            client.ExecuteAsync(request, callback);
+        }
+        public void UpdateTax(ShowableTax tax, Action<IRestResponse, RestRequestAsyncHandle> callback)
+        {
+            var request = new RestRequest($"api/taxes/{tax.Id}", Method.PATCH) { RequestFormat = DataFormat.Json };
+            request.AddHeader("Authorization", $"bearer {token}");
+            request.JsonSerializer = new JsonSerializer();
+            request.AddBody(tax);
             client.ExecuteAsync(request, callback);
         }
     }

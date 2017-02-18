@@ -108,8 +108,7 @@
                     {
                         if (response.ResponseStatus == ResponseStatus.TimedOut)
                         {
-                            MessageBoxesHelper.ShowWindowInformation("Request timed out",
-                                "Problem connecting to the server");
+                            MessageBoxesHelper.ShowProblemWithRequest(response);
                             Application.Current.Dispatcher.Invoke(ProgressBarStop);
                         }
                         else if (response.StatusCode != HttpStatusCode.OK)

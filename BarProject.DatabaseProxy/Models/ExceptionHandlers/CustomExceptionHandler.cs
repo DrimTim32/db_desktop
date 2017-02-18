@@ -14,7 +14,7 @@
 
             context.Result = new ResponseMessageResult(
                 context.Request.CreateResponse(
-                    exc.ExceptionData.Code, "Reason: " + exc.ExceptionData.Reason +
+                    exc.ExceptionData.Code, exc.ExceptionData.Reason +
                                             (exc.ExceptionData.Reason.Contains("inner") ?
                                                 " Inner : " + exc.ExceptionData.InnerMessage : ""
                                                 ))

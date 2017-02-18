@@ -21,7 +21,7 @@
                     <DataGridTextColumn Header="City"  Binding="{Binding City}"/>
                     <DataGridTextColumn Header="PostalCode"  Binding="{Binding PostalCode}"/>
                     <DataGridTextColumn Header="Country"  Binding="{Binding Country }"/>
-                    <DataGridTextColumn Header="ContactNam"  Binding="{Binding ContactNam}"/>
+                    <DataGridTextColumn Header="ContactName"  Binding="{Binding ContactName}"/>
                     <DataGridTextColumn Header="Phone"  Binding="{Binding Phone}"/>
                     <DataGridTextColumn Header="Fax"  Binding="{Binding Fax}"/>
                     <DataGridTextColumn Header="Website"  Binding="{Binding Website}"/>

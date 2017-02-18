@@ -1,4 +1,7 @@
-﻿namespace BarProject.DesktopApplication.Common.Utils
+﻿using System.Net;
+using RestSharp;
+
+namespace BarProject.DesktopApplication.Common.Utils
 {
     using System.Threading.Tasks;
     using System.Windows;
@@ -7,6 +10,47 @@
 
     public static class MessageBoxesHelper
     {
+
+        public static async void ShowProblemWithRequest(IRestResponse response)
+        {
+            var code = response.StatusCode;
+            string header = "";
+            string message = "";
+            if (response.ResponseStatus == ResponseStatus.Aborted)
+            {
+                header = "Aborted";
+                message = "This operation has been aborted";
+            }
+            else if (response.ResponseStatus == ResponseStatus.TimedOut)
+            {
+                header = "Request timed out";
+                message = "Problem connecting to the server";
+            }
+            else if (response.ResponseStatus == ResponseStatus.Error)
+            {
+                header = "Server error";
+                message = response.ErrorMessage;
+            }
+            else if (response.ResponseStatus == ResponseStatus.Completed)
+            {
+                if (code == HttpStatusCode.Unauthorized)
+                {
+                    header = "Unauthorized";
+                    message = "You do not have permission to do this";
+                }
+                else if (code == HttpStatusCode.Conflict)
+                {
+                    header = "Value duplication";
+                    message = response.Content;
+                }
+                else if (code == HttpStatusCode.InternalServerError)
+                {
+                    header = "Internal server error";
+                    message = response.Content;
+                }
+            }
+            await MessageAsync(header, message);
+        }
         public static async void ShowWindowInformationAsync(string header, string message)
         {
             await MessageAsync(header, message);

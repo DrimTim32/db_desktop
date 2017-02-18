@@ -103,17 +103,40 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                     return;
                 }
                 grid.RowEditEnding += DataGrid_RowEditEnding;
-                RestClient.Client().AddTax(tax, (response, handle) =>
+                if (tax.Id != null)
                 {
-                    if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
+                    RestClient.Client().UpdateTax(tax, (response, handle) =>
                     {
-                        if (response.Content.Contains("INSERT") && response.Content.Contains("CHECK"))
-                            MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database", "Tax value must be between 0 and 1");
-                        else
-                            MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database", response.Content.Replace("Reason", ""));
-                    }
-                    RefreshData();
-                });
+                        if (response.ResponseStatus != ResponseStatus.Completed ||
+                            response.StatusCode != HttpStatusCode.OK)
+                        {
+                            if (response.Content.Contains("INSERT") && response.Content.Contains("CHECK"))
+                                MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
+                                    "Tax value must be between 0 and 1");
+                            else
+                                MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
+                                    response.Content.Replace("Reason", ""));
+                        }
+                        RefreshData();
+                    });
+                }
+                else
+                {
+                    RestClient.Client().AddTax(tax, (response, handle) =>
+                    {
+                        if (response.ResponseStatus != ResponseStatus.Completed ||
+                            response.StatusCode != HttpStatusCode.OK)
+                        {
+                            if (response.Content.Contains("INSERT") && response.Content.Contains("CHECK"))
+                                MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
+                                    "Tax value must be between 0 and 1");
+                            else
+                                MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
+                                    response.Content.Replace("Reason", ""));
+                        }
+                        RefreshData();
+                    });
+                }
 
             }
         }

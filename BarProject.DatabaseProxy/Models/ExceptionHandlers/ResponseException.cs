@@ -76,7 +76,8 @@
                 var reg = ReasonForDatabaseExceptionDictionary[exceptionSql.Number];
                 var match = reg.Match(exceptionSql.Message);
                 ExceptionData.Reason = $"Value '{match.Groups[1].Value}' has to be unique but already exists in database";
-            }
+                ExceptionData.Code = HttpStatusCode.Conflict;
+            } 
             else
                 ExceptionData.Reason = exceptionSql.Message;
             ExceptionData.Arguments = arguments;
