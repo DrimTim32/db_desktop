@@ -48,5 +48,13 @@
                 db.removeUnit(id);
             }
         }
+        public static void UpdateUnit(int id, ShowableUnit unit)
+        {
+            using (var db = new BarProjectEntities())
+            {
+                var typeTemp = db.UnitTypes.FirstOrDefault(x => x.type_name == unit.Type);
+                db.updateUnit(id, unit.Name, unit.Factor, typeTemp?.id);
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using BarProject.DatabaseProxy.Models.WriteModels;
 
 namespace BarProject.WebService.Controllers
 {
@@ -76,13 +77,27 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
-        [Authorize(Roles = "Admin,Owner")] 
+        [Authorize(Roles = "Admin,Owner")]
         [HttpPatch, Route("{id}")]
         public IHttpActionResult UpdateProduct(int id, [FromBody]ShowableProductBase product)
         {
             try
             {
                 ProductsFunctions.UpdateProduct(id, product);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+        [Authorize(Roles = "Admin,Owner")]
+        [HttpPost, Route("")]
+        public IHttpActionResult Post([FromBody]WritableProduct product)
+        {
+            try
+            {
+                ProductsFunctions.AddProduct(product);
                 return Ok();
             }
             catch (Exception ex)

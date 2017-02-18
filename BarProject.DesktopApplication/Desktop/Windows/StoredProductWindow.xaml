@@ -48,8 +48,7 @@
                     <TextBlock x:Name="TextTaxValue" Width="150" Text="{Binding Path=TaxValue, Mode=TwoWay,ValidatesOnDataErrors=True}"/>
                 </StackPanel>
             </StackPanel>
-            <StackPanel>
-                <Button Content="Show price history" Click="ShowPricesHistoryClick"/>
+            <StackPanel> 
                 <Button Content="Save" Click="SaveClick"/>
             </StackPanel>
         </StackPanel>

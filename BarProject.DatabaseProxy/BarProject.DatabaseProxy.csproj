@@ -138,6 +138,7 @@
     <Compile Include="Models\Utilities\ExceptionData.cs" />
     <Compile Include="Models\Utilities\Utilities.cs" />
     <Compile Include="Models\WriteModels\WritableOrder.cs" />
+    <Compile Include="Models\WriteModels\WritableProduct.cs" />
     <Compile Include="Models\WriteModels\WritableUser.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

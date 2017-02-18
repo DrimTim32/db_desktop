@@ -143,6 +143,9 @@
     <Compile Include="Desktop\Windows\PricesHistory.xaml.cs">
       <DependentUpon>PricesHistory.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Desktop\Windows\ProductAddWindow.xaml.cs">
+      <DependentUpon>ProductAddWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Desktop\Windows\SoldProductDataWindow.xaml.cs">
       <DependentUpon>SoldProductDataWindow.xaml</DependentUpon>
     </Compile>
@@ -258,6 +261,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Desktop\Windows\PricesHistory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Desktop\Windows\ProductAddWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

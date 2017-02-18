@@ -51,7 +51,11 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             get
             {
                 lock (PossibleOverridingCategoriesLock)
-                    return CategoriesList.Select(x => x.Name).ToList();
+                {
+                    var list = CategoriesList.Select(x => x.Name).ToList();
+                    list.Add("");
+                    return list;
+                }
             }
         }
         public Categories()

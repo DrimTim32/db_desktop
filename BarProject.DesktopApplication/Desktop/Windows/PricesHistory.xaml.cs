@@ -9,9 +9,6 @@ using RestClient = BarProject.DesktopApplication.Library.RestHelpers.RestClient;
 
 namespace BarProject.DesktopApplication.Desktop.Windows
 {
-    /// <summary>
-    /// Interaction logic for PricesHistory.xaml
-    /// </summary>
     public partial class PricesHistory : MetroWindow
     {
         private int _id;
@@ -20,8 +17,7 @@ namespace BarProject.DesktopApplication.Desktop.Windows
             _id = id;
             InitializeComponent();
             this.Loaded += PricesHistory_Loaded;
-        }
-        public MetroWindow Caller { get; set; }
+        } 
         private void ProgressBarStart()
         {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => Progress.Visibility = Visibility.Visible));

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BarProject.DesktopApplication.Desktop.Windows"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
-        Title="SoldProductDataWindow" Height="300" Width="300">
+        Title="SoldProductDataWindow" Height="450" Width="300">
     <Grid>
         <StackPanel MinWidth="200" DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:SoldProductDataWindow}}"> 
             <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
@@ -59,6 +59,10 @@
                     <Label Content="Price" Target="{Binding ElementName=TextPrice}"/>
                     <TextBox x:Name="TextPrice" Width="150" Text="{Binding Path=Price, Mode=TwoWay, ValidatesOnDataErrors=True}" />
                 </StackPanel>
+            </StackPanel>
+            <StackPanel>
+                <Button Content="Show price history" Click="ShowPricesHistoryClick"/>
+                <Button Content="Save" Click="SaveClick"/>
             </StackPanel>
         </StackPanel>
     </Grid>

@@ -116,12 +116,7 @@ namespace BarProject.DesktopApplication.Desktop.Windows
             }
             ProgressBarStop();
         }
-
-        private void ShowPricesHistoryClick(object sender, RoutedEventArgs e)
-        {
-            var window = new PricesHistory(_productId);
-            window.ShowDialog();
-        }
+         
         private void SaveClick(object sender, RoutedEventArgs e)
         {
             RestClient.Client().UpdateProduct(this.StoredProduct, ((response, handle) =>

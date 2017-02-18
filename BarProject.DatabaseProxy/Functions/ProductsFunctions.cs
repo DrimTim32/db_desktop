@@ -1,4 +1,6 @@
-﻿namespace BarProject.DatabaseProxy.Functions
+﻿using BarProject.DatabaseProxy.Models.WriteModels;
+
+namespace BarProject.DatabaseProxy.Functions
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -57,6 +59,30 @@
                 var tax = db.Taxes.FirstOrDefault(x => x.tax_name == product.TaxName);
                 db.updateProduct(id, category?.id, unit?.id, tax?.id, product.Name);
             }
-        } 
+        }
+        public static void AddProduct(WritableProduct product)
+        {
+            using (var db = new BarProjectEntities())
+            {
+                var unit = db.Units.FirstOrDefault(x => x.unit_name == product.UnitName);
+                var tax = db.Taxes.FirstOrDefault(x => x.tax_name == product.TaxName);
+                var category = db.Categories.FirstOrDefault(x => x.category_name == product.CategoryName);
+                var productId = db.addProduct(category?.id, unit?.id, tax?.id, product.Name);
+                if (product.IsStored)
+                {
+                    db.addStoredProduct(productId);
+                }
+                if (product.IsSold)
+                {
+                    if (string.IsNullOrEmpty(product.RecipitDescription))
+                        db.addSoldProduct(productId, null);
+                    else
+                    {
+                        var recip = db.Receipts.FirstOrDefault(x => x.description == product.RecipitDescription);
+                        db.addSoldProduct(productId, recip?.id);
+                    }
+                }
+            }
+        }
     }
 }

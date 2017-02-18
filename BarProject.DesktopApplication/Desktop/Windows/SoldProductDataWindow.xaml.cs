@@ -138,5 +138,17 @@ namespace BarProject.DesktopApplication.Desktop.Windows
         {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => Progress.Visibility = Visibility.Hidden));
         }
+        private void ShowPricesHistoryClick(object sender, RoutedEventArgs e)
+        {
+            var window = new PricesHistory(_productId);
+            window.ShowDialog();
+        }
+        private void SaveClick(object sender, RoutedEventArgs e)
+        {
+            RestClient.Client().UpdateProduct(this.SoldProduct, ((response, handle) =>
+            {
+                MessageBox.Show("Success");
+            }));
+        }
     }
 }
