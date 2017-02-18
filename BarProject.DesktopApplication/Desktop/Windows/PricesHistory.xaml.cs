@@ -40,7 +40,7 @@ namespace BarProject.DesktopApplication.Desktop.Windows
                 {
                     if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
                     {
-                        MessageBoxesHelper.ShowWindowInformationAsync("Problem with reading from", response.Content);
+                        MessageBoxesHelper.ShowProblemWithRequest(response);
                     }
                     else
                     {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BarProject.DesktopApplication.Common.Utils;
+using RestSharp;
 
 namespace BarProject.DesktopApplication.Desktop.Windows
 {
@@ -98,11 +101,15 @@ namespace BarProject.DesktopApplication.Desktop.Windows
         {
             ProgressBarStart();
             var tmp = await RestClient.Client().GetTaxes();
-            TextTaxName.ItemsSource = tmp.Data.Select(x => x.TaxName); 
-            this.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
-            { 
-                ReloadModel();
-            }));
+            if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
+            {
+                MessageBoxesHelper.ShowProblemWithRequest(tmp);
+            }
+            else
+            {
+                TextTaxName.ItemsSource = tmp.Data.Select(x => x.TaxName);
+                this.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(ReloadModel));
+            }
         }
         private void ReloadModel()
         {
@@ -112,7 +119,14 @@ namespace BarProject.DesktopApplication.Desktop.Windows
         {
             ProgressBarStart();
             var tmp = await RestClient.Client().GetSoldProduct(productId);
-            SoldProduct.LoadFromAnother(tmp.Data); 
+            if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
+            {
+                MessageBoxesHelper.ShowProblemWithRequest(tmp);
+            }
+            else
+            {
+                SoldProduct.LoadFromAnother(tmp.Data);
+            }
             ProgressBarStop();
         }
         private void ProgressBarStart()

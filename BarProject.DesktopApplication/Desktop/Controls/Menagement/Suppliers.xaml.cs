@@ -69,12 +69,19 @@
         {
             ProgressBarStart();
             var tmp = await RestClient.Client().GetSuppliers();
-            SuppliersList.Clear();
-            foreach (var location in tmp.Data)
+            if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
             {
-                SuppliersList.Add(location);
+                MessageBoxesHelper.ShowProblemWithRequest(tmp);
             }
-            DataGrid.Items.Refresh();
+            else
+            {
+                SuppliersList.Clear();
+                foreach (var location in tmp.Data)
+                {
+                    SuppliersList.Add(location);
+                }
+                DataGrid.Items.Refresh();
+            }
             ProgressBarStop();
         }
         async void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)

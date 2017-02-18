@@ -189,30 +189,27 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         private void RefreshData()
         {
 
-            this.Dispatcher.Invoke(DispatcherPriority.Background,
-                  new Action(
-                  DoRefreshData
-                  ));
+            this.Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoRefreshData));
         }
 
         private async void DoRefreshData()
         {
-            try
+            ProgressBarStart();
+            var tmp = await RestClient.Client().GetTaxes();
+            if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
             {
-                ProgressBarStart();
-                var tmp = await RestClient.Client().GetTaxes();
+                MessageBoxesHelper.ShowProblemWithRequest(tmp);
+            }
+            else
+            {
                 TaxesData.Clear();
                 foreach (var showableTax in tmp.Data)
                 {
                     TaxesData.Add(showableTax);
                 }
                 DataGrid.Items.Refresh();
-                ProgressBarStop();
             }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Exception in do refresh data" + ex.Message);
-            }
+            ProgressBarStop();
         }
     }
 }

@@ -201,12 +201,19 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         {
             ProgressBarStart();
             var tmp = await RestClient.Client().GetCategories();
-            CategoriesList.Clear();
-            foreach (var showableCategory in tmp.Data)
+            if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
             {
-                CategoriesList.Add(showableCategory);
+                MessageBoxesHelper.ShowProblemWithRequest(tmp);
             }
-            RefreshOverridingPossibilities();
+            else
+            {
+                CategoriesList.Clear();
+                foreach (var showableCategory in tmp.Data)
+                {
+                    CategoriesList.Add(showableCategory);
+                }
+                RefreshOverridingPossibilities();
+            }
             ProgressBarStop();
         }
         private void RefreshOverridingPossibilities()

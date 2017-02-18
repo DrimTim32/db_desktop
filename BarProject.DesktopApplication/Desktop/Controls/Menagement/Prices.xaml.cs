@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Net;
 using System.Windows;
 using System.Windows.Threading;
 using BarProject.DatabaseProxy.Models.ReadModels;
-using BarProject.DesktopApplication.Library.RestHelpers;
+using BarProject.DesktopApplication.Common.Utils;
+using RestSharp;
+using RestClient = BarProject.DesktopApplication.Library.RestHelpers.RestClient;
 
 namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
 {
@@ -51,12 +54,19 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         {
             ProgressBarStart();
             var tmp = await RestClient.Client().GetPrices();
-            PricesList.Clear();
-            foreach (var showableCategory in tmp.Data)
+            if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
             {
-                PricesList.Add(showableCategory);
-            } 
-            DataGrid.Items.Refresh();
+                MessageBoxesHelper.ShowProblemWithRequest(tmp);
+            }
+            else
+            {
+                PricesList.Clear();
+                foreach (var showableCategory in tmp.Data)
+                {
+                    PricesList.Add(showableCategory);
+                }
+                DataGrid.Items.Refresh();
+            }
             ProgressBarStop();
         }
 

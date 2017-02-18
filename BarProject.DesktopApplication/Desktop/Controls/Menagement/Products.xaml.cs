@@ -1,4 +1,8 @@
-﻿namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
+﻿using System.Net;
+using BarProject.DesktopApplication.Common.Utils;
+using RestSharp;
+
+namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
 {
     using System;
     using System.Collections.ObjectModel;
@@ -61,12 +65,19 @@
         {
             ProgressBarStart();
             var tmp = await RestClient.Client().GetProducts();
-            ProductLists.Clear();
-            foreach (var showableTax in tmp.Data)
+            if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
             {
-                ProductLists.Add(showableTax);
+                MessageBoxesHelper.ShowProblemWithRequest(tmp);
             }
-            DataGrid.Items.Refresh();
+            else
+            {
+                ProductLists.Clear();
+                foreach (var showableTax in tmp.Data)
+                {
+                    ProductLists.Add(showableTax);
+                }
+                DataGrid.Items.Refresh();
+            }
             ProgressBarStop();
         }
 

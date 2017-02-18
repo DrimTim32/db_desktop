@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BarProject.DesktopApplication.Common.Utils;
+using RestSharp;
 
 namespace BarProject.DesktopApplication.Desktop.Windows
 {
@@ -78,12 +81,20 @@ namespace BarProject.DesktopApplication.Desktop.Windows
         {
             ProgressBarStart();
             var tmp = await RestClient.Client().GetTaxes();
-            var firstOrDefault = tmp.Data.FirstOrDefault(x => x.TaxName == TextTaxName.Text);
-            if (firstOrDefault != null)
-                TextTaxValue.Text = firstOrDefault.TaxValue.ToString();
+            if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
+            {
+                MessageBoxesHelper.ShowProblemWithRequest(tmp);
+            }
             else
-                TextTaxValue.Text = "";
+            {
+                var firstOrDefault = tmp.Data.FirstOrDefault(x => x.TaxName == TextTaxName.Text);
+                if (firstOrDefault != null)
+                    TextTaxValue.Text = firstOrDefault.TaxValue.ToString();
+                else
+                    TextTaxValue.Text = "";
+            }
             ProgressBarStop();
+
         }
         private void StoredProductWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -98,8 +109,16 @@ namespace BarProject.DesktopApplication.Desktop.Windows
         {
             ProgressBarStart();
             var tmp = await RestClient.Client().GetTaxes();
-            TextTaxName.ItemsSource = tmp.Data.Select(x => x.TaxName);
-            this.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(ReloadModel));
+            if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
+            {
+                MessageBoxesHelper.ShowProblemWithRequest(tmp);
+            }
+            else
+            {
+                TextTaxName.ItemsSource = tmp.Data.Select(x => x.TaxName);
+                this.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(ReloadModel));
+            }
+
         }
 
         private void ReloadModel()
@@ -119,7 +138,14 @@ namespace BarProject.DesktopApplication.Desktop.Windows
         {
             ProgressBarStart();
             var tmp = await RestClient.Client().GetStoredProduct(productId);
-            StoredProduct.LoadFromAnother(tmp.Data);
+            if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
+            {
+                MessageBoxesHelper.ShowProblemWithRequest(tmp);
+            }
+            else
+            {
+                StoredProduct.LoadFromAnother(tmp.Data);
+            }
             ProgressBarStop();
         }
 

@@ -79,7 +79,6 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         private void ProgressBarStart()
         {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => Progress.Visibility = Visibility.Visible));
-
         }
 
         private void ProgressBarStop()
@@ -95,12 +94,19 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         {
             ProgressBarStart();
             var tmp = await RestClient.Client().GetUnits();
-            UnitsLits.Clear();
-            foreach (var unit in tmp.Data)
+            if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
             {
-                UnitsLits.Add(unit);
+                MessageBoxesHelper.ShowProblemWithRequest(tmp);
             }
-            DataGrid.Items.Refresh();
+            else
+            {
+                UnitsLits.Clear();
+                foreach (var unit in tmp.Data)
+                {
+                    UnitsLits.Add(unit);
+                }
+                DataGrid.Items.Refresh();
+            }
             ProgressBarStop();
         }
 
@@ -153,8 +159,8 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                     {
                         if (response.ResponseStatus != ResponseStatus.Completed ||
                             response.StatusCode != HttpStatusCode.OK)
-                        { 
-                            MessageBoxesHelper.ShowProblemWithRequest(response); 
+                        {
+                            MessageBoxesHelper.ShowProblemWithRequest(response);
                         }
                         RefreshData();
                     });

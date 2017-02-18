@@ -63,7 +63,6 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
         private void ProgressBarStart()
         {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => Progress.Visibility = Visibility.Visible));
-
         }
 
         private void ProgressBarStop()
@@ -76,16 +75,23 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
         }
 
         private async void DoRefreshData()
-        { 
-                ProgressBarStart();
-                var tmp = await RestClient.Client().GetLocations();
+        {
+            ProgressBarStart();
+            var tmp = await RestClient.Client().GetLocations();
+            if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
+            {
+                MessageBoxesHelper.ShowProblemWithRequest(tmp);
+            }
+            else
+            {
                 LocationsList.Clear();
                 foreach (var location in tmp.Data)
                 {
                     LocationsList.Add(location);
                 }
                 DataGrid.Items.Refresh();
-                ProgressBarStop(); 
+                ProgressBarStop();
+            }
         }
         private bool IsLocationEmpty(ShowableLocation location)
         {

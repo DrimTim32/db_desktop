@@ -76,12 +76,19 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         {
             ProgressBarStart();
             var tmp = await RestClient.Client().GetWorkstations();
-            WorksationsList.Clear();
-            foreach (var location in tmp.Data)
+            if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
             {
-                WorksationsList.Add(location);
+                MessageBoxesHelper.ShowProblemWithRequest(tmp);
             }
-            DataGrid.Items.Refresh();
+            else
+            {
+                WorksationsList.Clear();
+                foreach (var location in tmp.Data)
+                {
+                    WorksationsList.Add(location);
+                }
+                DataGrid.Items.Refresh();
+            }
             ProgressBarStop();
         }
 
