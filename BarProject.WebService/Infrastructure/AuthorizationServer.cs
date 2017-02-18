@@ -26,28 +26,29 @@ namespace BarProject.WebService.Infrastructure
             {
                 context.AdditionalResponseParameters.Add(property.Key, property.Value);
             }
-            var username = context.Identity.Claims.FirstOrDefault(x => x.Type == "username");
-            if (username != null)
+            try
             {
-                var firstOrDefault = context.Identity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role);
-                if (firstOrDefault != null)
-                    context.AdditionalResponseParameters.Add("UserPrivileges", firstOrDefault.Value);
-                try
+                var username = context.Identity.Claims.FirstOrDefault(x => x.Type == "username");
+                if (username != null)
                 {
+                    var firstOrDefault = context.Identity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role);
+                    if (firstOrDefault != null)
+                        context.AdditionalResponseParameters.Add("UserPrivileges", firstOrDefault.Value);
+
                     UserFunctions.LogUserLogin(username.Value);
-                }
-                catch (Exception ex)
-                {
 
                 }
             }
+            catch (Exception ex)
+            {
 
+            }
             return Task.FromResult<object>(null);
         }
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
-            var userData = DatabaseProxy.Functions.UserFunctions.GetUserFullData(context.UserName);
+            var userData = UserFunctions.GetUserFullData(context.UserName);
             if (userData == null)
             {
                 context.SetError("invalid_grant", "The user name or password is incorrect.");
