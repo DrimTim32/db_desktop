@@ -111,6 +111,7 @@
     <Compile Include="Functions\OrdersFuncstions.cs" />
     <Compile Include="Functions\PricesFunctions.cs" />
     <Compile Include="Functions\ProductsFunctions.cs" />
+    <Compile Include="Functions\RecipiesFunctions.cs" />
     <Compile Include="Functions\SuppliersFunctions.cs" />
     <Compile Include="Functions\TaxesFunctions.cs" />
     <Compile Include="Functions\UnitsFunctions.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Models\ReadModels\ShowableLocation.cs" />
     <Compile Include="Models\ReadModels\ShowablePrices.cs" />
     <Compile Include="Models\ReadModels\ShowablePricesHistory.cs" />
+    <Compile Include="Models\ReadModels\ShowableReceipt.cs" />
     <Compile Include="Models\ReadModels\ShowableSimpleProduct.cs" />
     <Compile Include="Models\ReadModels\ShowableSoldProduct.cs" />
     <Compile Include="Models\ReadModels\ShowableStoredProduct.cs" />

@@ -4,9 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BarProject.DesktopApplication.Desktop.Controls.Menagement"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <TextBlock>Recipies</TextBlock>
+        <StackPanel>
+            <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
+            <DataGrid Name="DataGrid"                       
+                      DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:Recipies}}"
+                      ItemsSource="{Binding RecipiesData}" SelectionMode="Single"  SelectionUnit="FullRow"
+                      AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name"  Binding="{Binding Description}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
     </Grid>
 </UserControl>

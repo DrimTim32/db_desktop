@@ -63,8 +63,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             DataGrid.PreviewKeyDown += DataGrid_PreviewKeyDown;
         }
         private void Taxes_Loaded(object sender, RoutedEventArgs e)
-        {
-
+        { 
             Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoRefreshData));
         }
         private bool IsTaxEmpty(ShowableTax tax)
@@ -75,8 +74,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         {
             var grid = sender as DataGrid;
             if (DataGrid.SelectedItem != null && grid != null)
-            {
-
+            { 
                 var tax = (ShowableTax)e.Row.Item;
                 grid.RowEditEnding -= DataGrid_RowEditEnding;
                 grid.CommitEdit();
@@ -114,8 +112,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 else
                 {
                     AddTax(tax);
-                }
-
+                } 
             }
         }
 
@@ -132,6 +129,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 RefreshData();
             });
         }
+
         private void AddTax(ShowableTax tax)
         {
             RestClient.Client().AddTax(tax, (response, handle) =>
@@ -148,6 +146,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 RefreshData();
             });
         }
+
         async void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             DataGrid dg = sender as DataGrid;
@@ -191,7 +190,6 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         private void ProgressBarStart()
         {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => Progress.Visibility = Visibility.Visible));
-
         }
 
         private void ProgressBarStop()
@@ -200,8 +198,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         }
 
         private void RefreshData()
-        {
-
+        { 
             this.Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoRefreshData));
         }
 

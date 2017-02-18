@@ -42,9 +42,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         {
             GetSources();
             RefreshData();
-
         }
-
         private void GetSources()
         {
             this.Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoGetSources));
@@ -52,10 +50,16 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
 
         private async void DoGetSources()
         {
-
             ProgressBarStart();
             var tmp = await RestClient.Client().GetUnitsTypes();
-            DataGridCombo.ItemsSource = tmp.Data;
+            if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
+            {
+                MessageBoxesHelper.ShowProblemWithRequest(tmp);
+            }
+            else
+            {
+                DataGridCombo.ItemsSource = tmp.Data;
+            }
             ProgressBarStop();
         }
         private ObservableCollection<ShowableUnit> _unitsList;
