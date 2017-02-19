@@ -59,7 +59,7 @@
             UnitName = product.unit_name;
             TaxName = product.tax_name;
             TaxValue = product.tax_value;
-            RecepitId = product.receipt_id;
+            RecepitId = product.recipe_id;
             PeriodStart = product.period_start;
             Price = product.price;
 

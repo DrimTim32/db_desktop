@@ -18,8 +18,8 @@ namespace BarProject.DatabaseConnector
         public Product()
         {
             this.ProductsUsages = new HashSet<ProductsUsage>();
-            this.Warehouse_order_details = new HashSet<Warehouse_order_details>();
             this.Warehouses = new HashSet<Warehouse>();
+            this.Warehouse_order_details = new HashSet<Warehouse_order_details>();
         }
     
         public int id { get; set; }
@@ -35,9 +35,9 @@ namespace BarProject.DatabaseConnector
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductsUsage> ProductsUsages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Warehouse_order_details> Warehouse_order_details { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Warehouse> Warehouses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Warehouse_order_details> Warehouse_order_details { get; set; }
         public virtual ProductsSold ProductsSold { get; set; }
         public virtual ProductsStored ProductsStored1 { get; set; }
     }

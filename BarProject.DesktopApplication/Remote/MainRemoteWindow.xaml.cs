@@ -28,7 +28,7 @@ namespace BarProject.DesktopApplication.Remote
         }
         public void AcceptOrder()
         {
-            RestClient.Client().AddOrder(Order, ((response, handle) =>
+            RestClient.Client().AddUserOrder(Order, ((response, handle) =>
             {
                 if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
                 {

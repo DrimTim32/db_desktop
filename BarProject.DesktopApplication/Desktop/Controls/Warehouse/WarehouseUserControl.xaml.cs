@@ -30,7 +30,15 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
         }
         public void SetTabs()
         {
-           
+
+            var orders = new MetroTabItem()
+            {
+                Header = "Orders",
+                Content = new Orders()
+            };
+            orders.SetResourceReference(StyleProperty, "MenuLevel2");
+            TabControl.Items.Clear();
+            TabControl.Items.Add(orders);
         }
     }
 }

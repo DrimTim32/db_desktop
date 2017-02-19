@@ -104,6 +104,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Desktop\Controls\Menagement\SafeCounter.cs" />
     <Compile Include="Desktop\Controls\Menagement\Taxes.xaml.cs">
       <DependentUpon>Taxes.xaml</DependentUpon>
     </Compile>
@@ -131,14 +132,20 @@
     <Compile Include="Desktop\Controls\Menagement\Recipies.xaml.cs">
       <DependentUpon>Recipies.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Desktop\Controls\Warehouse\Sales.xaml.cs">
-      <DependentUpon>Sales.xaml</DependentUpon>
+    <Compile Include="Desktop\Controls\Warehouse\Orders.xaml.cs">
+      <DependentUpon>Orders.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Desktop\Controls\Warehouse\Warehouse.xaml.cs">
+      <DependentUpon>Warehouse.xaml</DependentUpon>
     </Compile>
     <Compile Include="Desktop\Controls\Warehouse\WarehouseUserControl.xaml.cs">
       <DependentUpon>WarehouseUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Desktop\Introduction.xaml.cs">
       <DependentUpon>Introduction.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Desktop\Windows\OrdersDetailsWindow.xaml.cs">
+      <DependentUpon>OrdersDetailsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Desktop\Windows\PricesHistory.xaml.cs">
       <DependentUpon>PricesHistory.xaml</DependentUpon>
@@ -221,7 +228,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Desktop\Controls\Warehouse\Sales.xaml">
+    <Page Include="Desktop\Controls\Warehouse\Orders.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Desktop\Controls\Warehouse\Warehouse.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -260,6 +271,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Desktop\Windows\AddUserWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Desktop\Windows\OrdersDetailsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

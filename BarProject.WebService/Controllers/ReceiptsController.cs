@@ -33,11 +33,11 @@ namespace BarProject.WebService.Controllers
 
         [Authorize(Roles = "Admin,Owner")]
         [HttpPost, Route("")]
-        public IHttpActionResult Post(ShowableReceipt tax)
+        public IHttpActionResult Post(ShowableReceipt receipt)
         {
             try
             {
-                RecipiesFunctions.AddRecipt(tax);
+                RecipiesFunctions.AddRecipt(receipt);
                 return Ok();
             }
             catch (Exception ex)

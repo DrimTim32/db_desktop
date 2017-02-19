@@ -1,0 +1,26 @@
+﻿<controls:MetroWindow x:Class="BarProject.DesktopApplication.Desktop.Windows.OrdersDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BarProject.DesktopApplication.Desktop.Windows"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        mc:Ignorable="d"
+        Title="OrdersDetailsWindow" Height="300" Width="300">
+    <Grid>
+        <StackPanel>
+            <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
+            <DataGrid Name="DataGrid"                       
+                      DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:OrdersDetailsWindow}}"
+                      ItemsSource="{Binding DetailsList}" SelectionMode="Single"  SelectionUnit="FullRow"
+                      AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name"  Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="Category"  Binding="{Binding CategoryName}"/>
+                    <DataGridTextColumn Header="Quantity"  Binding="{Binding Quantity}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</controls:MetroWindow>
+

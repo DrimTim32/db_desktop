@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="BarProject.DesktopApplication.Desktop.Controls.Warehouse.Orders"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BarProject.DesktopApplication.Desktop.Controls.Warehouse"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:organisation="clr-namespace:BarProject.DesktopApplication.Desktop.Controls.Organisation"
+             mc:Ignorable="d"  >
+    <Grid>
+        <StackPanel>
+            <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
+            <DataGrid Name="DataGrid"                       
+                      DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:Orders}}"
+                      ItemsSource="{Binding OrdersList}" SelectionMode="Single"  SelectionUnit="FullRow"
+                      AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Employee name"  Binding="{Binding EmployeeName}"/>
+                    <DataGridTextColumn Header="Value"  Binding="{Binding Value}"/>
+                    <DataGridTextColumn Header="Supplier name"  Binding="{Binding SupplierName}"/>
+                    <DataGridTextColumn Header="Location name"  Binding="{Binding LocationName}"/>
+                    <DataGridTemplateColumn Header="Delivery date">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding DeliveryDate}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Order date">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding OrderDate}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Required date">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding RequiredDate}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</UserControl>

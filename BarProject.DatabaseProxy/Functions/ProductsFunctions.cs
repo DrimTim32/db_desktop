@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity.Migrations;
+using System.Net;
 using BarProject.DatabaseProxy.Models.WriteModels;
 
 namespace BarProject.DatabaseProxy.Functions
@@ -61,6 +62,26 @@ namespace BarProject.DatabaseProxy.Functions
                 db.updateProduct(id, category?.id, unit?.id, tax?.id, product.Name);
             }
         }
+
+        public static List<string> GetOrderableProductsNames()
+        {
+            using (var db = new Entities())
+            {
+                var soldIds = (from sold in db.ProductsSolds
+                               where sold.recipe_id == null
+                               select sold.id);
+
+                var storedIds = (from stored in db.ProductsStoreds select stored.id);
+
+                var union = soldIds.Concat(storedIds);
+
+                return (from pr in db.Products
+                        join un in union
+                        on pr.id equals un
+                        select pr.name
+                ).ToList();
+            }
+        }
         public static void AddProduct(WritableProduct product)
         {
             using (var db = new Entities())
@@ -89,7 +110,7 @@ namespace BarProject.DatabaseProxy.Functions
                         db.addSoldProduct(id, null);
                     else
                     {
-                        var recip = db.Receipts.FirstOrDefault(x => x.description == product.RecipitDescription);
+                        var recip = db.Recipes.FirstOrDefault(x => x.description == product.RecipitDescription);
                         db.addSoldProduct(id, recip?.id);
                     }
                 }

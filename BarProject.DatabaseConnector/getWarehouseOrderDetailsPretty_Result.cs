@@ -15,7 +15,7 @@ namespace BarProject.DatabaseConnector
     {
         public string name { get; set; }
         public string category_name { get; set; }
-        public decimal unit_price { get; set; }
+        public decimal purchase_price { get; set; }
         public short quantity { get; set; }
     }
 }

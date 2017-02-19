@@ -14,8 +14,9 @@ namespace BarProject.DatabaseProxy.Models.ReadModels
         public double Quantity { get; set; }
         public ShowableRecipitDetails() { }
 
-        public ShowableRecipitDetails(receiptDetails_Result result)
+        public ShowableRecipitDetails(recipeDetails_Result result)
         {
+            //TODO : !!!
         }
     }
 }

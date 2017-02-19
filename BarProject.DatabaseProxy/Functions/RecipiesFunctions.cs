@@ -15,7 +15,7 @@ namespace BarProject.DatabaseProxy.Functions
         {
             using (var db = new Entities())
             {
-                return db.Receipts.Select(x => x).ToAnotherType<Receipt, ShowableReceipt>().ToList();
+                return db.Recipes.Select(x => x).ToAnotherType<Recipe, ShowableReceipt>().ToList();
             }
         }
 
@@ -23,21 +23,21 @@ namespace BarProject.DatabaseProxy.Functions
         {
             using (var db = new Entities())
             {
-                db.addReceipt(receipt.Description);
+                db.addRecipe(receipt.Description);
             }
         }
         public static void UpdateRecipt(int id, ShowableReceipt receipt)
         {
             using (var db = new Entities())
             {
-                db.updateReceipt(id, receipt.Description);
+                db.updateRecipe(id, receipt.Description);
             }
         }
         public static void RemoveRecipt(int id)
         {
             using (var db = new Entities())
             {
-                db.removeReceipt(id);
+                db.removeRecipe(id);
             }
         }
         public static List<ShowableRecipitDetails> GetDetails(int id)
@@ -45,9 +45,9 @@ namespace BarProject.DatabaseProxy.Functions
             using (var db = new Entities())
             {
                 return (from I in db.Ingredients
-                        join R in db.Receipts on I.receipt_id equals R.id
+                        join R in db.Recipes on I.recipe_id equals R.id
                         join P in db.Products on I.ingredient_id equals P.id
-                        where I.receipt_id == id
+                        where I.recipe_id == id
                         select new ShowableRecipitDetails()
                         {
                             ProductName = P.name,

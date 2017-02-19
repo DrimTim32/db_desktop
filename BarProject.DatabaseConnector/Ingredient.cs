@@ -14,11 +14,11 @@ namespace BarProject.DatabaseConnector
     
     public partial class Ingredient
     {
-        public int receipt_id { get; set; }
+        public int recipe_id { get; set; }
         public int ingredient_id { get; set; }
         public double quantity { get; set; }
     
         public virtual ProductsStored ProductsStored { get; set; }
-        public virtual Receipt Receipt { get; set; }
+        public virtual Recipe Recipe { get; set; }
     }
 }

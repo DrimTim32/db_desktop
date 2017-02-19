@@ -21,6 +21,14 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
             var data = await client.ExecuteGetTaskAsync<List<ShowableSimpleProduct>>(request);
             return data;
         }
+        public async Task<IRestResponse<List<string>>> GetOrderableProductNames()
+        {
+            var request = new RestRequest($"api/products/orderable", Method.GET);
+            request.AddHeader("Authorization", $"bearer {token}");
+            request.AddHeader("Content-Type", "application/json");
+            var data = await client.ExecuteGetTaskAsync<List<string>>(request);
+            return data;
+        }
         public async Task<IRestResponse<List<ShowableSoldProduct>>> GetProductsByCategory(int id)
         {
             var request = new RestRequest($"api/categories/{id}/products", Method.GET);

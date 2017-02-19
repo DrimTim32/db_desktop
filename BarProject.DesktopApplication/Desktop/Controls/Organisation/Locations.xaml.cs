@@ -30,7 +30,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
     /// </summary>
     public partial class Locations : UserControl
     {
-        private ObservableCollection<ShowableLocation> _productsList;
+        private ObservableCollection<ShowableLocation> _locationsList;
         private readonly object LocationsLock = new object();
 
         public ObservableCollection<ShowableLocation> LocationsList
@@ -39,13 +39,13 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
             {
                 lock (LocationsLock)
                 {
-                    if (_productsList == null)
-                        _productsList =
+                    if (_locationsList == null)
+                        _locationsList =
                             new ObservableCollection<ShowableLocation>();
-                    return _productsList;
+                    return _locationsList;
                 }
             }
-            set { lock (LocationsLock) { _productsList = value; } }
+            set { lock (LocationsLock) { _locationsList = value; } }
         }
         public Locations()
         {

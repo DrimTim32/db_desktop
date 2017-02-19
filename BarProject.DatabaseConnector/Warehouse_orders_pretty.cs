@@ -18,6 +18,7 @@ namespace BarProject.DatabaseConnector
         public Nullable<System.DateTime> order_date { get; set; }
         public Nullable<System.DateTime> required_date { get; set; }
         public Nullable<System.DateTime> delivery_date { get; set; }
+        public Nullable<decimal> value { get; set; }
         public string employee_username { get; set; }
         public string employee_name { get; set; }
         public string employee_surname { get; set; }

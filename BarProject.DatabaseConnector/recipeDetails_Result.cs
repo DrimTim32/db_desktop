@@ -11,9 +11,9 @@ namespace BarProject.DatabaseConnector
 {
     using System;
     
-    public partial class receiptDetails_Result
+    public partial class recipeDetails_Result
     {
-        public int receipt_id { get; set; }
+        public int recipe_id { get; set; }
         public int ingredient_id { get; set; }
         public double quantity { get; set; }
     }

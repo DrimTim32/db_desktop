@@ -105,5 +105,19 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
+        [Authorize(Roles = "Admin,Owner")]
+        [ResponseType(typeof(List<string>))]
+        [HttpGet, Route("orderable")]
+        public IHttpActionResult GetProductsForOrder()
+        {
+            try
+            {
+                return Ok(ProductsFunctions.GetOrderableProductsNames());
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
     }
 }

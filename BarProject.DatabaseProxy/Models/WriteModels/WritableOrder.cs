@@ -11,10 +11,12 @@ namespace BarProject.DatabaseProxy.Models.WriteModels
 {
     public class WritableOrder : INotifyPropertyChanged
     {
-        private decimal _sum = 0;
+        private decimal _sum = 0; 
+
         public WritableOrder()
         {
         }
+         
 
         public void Clear()
         {

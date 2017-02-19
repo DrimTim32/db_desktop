@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
-using System.Runtime.CompilerServices;
-using BarProject.DatabaseProxy.Annotations;
 using BarProject.DesktopApplication.Common.Utils;
 using RestSharp;
 
@@ -22,40 +19,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
 
     public partial class Products : UserControl
     {
-        public class SafeCounter
-        {
-            private int _counter = -1;
-            private readonly object locker = new object();
-            public int Counter
-            {
-                get
-                {
-                    lock (locker)
-                    {
-                        return _counter;
-                    }
-                }
-                set
-                {
-                    lock (locker)
-                    {
-                        _counter = value;
-                        if (_counter == 0)
-                        {
-                            OnPropertyChanged();
-                        }
-                    }
-                }
-            }
-
-            public event EventHandler Event;
-
-            [NotifyPropertyChangedInvocator]
-            protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-            {
-                Event?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
+      
         public List<string> UnitNames { get; set; }
         public List<string> TaxesNames { get; set; }
         public List<string> CategoriesNames { get; set; }

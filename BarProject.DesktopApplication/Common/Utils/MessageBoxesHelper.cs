@@ -11,11 +11,11 @@ namespace BarProject.DesktopApplication.Common.Utils
     public static class MessageBoxesHelper
     {
 
-        public static async void ShowProblemWithRequest(IRestResponse response, MetroWindow baseWindow = null)
+        public static void ShowProblemWithRequest(IRestResponse response, MetroWindow baseWindow = null)
         {
             var code = response.StatusCode;
-            string header = "";
-            string message = "";
+            string header = "Unknown error";
+            string message = "Unknown error";
             if (response.ResponseStatus == ResponseStatus.Aborted)
             {
                 header = "Aborted";

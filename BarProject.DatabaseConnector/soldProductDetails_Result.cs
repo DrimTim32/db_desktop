@@ -22,7 +22,7 @@ namespace BarProject.DatabaseConnector
         public Nullable<int> tax_id { get; set; }
         public string tax_name { get; set; }
         public double tax_value { get; set; }
-        public Nullable<int> receipt_id { get; set; }
+        public Nullable<int> recipe_id { get; set; }
         public System.DateTime period_start { get; set; }
         public decimal price { get; set; }
     }

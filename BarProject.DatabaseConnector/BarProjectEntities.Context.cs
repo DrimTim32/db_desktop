@@ -38,7 +38,7 @@ namespace BarProject.DatabaseConnector
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductsSold> ProductsSolds { get; set; }
         public virtual DbSet<ProductsStored> ProductsStoreds { get; set; }
-        public virtual DbSet<Receipt> Receipts { get; set; }
+        public virtual DbSet<Recipe> Recipes { get; set; }
         public virtual DbSet<Spot> Spots { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<Tax> Taxes { get; set; }
@@ -202,14 +202,14 @@ namespace BarProject.DatabaseConnector
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<productsHistoryPrices_Result>("[Entities].[productsHistoryPrices](@date)", dateParameter);
         }
     
-        [DbFunction("Entities", "receiptDetails")]
-        public virtual IQueryable<receiptDetails_Result> receiptDetails(Nullable<int> receipt_id)
+        [DbFunction("Entities", "recipeDetails")]
+        public virtual IQueryable<recipeDetails_Result> recipeDetails(Nullable<int> recipe_id)
         {
-            var receipt_idParameter = receipt_id.HasValue ?
-                new ObjectParameter("receipt_id", receipt_id) :
-                new ObjectParameter("receipt_id", typeof(int));
+            var recipe_idParameter = recipe_id.HasValue ?
+                new ObjectParameter("recipe_id", recipe_id) :
+                new ObjectParameter("recipe_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<receiptDetails_Result>("[Entities].[receiptDetails](@receipt_id)", receipt_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<recipeDetails_Result>("[Entities].[recipeDetails](@recipe_id)", recipe_idParameter);
         }
     
         [DbFunction("Entities", "soldProductDetails")]
@@ -277,11 +277,11 @@ namespace BarProject.DatabaseConnector
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addClientOrderDetail", client_order_idParameter, products_sold_idParameter, quantityParameter);
         }
     
-        public virtual int addIngredient(Nullable<int> receipt_id, Nullable<int> ingredient_id, Nullable<double> quantity)
+        public virtual int addIngredient(Nullable<int> recipe_id, Nullable<int> ingredient_id, Nullable<double> quantity)
         {
-            var receipt_idParameter = receipt_id.HasValue ?
-                new ObjectParameter("receipt_id", receipt_id) :
-                new ObjectParameter("receipt_id", typeof(int));
+            var recipe_idParameter = recipe_id.HasValue ?
+                new ObjectParameter("recipe_id", recipe_id) :
+                new ObjectParameter("recipe_id", typeof(int));
     
             var ingredient_idParameter = ingredient_id.HasValue ?
                 new ObjectParameter("ingredient_id", ingredient_id) :
@@ -291,7 +291,7 @@ namespace BarProject.DatabaseConnector
                 new ObjectParameter("quantity", quantity) :
                 new ObjectParameter("quantity", typeof(double));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addIngredient", receipt_idParameter, ingredient_idParameter, quantityParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addIngredient", recipe_idParameter, ingredient_idParameter, quantityParameter);
         }
     
         public virtual int addLocation(string name, string address, string city, string postal_code, string country, string phone)
@@ -323,7 +323,7 @@ namespace BarProject.DatabaseConnector
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addLocation", nameParameter, addressParameter, cityParameter, postal_codeParameter, countryParameter, phoneParameter);
         }
     
-        public virtual ObjectResult<Nullable<int>> addProduct(Nullable<int> category_id, Nullable<int> unit_id, Nullable<int> tax_id, string name)
+        public virtual ObjectResult<Nullable<decimal>> addProduct(Nullable<int> category_id, Nullable<int> unit_id, Nullable<int> tax_id, string name)
         {
             var category_idParameter = category_id.HasValue ?
                 new ObjectParameter("category_id", category_id) :
@@ -341,29 +341,29 @@ namespace BarProject.DatabaseConnector
                 new ObjectParameter("name", name) :
                 new ObjectParameter("name", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("addProduct", category_idParameter, unit_idParameter, tax_idParameter, nameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("addProduct", category_idParameter, unit_idParameter, tax_idParameter, nameParameter);
         }
     
-        public virtual int addReceipt(string description)
+        public virtual int addRecipe(string description)
         {
             var descriptionParameter = description != null ?
                 new ObjectParameter("description", description) :
                 new ObjectParameter("description", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addReceipt", descriptionParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addRecipe", descriptionParameter);
         }
     
-        public virtual int addSoldProduct(Nullable<int> product_id, Nullable<int> receipt_id)
+        public virtual int addSoldProduct(Nullable<int> product_id, Nullable<int> recipe_id)
         {
             var product_idParameter = product_id.HasValue ?
                 new ObjectParameter("product_id", product_id) :
                 new ObjectParameter("product_id", typeof(int));
     
-            var receipt_idParameter = receipt_id.HasValue ?
-                new ObjectParameter("receipt_id", receipt_id) :
-                new ObjectParameter("receipt_id", typeof(int));
+            var recipe_idParameter = recipe_id.HasValue ?
+                new ObjectParameter("recipe_id", recipe_id) :
+                new ObjectParameter("recipe_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addSoldProduct", product_idParameter, receipt_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addSoldProduct", product_idParameter, recipe_idParameter);
         }
     
         public virtual int addSpot(string name, Nullable<int> location_id)
@@ -577,17 +577,17 @@ namespace BarProject.DatabaseConnector
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addWorkstationRights", workstation_idParameter, employe_permissionParameter);
         }
     
-        public virtual int changeReceipt(Nullable<int> product_id, Nullable<int> new_receipt)
+        public virtual int changeRecipe(Nullable<int> product_id, Nullable<int> new_recipe)
         {
             var product_idParameter = product_id.HasValue ?
                 new ObjectParameter("product_id", product_id) :
                 new ObjectParameter("product_id", typeof(int));
     
-            var new_receiptParameter = new_receipt.HasValue ?
-                new ObjectParameter("new_receipt", new_receipt) :
-                new ObjectParameter("new_receipt", typeof(int));
+            var new_recipeParameter = new_recipe.HasValue ?
+                new ObjectParameter("new_recipe", new_recipe) :
+                new ObjectParameter("new_recipe", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("changeReceipt", product_idParameter, new_receiptParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("changeRecipe", product_idParameter, new_recipeParameter);
         }
     
         public virtual int changeStock(Nullable<int> product_id, Nullable<short> quantity_change, Nullable<int> location_id)
@@ -743,17 +743,17 @@ namespace BarProject.DatabaseConnector
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeFromWarehouse", location_idParameter, product_in_stock_idParameter);
         }
     
-        public virtual int removeIngredient(Nullable<int> receipt_id, Nullable<int> ingredient_id)
+        public virtual int removeIngredient(Nullable<int> recipe_id, Nullable<int> ingredient_id)
         {
-            var receipt_idParameter = receipt_id.HasValue ?
-                new ObjectParameter("receipt_id", receipt_id) :
-                new ObjectParameter("receipt_id", typeof(int));
+            var recipe_idParameter = recipe_id.HasValue ?
+                new ObjectParameter("recipe_id", recipe_id) :
+                new ObjectParameter("recipe_id", typeof(int));
     
             var ingredient_idParameter = ingredient_id.HasValue ?
                 new ObjectParameter("ingredient_id", ingredient_id) :
                 new ObjectParameter("ingredient_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeIngredient", receipt_idParameter, ingredient_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeIngredient", recipe_idParameter, ingredient_idParameter);
         }
     
         public virtual int removeLocation(Nullable<int> id)
@@ -774,13 +774,13 @@ namespace BarProject.DatabaseConnector
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeProduct", product_idParameter);
         }
     
-        public virtual int removeReceipt(Nullable<int> id)
+        public virtual int removeRecipe(Nullable<int> id)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeReceipt", idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeRecipe", idParameter);
         }
     
         public virtual int removeSoldProduct(Nullable<int> product_id)
@@ -881,11 +881,11 @@ namespace BarProject.DatabaseConnector
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeWorkstationRights", workstation_idParameter, employe_permissionParameter);
         }
     
-        public virtual int udpateIngredient(Nullable<int> receipt_id, Nullable<int> ingredient_id, Nullable<double> new_quantity)
+        public virtual int udpateIngredient(Nullable<int> recipe_id, Nullable<int> ingredient_id, Nullable<double> new_quantity)
         {
-            var receipt_idParameter = receipt_id.HasValue ?
-                new ObjectParameter("receipt_id", receipt_id) :
-                new ObjectParameter("receipt_id", typeof(int));
+            var recipe_idParameter = recipe_id.HasValue ?
+                new ObjectParameter("recipe_id", recipe_id) :
+                new ObjectParameter("recipe_id", typeof(int));
     
             var ingredient_idParameter = ingredient_id.HasValue ?
                 new ObjectParameter("ingredient_id", ingredient_id) :
@@ -895,7 +895,7 @@ namespace BarProject.DatabaseConnector
                 new ObjectParameter("new_quantity", new_quantity) :
                 new ObjectParameter("new_quantity", typeof(double));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("udpateIngredient", receipt_idParameter, ingredient_idParameter, new_quantityParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("udpateIngredient", recipe_idParameter, ingredient_idParameter, new_quantityParameter);
         }
     
         public virtual int updateCategory(Nullable<int> id, string new_slug, string new_name, Nullable<int> new_overriding)
@@ -1049,7 +1049,7 @@ namespace BarProject.DatabaseConnector
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateQuantityInWarehouse", location_idParameter, product_in_stock_idParameter, quantity_changeParameter);
         }
     
-        public virtual int updateReceipt(Nullable<int> id, string new_description)
+        public virtual int updateRecipe(Nullable<int> id, string new_description)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
@@ -1059,7 +1059,7 @@ namespace BarProject.DatabaseConnector
                 new ObjectParameter("new_description", new_description) :
                 new ObjectParameter("new_description", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateReceipt", idParameter, new_descriptionParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateRecipe", idParameter, new_descriptionParameter);
         }
     
         public virtual int updateSpot(Nullable<int> id, string new_name)
@@ -1212,17 +1212,21 @@ namespace BarProject.DatabaseConnector
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateWarehouseOrderDetail", warehouse_order_idParameter, product_idParameter, new_unit_priceParameter, new_quantityParameter);
         }
     
-        public virtual int updateWorkstation(Nullable<int> id, string new_name)
+        public virtual int updateWorkstation(Nullable<int> id, Nullable<int> new_location_id, string new_name)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
+            var new_location_idParameter = new_location_id.HasValue ?
+                new ObjectParameter("new_location_id", new_location_id) :
+                new ObjectParameter("new_location_id", typeof(int));
+    
             var new_nameParameter = new_name != null ?
                 new ObjectParameter("new_name", new_name) :
                 new ObjectParameter("new_name", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateWorkstation", idParameter, new_nameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateWorkstation", idParameter, new_location_idParameter, new_nameParameter);
         }
     
         public virtual int userExists(string login)

@@ -18,6 +18,6 @@ namespace BarProject.DatabaseProxy.Extensions
             {
                 throw new MissingMethodException($"Object does not have a necessary constructor, should have {typeof(T1)}({typeof(T2)})");
             }
-        }
+        } 
     }
 }

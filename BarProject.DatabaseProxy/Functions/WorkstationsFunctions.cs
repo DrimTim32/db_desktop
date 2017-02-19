@@ -35,7 +35,8 @@ namespace BarProject.DatabaseProxy.Functions
         {
             using (var db = new Entities())
             {
-                db.updateWorkstation(id, workstation.Name); 
+                var location = db.Locations.FirstOrDefault(x => x.name == workstation.LocationName);
+                db.updateWorkstation(id, location?.id, workstation.Name);
             }
         }
     }

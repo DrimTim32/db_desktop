@@ -219,10 +219,10 @@
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Receipt.cs">
+    <Compile Include="Recipe.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="receiptDetails_Result.cs">
+    <Compile Include="recipeDetails_Result.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="soldProductDetails_Result.cs">

@@ -17,6 +17,7 @@ namespace BarProject.DatabaseConnector
         public int id { get; set; }
         public Nullable<System.DateTime> order_time { get; set; }
         public Nullable<System.DateTime> payment_time { get; set; }
+        public Nullable<decimal> value { get; set; }
         public int spot_id { get; set; }
         public string spot_name { get; set; }
         public int location_id { get; set; }

@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
 {
     /// <summary>
-    /// Interaction logic for Sales.xaml
+    /// Interaction logic for Warehouse.xaml
     /// </summary>
-    public partial class Sales : UserControl
+    public partial class Warehouse : UserControl
     {
-        public Sales()
+        public Warehouse()
         {
             InitializeComponent();
         }

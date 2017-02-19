@@ -47,10 +47,70 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         {
             InitializeComponent();
             Loaded += Recipies_Loaded;
-            this.DataGrid.MouseDoubleClick += DataGrid_MouseDoubleClick;
+            DataGrid.MouseDoubleClick += DataGrid_MouseDoubleClick;
+            DataGrid.RowEditEnding += DataGrid_RowEditEnding;
+        }
+        private void DataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            var grid = sender as DataGrid;
+            if (DataGrid.SelectedItem != null && grid != null)
+            {
+                var cat = (ShowableReceipt)e.Row.Item;
+                grid.RowEditEnding -= DataGrid_RowEditEnding;
+                grid.CommitEdit();
+                ProgressBarStart();
+                string message = "";
+                if (cat.Description == null)
+                {
+                    grid.CancelEdit();
+                    grid.RowEditEnding += DataGrid_RowEditEnding;
+                    return;
+                }
+                if (message != "")
+                {
+                    grid.CancelEdit();
+                    grid.RowEditEnding += DataGrid_RowEditEnding;
+                    MessageBoxesHelper.ShowWindowInformationAsync("Problem with new item!", message);
+                    RefreshData();
+                    ProgressBarStop();
+                    return;
+                }
+                grid.RowEditEnding += DataGrid_RowEditEnding;
+                if (cat.Id == null) // new row added
+                {
+                    AddRecipe(cat);
+                }
+                else
+                {
+                    UpdateRecipe(cat);
+                }
+            }
         }
 
-
+        private void AddRecipe(ShowableReceipt recipit)
+        {
+            RestClient.Client().AddReceipt(recipit, (response, handle) =>
+            {
+                if (response.ResponseStatus != ResponseStatus.Completed ||
+                    response.StatusCode != HttpStatusCode.OK)
+                {
+                    MessageBoxesHelper.ShowProblemWithRequest(response);
+                }
+                RefreshData();
+            });
+        }
+        private void UpdateRecipe(ShowableReceipt recipit)
+        {
+            RestClient.Client().UpdateReceipt(recipit, (response, handle) =>
+            {
+                if (response.ResponseStatus != ResponseStatus.Completed ||
+                    response.StatusCode != HttpStatusCode.OK)
+                {
+                    MessageBoxesHelper.ShowProblemWithRequest(response);
+                }
+                RefreshData();
+            });
+        }
         private void Recipies_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             RefreshData();
@@ -93,7 +153,8 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             {
                 var dgr = (DataGridRow)(dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex));
                 var receipt = (ShowableReceipt)dgr.Item;
-
+                if (receipt.Id == null)
+                    return;
                 var window = new RecipieDetailsWindow(receipt.Id.Value);
                 window.ShowDialog();
             }

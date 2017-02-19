@@ -13,7 +13,7 @@ namespace BarProject.DatabaseProxy.Models.ReadModels
         public int? Id { get; set; }
         public ShowableReceipt() { }
 
-        public ShowableReceipt(Receipt reci)
+        public ShowableReceipt(Recipe reci)
         {
             Description = reci.description;
             Id = reci.id;
