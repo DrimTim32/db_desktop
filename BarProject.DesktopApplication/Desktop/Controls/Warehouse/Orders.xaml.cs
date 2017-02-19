@@ -221,7 +221,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
             if (Counter.Counter != 0)
                 return;
             var dg = sender as DataGrid;
-            if (dg != null)
+            if (dg != null && dg.SelectedIndex >= 0 && dg.SelectedIndex < dg.Items.Count - 1)
             {
                 var dgr = (DataGridRow)(dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex));
                 var product = dgr.Item as ShowableWarehouseOrder;
