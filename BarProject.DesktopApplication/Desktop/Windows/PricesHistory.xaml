@@ -9,7 +9,7 @@
         Title="PricesHistory" Height="300" Width="300">
     <Grid>
         <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
-        <DataGrid x:Name="Datagrid"/>
+        <DataGrid x:Name="Datagrid" AutoGenerateColumns="True"/>
     </Grid>
 </controls:MetroWindow>
 

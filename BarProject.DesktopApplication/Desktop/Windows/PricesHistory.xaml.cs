@@ -47,7 +47,7 @@ namespace BarProject.DesktopApplication.Desktop.Windows
                         }
                         else
                         {
-                            Datagrid.DataContext = response.Data;
+                            Datagrid.ItemsSource = response.Data;
                         }
 
                     }
