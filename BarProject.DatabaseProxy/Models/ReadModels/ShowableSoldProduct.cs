@@ -5,7 +5,7 @@
 
     public class ShowableSoldProduct : ShowableProductBase
     {
-        private decimal _price;
+        private decimal? _price;
         private DateTime _periodStart;
         private int? _recepitId;
 
@@ -29,7 +29,7 @@
             }
         }
 
-        public decimal Price
+        public decimal? Price
         {
             get { return _price; }
             set

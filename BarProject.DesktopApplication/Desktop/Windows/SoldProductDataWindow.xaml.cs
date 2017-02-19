@@ -167,6 +167,7 @@ namespace BarProject.DesktopApplication.Desktop.Windows
                 MessageBoxesHelper.ShowWindowInformation("Problem with product", message);
                 return;
             }
+            SoldProduct.Price = TextPrice.Value;
             RestClient.Client().UpdateProduct(this.SoldProduct, ((response, handle) =>
             {
                 if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
