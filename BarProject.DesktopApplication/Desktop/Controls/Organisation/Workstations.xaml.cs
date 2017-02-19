@@ -1,27 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Threading;
+using BarProject.DatabaseProxy.Models.ReadModels;
+using BarProject.DesktopApplication.Common.Utils;
+using MahApps.Metro.Controls.Dialogs;
+using RestSharp;
 
-namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
+namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
 {
-    using System.Collections.ObjectModel;
-    using System.Net;
-    using System.Windows.Threading;
-    using Common.Utils;
-    using DatabaseProxy.Models.ReadModels;
-    using MahApps.Metro.Controls.Dialogs;
-    using RestSharp;
     using RestClient = Library.RestHelpers.RestClient;
 
     /// <summary>

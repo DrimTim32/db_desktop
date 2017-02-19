@@ -111,7 +111,7 @@
     <Compile Include="Desktop\Controls\Menagement\Units.xaml.cs">
       <DependentUpon>Units.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Desktop\Controls\Menagement\Workstations.xaml.cs">
+    <Compile Include="Desktop\Controls\Organisation\Workstations.xaml.cs">
       <DependentUpon>Workstations.xaml</DependentUpon>
     </Compile>
     <Compile Include="Desktop\Controls\Organisation\Locations.xaml.cs">
@@ -189,7 +189,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Desktop\Controls\Menagement\Workstations.xaml">
+    <Page Include="Desktop\Controls\Organisation\Workstations.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
