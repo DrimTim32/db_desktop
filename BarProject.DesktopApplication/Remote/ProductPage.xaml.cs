@@ -7,8 +7,8 @@ namespace BarProject.DesktopApplication.Remote
 {
     public class ConfigurationData : INotifyPropertyChanged
     {
-        private int _quantity;
-        public int Quantity
+        private short _quantity;
+        public short Quantity
         {
             get { return _quantity; }
             set { _quantity = value; OnPropertyChanged(nameof(Quantity)); }
@@ -53,6 +53,7 @@ namespace BarProject.DesktopApplication.Remote
             var window = Window.GetWindow(this) as MainRemoteWindow;
             if (Data.Quantity != 0)
                 window?.RegisterProduct(Product, Data.Quantity);
+            NavigationService.GoBack();
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)

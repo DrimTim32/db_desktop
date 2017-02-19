@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Net.Http;
 using System.Web.Http;
 using BarProject.DatabaseProxy.Functions;
 using BarProject.DatabaseProxy.Models.ExceptionHandlers;
@@ -8,16 +10,19 @@ using BarProject.DatabaseProxy.Models.WriteModels;
 
 namespace BarProject.WebService.Controllers
 {
-    [RoutePrefix("api/locations")]
+    [RoutePrefix("api/orders")]
     public class OrdersController : ApiController
     {
         [HttpPost, Route("")]
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize]
         public IHttpActionResult Post(WritableOrder location)
         {
             try
             {
-                OrdersFuncstions.AddOrder(location);
+                var claims = Request.GetOwinContext().Authentication.User.Claims;
+                var first = claims.First(x => x.Type == "username");
+
+                OrdersFuncstions.AddOrder(first.Value, location);
                 return Ok();
             }
             catch (Exception ex)

@@ -2,6 +2,7 @@
 using System.Windows.Navigation;
 using BarProject.DatabaseProxy.Models.ReadModels;
 using BarProject.DatabaseProxy.Models.WriteModels;
+using BarProject.DesktopApplication.Library.RestHelpers;
 
 namespace BarProject.DesktopApplication.Remote
 {
@@ -15,15 +16,19 @@ namespace BarProject.DesktopApplication.Remote
             this.InfoLabel.Content = $"Logged as {username}";
         }
 
-        public void RegisterProduct(ShowableSoldProduct product, int quantity)
+        public void RegisterProduct(ShowableSoldProduct product, short quantity)
         {
             OrderDetails.Visibility = Visibility.Visible;
             Order.AddProduct(product, quantity);
         }
         public void AcceptOrder()
         {
-            Order.Clear();
-            OrderDetails.Visibility = Visibility.Hidden;
+            RestClient.Client().AddOrder(Order, ((response, handle) =>
+            {
+                Order.Clear();
+                OrderDetails.Visibility = Visibility.Hidden;
+            }));
+
         }
         public void DiscardOrder()
         {

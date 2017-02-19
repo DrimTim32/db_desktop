@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BarProject.DatabaseProxy.Models.ReadModels;
+﻿using System; 
 using BarProject.DatabaseProxy.Models.WriteModels;
+using Newtonsoft.Json;
 using RestSharp;
+using JsonSerializer = RestSharp.Serializers.JsonSerializer;
 
 namespace BarProject.DesktopApplication.Library.RestHelpers
 {
@@ -14,8 +11,10 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
         public void AddOrder(WritableOrder order, Action<IRestResponse, RestRequestAsyncHandle> callback)
         {
             var request = new RestRequest("api/orders/", Method.POST);
-            request.AddHeader("Authorization", $"bearer {token}");
-            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Authorization", $"bearer {token}");  
+            var json = JsonConvert.SerializeObject(order);
+            request.AddParameter("application/json; charset=utf-8", json, ParameterType.RequestBody);
+            request.RequestFormat = DataFormat.Json;   
             client.ExecuteAsync(request, callback);
         }
     }
