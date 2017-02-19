@@ -55,7 +55,8 @@ namespace BarProject.WebService.Controllers
         {
             try
             {
-                return Ok(ProductsFunctions.GetSoldProductData(id));
+                var tmp = ProductsFunctions.GetSoldProductData(id);
+                return Ok(tmp);
             }
             catch (Exception ex)
             {
@@ -92,11 +93,25 @@ namespace BarProject.WebService.Controllers
             }
         }
         [Authorize(Roles = "Admin,Owner")]
+        [HttpDelete, Route("{id}")]
+        public IHttpActionResult UpdateProduct(int id)
+        {
+            try
+            {
+                ProductsFunctions.RemoveProduct(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+        [Authorize(Roles = "Admin,Owner")]
         [HttpPost, Route("")]
         public IHttpActionResult Post([FromBody]WritableProduct product)
         {
             try
-            {
+            { 
                 ProductsFunctions.AddProduct(product);
                 return Ok();
             }

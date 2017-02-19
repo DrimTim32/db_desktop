@@ -1,5 +1,8 @@
-﻿using System.Data.Entity.Migrations;
+﻿using System;
+using System.Data.Entity.Migrations;
 using System.Net;
+using BarProject.DatabaseProxy.Models.ExceptionHandlers;
+using BarProject.DatabaseProxy.Models.Utilities;
 using BarProject.DatabaseProxy.Models.WriteModels;
 
 namespace BarProject.DatabaseProxy.Functions
@@ -14,9 +17,16 @@ namespace BarProject.DatabaseProxy.Functions
     {
         public static List<ShowableSimpleProduct> GetProductView()
         {
-            using (var db = new Entities())
+            try
             {
-                return db.productSimples.ToAnotherType<productSimple, ShowableSimpleProduct>().ToList();
+                using (var db = new Entities())
+                {
+                    return db.productSimples.ToAnotherType<productSimple, ShowableSimpleProduct>().ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Database);
             }
         }
 
@@ -60,6 +70,8 @@ namespace BarProject.DatabaseProxy.Functions
                 var unit = db.Units.FirstOrDefault(x => x.unit_name == product.UnitName);
                 var tax = db.Taxes.FirstOrDefault(x => x.tax_name == product.TaxName);
                 db.updateProduct(id, category?.id, unit?.id, tax?.id, product.Name);
+                if (product.Price != null)
+                    db.updatePrice(product.Id, product.Price.Value);
             }
         }
 
@@ -80,6 +92,15 @@ namespace BarProject.DatabaseProxy.Functions
                         on pr.id equals un
                         select pr.name
                 ).ToList();
+            }
+        }
+
+        public static void RemoveProduct(int id)
+        {
+
+            using (var db = new Entities())
+            {
+                db.removeProduct(id);
             }
         }
         public static void AddProduct(WritableProduct product)
@@ -113,6 +134,7 @@ namespace BarProject.DatabaseProxy.Functions
                         var recip = db.Recipes.FirstOrDefault(x => x.description == product.RecipitDescription);
                         db.addSoldProduct(id, recip?.id);
                     }
+                    db.updatePrice(id, product.Price.Value);
                 }
             }
         }

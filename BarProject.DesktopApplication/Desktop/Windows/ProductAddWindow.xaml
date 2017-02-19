@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BarProject.DesktopApplication.Desktop.Windows"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="ProductAddWindow" Height="350" Width="300" ResizeMode="NoResize">
     <Grid Margin="2,0,0,0">
@@ -29,7 +30,7 @@
                 <WrapPanel>
                     <Label Target="{Binding ElementName=SoldSwitch}" >Is sold</Label>
                     <controls:ToggleSwitchButton IsChecked="{Binding Path=IsSold, Mode=TwoWay}" x:Name="SoldSwitch"/>
-                </WrapPanel> 
+                </WrapPanel>
                 <StackPanel>
                     <Label Content="Name" Target="{Binding ElementName=TextName}"/>
                     <TextBox x:Name="TextName" Width="167" Text="{Binding Name, Mode=TwoWay}" />
@@ -49,10 +50,15 @@
                     <ComboBox x:Name="TextCategoryName" Width="167" 
                               Text="{Binding Path=CategoryName, Mode=TwoWay}" ItemsSource="{Binding}" FontSize="15" />
                 </StackPanel>
-                <StackPanel>
+                <StackPanel Visibility="Hidden" x:Name="RecipitStack">
                     <Label Content="Recipit description" Target="{Binding ElementName=TextRecipitName}"/>
                     <ComboBox x:Name="TextRecipitName" Width="167" 
                               Text="{Binding Path=RecipitDescription, Mode=TwoWay}" ItemsSource="{Binding}" FontSize="15" />
+                </StackPanel>
+                <StackPanel Visibility="Hidden" x:Name="PriceStack">
+                    <Label Content="Recipit description" Target="{Binding ElementName=TextPriceName}"/>
+                    <xctk:DecimalUpDown x:Name="TextPriceName" Width="167" Increment="0.1"
+                              Text="{Binding Path=Price, Mode=TwoWay}" FontSize="15" />
                 </StackPanel>
                 <Button Click="Save_Click">Save</Button>
             </StackPanel>

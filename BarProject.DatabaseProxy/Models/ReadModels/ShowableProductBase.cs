@@ -14,6 +14,7 @@ namespace BarProject.DatabaseProxy.Models.ReadModels
         private string _unitName;
         private string _taxName;
         private double _taxValue;
+        public decimal? Price { get; set; }
         public int? Id { get; set; }
 
         public string Name

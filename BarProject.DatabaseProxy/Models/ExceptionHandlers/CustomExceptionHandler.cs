@@ -8,8 +8,13 @@
     {
         public override void Handle(ExceptionHandlerContext context)
         {
+            if (context.Exception == null)
+                return;
             var exception = context.Exception as ResponseException;
-            if (exception == null) return;
+            if (exception == null)
+            {
+                exception = new ResponseException(context.Exception);
+            }
             var exc = exception;
 
             context.Result = new ResponseMessageResult(

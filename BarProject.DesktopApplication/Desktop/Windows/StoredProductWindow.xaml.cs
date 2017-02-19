@@ -116,12 +116,35 @@ namespace BarProject.DesktopApplication.Desktop.Windows
             }
             ProgressBarStop();
         }
-         
+
         private void SaveClick(object sender, RoutedEventArgs e)
         {
+            var message = "";
+            if (string.IsNullOrEmpty(StoredProduct.CategoryName))
+            {
+                message = "You cannot remove category from product";
+            }
+            if (string.IsNullOrEmpty(StoredProduct.TaxName))
+            {
+                message = "You cannot remove tax from product";
+            }
+            if (string.IsNullOrEmpty(StoredProduct.UnitName))
+            {
+                message = "You cannot remove unit from product";
+            }
+            if (message != "")
+            { 
+                MessageBoxesHelper.ShowWindowInformation("Problem with product", message);
+                return;
+            }
             RestClient.Client().UpdateProduct(this.StoredProduct, ((response, handle) =>
             {
-                MessageBox.Show("Success");
+                if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
+                {
+                    MessageBoxesHelper.ShowProblemWithRequest(response);
+                }
+                else
+                    MessageBox.Show("Success");
             }));
         }
     }

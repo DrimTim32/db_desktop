@@ -60,6 +60,9 @@ namespace BarProject.DesktopApplication.Desktop.Windows
                 TextUnitName.ItemsSource = unitsNames;
                 TextCategoryName.ItemsSource = categoriesNames;
                 TextRecipitName.ItemsSource = reciptNames;
+                SoldSwitch.Checked += (a, b) => { PriceStack.Visibility = Visibility.Visible; RecipitStack.Visibility = Visibility.Visible; };
+                SoldSwitch.Unchecked += (a, b) => { PriceStack.Visibility = Visibility.Hidden; RecipitStack.Visibility = Visibility.Hidden; };
+
             };
         }
 
@@ -81,6 +84,28 @@ namespace BarProject.DesktopApplication.Desktop.Windows
             else
             {
                 WritableProduct.IsStored = false;
+            }
+            var message = "";
+            if (string.IsNullOrEmpty(WritableProduct.CategoryName))
+            {
+                message = "You cannot add product with no category";
+            }
+            if (string.IsNullOrEmpty(WritableProduct.TaxName))
+            {
+                message = "You cannot add product with no tax";
+            }
+            if (string.IsNullOrEmpty(WritableProduct.UnitName))
+            {
+                message = "You cannot add product with no unit";
+            }
+            if (WritableProduct.IsSold && TextPriceName.Value == null)
+            {
+                message = "Sold product must have price!";  
+            }
+            if (message != "")
+            {
+                MessageBoxesHelper.ShowWindowInformation("Problem with product", message);
+                return;
             }
             RestClient.Client().AddProduct(WritableProduct,
                  (response, handle) =>

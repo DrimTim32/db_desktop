@@ -54,8 +54,14 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
             var task = client.ExecuteGetTaskAsync<ShowableSoldProduct>(request);
             var data = await task;
             return data;
+        } 
+        public void RemoveProduct(int? id, Action<IRestResponse, RestRequestAsyncHandle> callback)
+        {
+            var request = new RestRequest($"api/products/{id}", Method.DELETE);
+            request.AddHeader("Authorization", $"bearer {token}");
+            request.AddHeader("Content-Type", "application/json");
+            client.ExecuteAsync(request, callback);
         }
-
         public void GetPricesHistory(int id, Action<IRestResponse<List<ShowablePricesHistory>>, RestRequestAsyncHandle> callback)
         {
             var request = new RestRequest($"api/products/history/{id}", Method.GET);

@@ -77,7 +77,7 @@
                 var match = reg.Match(exceptionSql.Message);
                 ExceptionData.Reason = $"Value '{match.Groups[1].Value}' has to be unique but already exists in database";
                 ExceptionData.Code = HttpStatusCode.Conflict;
-            } 
+            }
             else
                 ExceptionData.Reason = exceptionSql.Message;
             ExceptionData.Arguments = arguments;
@@ -93,6 +93,8 @@
         public ResponseException(Exception e, Utilities.ExceptionType type, params object[] arguments) : this(HttpStatusCode.InternalServerError, e.Message,
                 e.InnerException?.Message, type, arguments)
         {
+            while (e.Message.Contains("inner exception") && e.InnerException != null)
+                e = e.InnerException;
             CheckAllExceptions(e, arguments);
         }
         public ResponseException(Exception e, HttpStatusCode code, Utilities.ExceptionType type, params object[] arguments) :

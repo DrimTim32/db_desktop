@@ -145,9 +145,36 @@ namespace BarProject.DesktopApplication.Desktop.Windows
         }
         private void SaveClick(object sender, RoutedEventArgs e)
         {
+            var message = "";
+            if (string.IsNullOrEmpty(SoldProduct.CategoryName))
+            {
+                message = "You cannot add product with no category";
+            }
+            if (string.IsNullOrEmpty(SoldProduct.TaxName))
+            {
+                message = "You cannot add product with no tax";
+            }
+            if (string.IsNullOrEmpty(SoldProduct.UnitName))
+            {
+                message = "You cannot add product with no unit";
+            }
+            if (TextPrice.Value == null)
+            {
+                message = "Sold product must have price!"; 
+            }
+            if (message != "")
+            {
+                MessageBoxesHelper.ShowWindowInformation("Problem with product", message);
+                return;
+            }
             RestClient.Client().UpdateProduct(this.SoldProduct, ((response, handle) =>
             {
-                MessageBox.Show("Success");
+                if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
+                {
+                    MessageBoxesHelper.ShowProblemWithRequest(response);
+                }
+                else
+                    MessageBox.Show("Success");
             }));
         }
     }

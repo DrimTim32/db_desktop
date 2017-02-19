@@ -994,7 +994,7 @@ namespace BarProject.DatabaseConnector
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateLocation", idParameter, new_nameParameter, new_addressParameter, new_cityParameter, new_postal_codeParameter, new_countryParameter, new_phoneParameter);
         }
     
-        public virtual int updatePrice(Nullable<int> priduct_id, Nullable<double> new_price)
+        public virtual int updatePrice(Nullable<int> priduct_id, Nullable<decimal> new_price)
         {
             var priduct_idParameter = priduct_id.HasValue ?
                 new ObjectParameter("priduct_id", priduct_id) :
@@ -1002,7 +1002,7 @@ namespace BarProject.DatabaseConnector
     
             var new_priceParameter = new_price.HasValue ?
                 new ObjectParameter("new_price", new_price) :
-                new ObjectParameter("new_price", typeof(double));
+                new ObjectParameter("new_price", typeof(decimal));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updatePrice", priduct_idParameter, new_priceParameter);
         }

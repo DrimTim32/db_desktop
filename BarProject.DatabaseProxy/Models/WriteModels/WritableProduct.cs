@@ -10,8 +10,9 @@ namespace BarProject.DatabaseProxy.Models.WriteModels
     {
         public WritableProduct()
         {
-            
+
         }
+        public decimal? Price { get; set; }
         public string Name { get; set; }
         public bool IsSold { get; set; }
         public bool IsStored { get; set; }

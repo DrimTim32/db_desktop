@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using BarProject.DesktopApplication.Common.Utils;
+using MahApps.Metro.Controls.Dialogs;
 using RestSharp;
 
 namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
@@ -19,7 +20,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
 
     public partial class Products : UserControl
     {
-      
+
         public List<string> UnitNames { get; set; }
         public List<string> TaxesNames { get; set; }
         public List<string> CategoriesNames { get; set; }
@@ -35,7 +36,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                     return _counter;
                 }
             }
-        }
+        } 
         private ObservableCollection<ShowableSimpleProduct> _productsList;
         private readonly object ShowableSimpleProductLock = new object();
 
@@ -58,12 +59,16 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             InitializeComponent();
             Loaded += Products_Loaded;
             DataGrid.MouseDoubleClick += DataGrid_MouseDoubleClick;
+            DataGrid.PreviewKeyDown += DataGrid_PreviewKeyDown;
         }
 
         private void Products_Loaded(object sender, RoutedEventArgs e)
         {
             ProgressBarStart();
             Counter.Counter = 4;
+            if (UnitNames != null)
+                Counter.Counter -= 1;
+
             Counter.Event += (s, q) =>
             {
                 ProgressBarStop();
@@ -71,6 +76,44 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             };
             RefreshData();
             GetAll();
+        }
+        void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            DataGrid dg = sender as DataGrid;
+            if (dg != null)
+            {
+                DataGridRow dgr = (DataGridRow)(dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex));
+                if (e.Key == Key.Delete && !dgr.IsEditing)
+                {
+                    // User is attempting to delete the row
+                    var resul = MessageBoxesHelper.ShowYesNoMessage("Delete", "About to delete the current row.\n\nProceed?");
+                    if (resul == MessageDialogResult.Negative)
+                    {
+                        e.Handled = true;
+                    }
+                    else
+                    {
+                        var cat = (ShowableSimpleProduct)dgr.Item;
+                        RemoveProduct(cat);
+                    }
+                }
+            }
+        }
+        private void RemoveProduct(ShowableSimpleProduct supplier)
+        {
+            RestClient.Client().RemoveProduct(supplier.Id,
+                              (response, handle) =>
+                              {
+                                  if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
+                                  {
+                                      MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
+                                          response.Content);
+                                  }
+                                  else
+                                  {
+                                      RefreshData();
+                                  }
+                              });
         }
 
         private void ProgressBarStart()
@@ -100,7 +143,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 {
                     ProductLists.Add(showableTax);
                 }
-                DataGrid.Items.Refresh(); 
+                DataGrid.Items.Refresh();
             }
         }
 
@@ -197,7 +240,6 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             else
             {
                 CategoriesNames = tmp.Data.Select(x => x.Name).ToList();
-                Debug.WriteLine("categories done");
                 Counter.Counter -= 1;
             }
         }
@@ -211,7 +253,6 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             else
             {
                 TaxesNames = tmp.Data.Select(x => x.TaxName).ToList();
-                Debug.WriteLine("taxes done");
                 Counter.Counter -= 1;
             }
         }
@@ -221,6 +262,8 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         private void AddNew_OnClick(object sender, RoutedEventArgs e)
         {
             var window = new ProductAddWindow(TaxesNames, CategoriesNames, UnitNames, RecipiesNames);
+            window.Closed +=
+                (s, q) => { this.Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoRefreshData)); };
             window.ShowDialog();
         }
     }

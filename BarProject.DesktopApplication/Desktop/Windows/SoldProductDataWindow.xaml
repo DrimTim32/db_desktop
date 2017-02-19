@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BarProject.DesktopApplication.Desktop.Windows"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="SoldProductDataWindow" Height="450" Width="300">
     <Grid>
@@ -17,7 +18,7 @@
                         <Setter Property="Margin" Value="0,0,0,4" />
                     </Style>
                     <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
-                        <Setter Property="Width" Value="100" />
+                        <Setter Property="Width" Value="110" />
                         <Setter Property="VerticalAlignment" Value="Center" />
                     </Style>
                     <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
@@ -55,9 +56,10 @@
                     <Label Content="Period start" Target="{Binding ElementName=TextPeriodStart}" />
                     <TextBox x:Name="TextPeriodStart" Width="150"  Text="{Binding Path=PeriodStart, Mode=TwoWay}" />
                 </StackPanel>
-                <StackPanel>
-                    <Label Content="Price" Target="{Binding ElementName=TextPrice}"/>
-                    <TextBox x:Name="TextPrice" Width="150" Text="{Binding Path=Price, Mode=TwoWay, ValidatesOnDataErrors=True}" />
+                <StackPanel x:Name="PriceStack">
+                    <Label Content="Price " Target="{Binding ElementName=TextPrice}"/>
+                    <xctk:DecimalUpDown x:Name="TextPrice" Width="167" Increment="0.1"
+                              Text="{Binding Path=Price, Mode=TwoWay}" FontSize="15" />
                 </StackPanel>
             </StackPanel>
             <StackPanel>
