@@ -74,7 +74,7 @@ namespace BarProject.DesktopApplication.Desktop.Windows
             if (SoldSwitch.IsChecked != null)
             {
                 WritableProduct.IsSold = SoldSwitch.IsChecked.Value;
-                anyChecked = true;
+                anyChecked = WritableProduct.IsSold;
             }
             else
             {
@@ -83,7 +83,7 @@ namespace BarProject.DesktopApplication.Desktop.Windows
             if (StoredSwitch.IsChecked != null)
             {
                 WritableProduct.IsStored = StoredSwitch.IsChecked.Value;
-                anyChecked = true;
+                anyChecked = WritableProduct.IsStored || anyChecked;
             }
             else
             {
@@ -121,7 +121,7 @@ namespace BarProject.DesktopApplication.Desktop.Windows
                      if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
                      {
                          MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
-                             response.Content, this);
+                             response.Content);
                          ProgressBarStop();
                      }
                      else
