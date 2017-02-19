@@ -16,7 +16,7 @@ namespace BarProject.WebService.Controllers
     [RoutePrefix("api/warehouse")]
     public class WarehouseController : ApiController
     {
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [HttpGet, ResponseType(typeof(List<ShowableWarehouseOrder>))]
         [Route("orders")]
         public IHttpActionResult Get()
@@ -30,7 +30,7 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [HttpPost, ResponseType(typeof(List<ShowableWarehouseOrder>))]
         [Route("orders")]
         public IHttpActionResult Post([FromBody]ShowableWarehouseOrder order)
@@ -47,7 +47,7 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [HttpGet, ResponseType(typeof(List<ShowableWarehouseOrderDetails>))]
         [Route("orders/{id}/details")]
         public IHttpActionResult GetDetails(int id)
@@ -61,7 +61,7 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [HttpPost]
         [Route("orders/{id}/details")]
         public IHttpActionResult AddDetails(int id, ShowableWarehouseOrderDetails details)
@@ -76,7 +76,7 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [HttpPatch]
         [Route("orders/{id}/details")]
         public IHttpActionResult PatchDetails(int id, ShowableWarehouseOrderDetails details)

@@ -16,7 +16,7 @@ namespace BarProject.WebService.Controllers
     public class ReceiptsController : ApiController
     {
         [HttpGet]
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [ResponseType(typeof(IEnumerable<ShowableReceipt>))]
         [Route("")]
         public IHttpActionResult Get()
@@ -31,7 +31,7 @@ namespace BarProject.WebService.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [HttpPost, Route("")]
         public IHttpActionResult Post(ShowableReceipt receipt)
         {
@@ -45,7 +45,7 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [HttpPatch, Route("{id}")]
         public IHttpActionResult Patch(int id, [FromBody] ShowableReceipt tax)
         {
@@ -59,9 +59,9 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [HttpGet, Route("{id}/details")]
-        [ResponseType(typeof(IEnumerable<ShowableRecipitDetails>))]
+        [ResponseType(typeof(IEnumerable<ShowableRecipitDetail>))]
         public IHttpActionResult GetDetails(int id)
         {
             try
@@ -73,9 +73,9 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [HttpGet, Route("{id}")]
-        [ResponseType(typeof(IEnumerable<ShowableRecipitDetails>))]
+        [ResponseType(typeof(IEnumerable<ShowableRecipitDetail>))]
         public IHttpActionResult Delete(int id)
         {
             try
@@ -87,6 +87,49 @@ namespace BarProject.WebService.Controllers
             {
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
-        } 
+        }
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
+        [HttpGet, Route("{id}/details/{id2}")]
+        [ResponseType(typeof(IEnumerable<ShowableRecipitDetail>))]
+        public IHttpActionResult DeleteDetails(int id, int id2)
+        {
+            try
+            {
+                RecipiesFunctions.RemoveReciptDetails(id, id2);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
+        [HttpPost, Route("{id}/details")]
+        public IHttpActionResult PostDetails(int id, ShowableRecipitDetail receipt)
+        {
+            try
+            {
+                RecipiesFunctions.AddReciptDetails(id, receipt);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
+        [HttpPatch, Route("{id}/details")]
+        public IHttpActionResult Patch(int id, [FromBody] ShowableRecipitDetail tax)
+        {
+            try
+            {
+                RecipiesFunctions.UpdateReciptDetails(id, tax);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
     }
 }

@@ -23,9 +23,9 @@ namespace BarProject.DatabaseConnector
         }
     
         public int id { get; set; }
-        public Nullable<int> category_id { get; set; }
-        public Nullable<int> unit_id { get; set; }
-        public Nullable<int> tax_id { get; set; }
+        public int category_id { get; set; }
+        public int unit_id { get; set; }
+        public int tax_id { get; set; }
         public string name { get; set; }
     
         public virtual Category Category { get; set; }

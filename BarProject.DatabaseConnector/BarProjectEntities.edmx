@@ -89,7 +89,7 @@ warning 6002: The table/view 'BarProject.dbo.LoginLog' does not have a primary k
             <PropertyRef Name="period_start" />
           </Key>
           <Property Name="product_id" Type="int" Nullable="false" />
-          <Property Name="period_start" Type="date" Nullable="false" />
+          <Property Name="period_start" Type="datetime" Nullable="false" />
           <Property Name="price" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
@@ -97,9 +97,9 @@ warning 6002: The table/view 'BarProject.dbo.LoginLog' does not have a primary k
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="category_id" Type="int" />
-          <Property Name="unit_id" Type="int" />
-          <Property Name="tax_id" Type="int" />
+          <Property Name="category_id" Type="int" Nullable="false" />
+          <Property Name="unit_id" Type="int" Nullable="false" />
+          <Property Name="tax_id" Type="int" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductsSold">
@@ -329,7 +329,7 @@ warning 6002: The table/view 'BarProject.dbo.productsLastPrices' does not have a
           </Key>
           <Property Name="product_id" Type="int" Nullable="false" />
           <Property Name="price" Type="money" Nullable="false" />
-          <Property Name="period_start" Type="date" Nullable="false" />
+          <Property Name="period_start" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'BarProject.dbo.productsLastPricesWithName' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -343,7 +343,7 @@ warning 6002: The table/view 'BarProject.dbo.productsLastPricesWithName' does no
           <Property Name="product_id" Type="int" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="price" Type="money" Nullable="false" />
-          <Property Name="period_start" Type="date" Nullable="false" />
+          <Property Name="period_start" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'BarProject.dbo.Warehouse_order_details_pretty' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -463,7 +463,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           <Property Name="create_date" Type="datetime" Nullable="false" />
           <Property Name="modify_date" Type="datetime" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Categorie__overr__6F00685E">
+        <Association Name="FK__Categorie__overr__7E2D9D55">
           <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
           <End Role="Categories1" Type="Self.Categories" Multiplicity="*" />
           <ReferentialConstraint>
@@ -475,7 +475,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Client_or__clien__2B155265">
+        <Association Name="FK__Client_or__clien__3B36AB95">
           <End Role="Client_orders" Type="Self.Client_orders" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -489,7 +489,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Client_or__emplo__2744C181">
+        <Association Name="FK__Client_or__emplo__37661AB1">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Client_orders" Type="Self.Client_orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -501,7 +501,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Client_or__produ__2C09769E">
+        <Association Name="FK__Client_or__produ__3C2ACFCE">
           <End Role="ProductsSold" Type="Self.ProductsSold" Multiplicity="1" />
           <End Role="Client_order_details" Type="Self.Client_order_details" Multiplicity="*" />
           <ReferentialConstraint>
@@ -513,7 +513,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Client_or__spot___26509D48">
+        <Association Name="FK__Client_or__spot___3671F678">
           <End Role="Spots" Type="Self.Spots" Multiplicity="1" />
           <End Role="Client_orders" Type="Self.Client_orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -525,7 +525,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Ingredien__ingre__02133CD2">
+        <Association Name="FK__Ingredien__ingre__114071C9">
           <End Role="ProductsStored" Type="Self.ProductsStored" Multiplicity="1" />
           <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="*" />
           <ReferentialConstraint>
@@ -537,7 +537,7 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Ingredien__recip__011F1899">
+        <Association Name="FK__Ingredien__recip__104C4D90">
           <End Role="Recipes" Type="Self.Recipes" Multiplicity="1" />
           <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="*" />
           <ReferentialConstraint>
@@ -550,9 +550,9 @@ warning 6002: The table/view 'BarProject.sys.database_firewall_rules' does not h
           </ReferentialConstraint>
         </Association>
         <!--Errors Found During Generation:
-warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK__LoginLog__userna__08C03A61" />-->
-        <Association Name="FK__Prices__product___05E3CDB6">
+warning 6035: The relationship 'FK__LoginLog__userna__18E19391' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK__LoginLog__userna__18E19391" />-->
+        <Association Name="FK__Prices__product___151102AD">
           <End Role="ProductsSold" Type="Self.ProductsSold" Multiplicity="1" />
           <End Role="Prices" Type="Self.Prices" Multiplicity="*" />
           <ReferentialConstraint>
@@ -564,8 +564,8 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products__catego__72D0F942">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+        <Association Name="FK__Products__catego__01FE2E39">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categories">
@@ -576,8 +576,8 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products__tax_id__74B941B4">
-          <End Role="Taxes" Type="Self.Taxes" Multiplicity="0..1" />
+        <Association Name="FK__Products__tax_id__03E676AB">
+          <End Role="Taxes" Type="Self.Taxes" Multiplicity="1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Taxes">
@@ -588,8 +588,8 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products__unit_i__73C51D7B">
-          <End Role="Units" Type="Self.Units" Multiplicity="0..1" />
+        <Association Name="FK__Products__unit_i__02F25272">
+          <End Role="Units" Type="Self.Units" Multiplicity="1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Units">
@@ -600,7 +600,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ProductsS__recip__7D4E87B5">
+        <Association Name="FK__ProductsS__recip__0C7BBCAC">
           <End Role="Recipes" Type="Self.Recipes" Multiplicity="0..1" />
           <End Role="ProductsSold" Type="Self.ProductsSold" Multiplicity="*" />
           <ReferentialConstraint>
@@ -612,7 +612,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ProductsStor__id__7795AE5F">
+        <Association Name="FK__ProductsStor__id__06C2E356">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="ProductsStored" Type="Self.ProductsStored" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -624,7 +624,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ProductsU__produ__0AA882D3">
+        <Association Name="FK__ProductsU__produ__1AC9DC03">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="ProductsUsage" Type="Self.ProductsUsage" Multiplicity="*" />
           <ReferentialConstraint>
@@ -636,7 +636,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Spots__location___22800C64">
+        <Association Name="FK__Spots__location___32A16594">
           <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
           <End Role="Spots" Type="Self.Spots" Multiplicity="*" />
           <ReferentialConstraint>
@@ -648,7 +648,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Units__unit_type__666B225D">
+        <Association Name="FK__Units__unit_type__75985754">
           <End Role="UnitTypes" Type="Self.UnitTypes" Multiplicity="0..1" />
           <End Role="Units" Type="Self.Units" Multiplicity="*" />
           <ReferentialConstraint>
@@ -660,7 +660,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__permissio__3A8CA01F">
+        <Association Name="FK__Users__permissio__6C0EED1A">
           <End Role="EmployePermissions" Type="Self.EmployePermissions" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -672,7 +672,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Warehouse__emplo__18027DF1">
+        <Association Name="FK__Warehouse__emplo__2823D721">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Warehouse_orders" Type="Self.Warehouse_orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -684,7 +684,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Warehouse__locat__11558062">
+        <Association Name="FK__Warehouse__locat__2176D992">
           <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
           <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="*" />
           <ReferentialConstraint>
@@ -696,7 +696,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Warehouse__locat__19EAC663">
+        <Association Name="FK__Warehouse__locat__2A0C1F93">
           <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
           <End Role="Warehouse_orders" Type="Self.Warehouse_orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -708,7 +708,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Warehouse__produ__1249A49B">
+        <Association Name="FK__Warehouse__produ__226AFDCB">
           <End Role="Products" Type="Self.Products" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -722,7 +722,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Warehouse__produ__1FA39FB9">
+        <Association Name="FK__Warehouse__produ__2FC4F8E9">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="Warehouse_order_details" Type="Self.Warehouse_order_details" Multiplicity="*" />
           <ReferentialConstraint>
@@ -734,7 +734,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Warehouse__suppl__18F6A22A">
+        <Association Name="FK__Warehouse__suppl__2917FB5A">
           <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
           <End Role="Warehouse_orders" Type="Self.Warehouse_orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -746,7 +746,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Warehouse__wareh__1EAF7B80">
+        <Association Name="FK__Warehouse__wareh__2ED0D4B0">
           <End Role="Warehouse_orders" Type="Self.Warehouse_orders" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -760,7 +760,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Workstati__emplo__32B6742D">
+        <Association Name="FK__Workstati__emplo__42D7CD5D">
           <End Role="EmployePermissions" Type="Self.EmployePermissions" Multiplicity="1" />
           <End Role="Workstation_rights" Type="Self.Workstation_rights" Multiplicity="*" />
           <ReferentialConstraint>
@@ -772,7 +772,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Workstati__locat__2EE5E349">
+        <Association Name="FK__Workstati__locat__3F073C79">
           <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
           <End Role="Workstations" Type="Self.Workstations" Multiplicity="*" />
           <ReferentialConstraint>
@@ -784,7 +784,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Workstati__works__31C24FF4">
+        <Association Name="FK__Workstati__works__41E3A924">
           <End Role="Workstations" Type="Self.Workstations" Multiplicity="1" />
           <End Role="Workstation_rights" Type="Self.Workstation_rights" Multiplicity="*" />
           <ReferentialConstraint>
@@ -793,6 +793,20 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Principal>
             <Dependent Role="Workstation_rights">
               <PropertyRef Name="workstation_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_price_prod">
+          <End Role="ProductsSold" Type="Self.ProductsSold" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Prices" Type="Self.Prices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductsSold">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Prices">
+              <PropertyRef Name="product_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1149,7 +1163,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             <CollectionType>
               <RowType>
                 <Property Name="price" Type="money" Nullable="false" />
-                <Property Name="period_start" Type="date" Nullable="false" />
+                <Property Name="period_start" Type="datetime" Nullable="false" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -1161,11 +1175,11 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
               <RowType>
                 <Property Name="id" Type="int" Nullable="false" />
                 <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-                <Property Name="category_id" Type="int" />
+                <Property Name="category_id" Type="int" Nullable="false" />
                 <Property Name="category_name" Type="nvarchar" MaxLength="64" Nullable="false" />
-                <Property Name="unit_id" Type="int" />
+                <Property Name="unit_id" Type="int" Nullable="false" />
                 <Property Name="unit_name" Type="nvarchar" MaxLength="32" Nullable="false" />
-                <Property Name="tax_id" Type="int" />
+                <Property Name="tax_id" Type="int" Nullable="false" />
                 <Property Name="tax_name" Type="nvarchar" MaxLength="32" Nullable="false" />
                 <Property Name="tax_value" Type="float" Nullable="false" />
               </RowType>
@@ -1191,7 +1205,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
               <RowType>
                 <Property Name="product_id" Type="int" Nullable="false" />
                 <Property Name="price" Type="money" Nullable="false" />
-                <Property Name="period_start" Type="date" Nullable="false" />
+                <Property Name="period_start" Type="datetime" Nullable="false" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -1203,6 +1217,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
               <RowType>
                 <Property Name="recipe_id" Type="int" Nullable="false" />
                 <Property Name="ingredient_id" Type="int" Nullable="false" />
+                <Property Name="ingredient_name" Type="nvarchar" MaxLength="128" Nullable="false" />
                 <Property Name="quantity" Type="float" Nullable="false" />
               </RowType>
             </CollectionType>
@@ -1274,24 +1289,19 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
               <RowType>
                 <Property Name="product_id" Type="int" Nullable="false" />
                 <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-                <Property Name="category_id" Type="int" />
+                <Property Name="category_id" Type="int" Nullable="false" />
                 <Property Name="category_name" Type="nvarchar" MaxLength="64" Nullable="false" />
-                <Property Name="unit_id" Type="int" />
+                <Property Name="unit_id" Type="int" Nullable="false" />
                 <Property Name="unit_name" Type="nvarchar" MaxLength="32" Nullable="false" />
-                <Property Name="tax_id" Type="int" />
+                <Property Name="tax_id" Type="int" Nullable="false" />
                 <Property Name="tax_name" Type="nvarchar" MaxLength="32" Nullable="false" />
                 <Property Name="tax_value" Type="float" Nullable="false" />
                 <Property Name="recipe_id" Type="int" />
-                <Property Name="period_start" Type="date" Nullable="false" />
+                <Property Name="period_start" Type="datetime" Nullable="false" />
                 <Property Name="price" Type="money" Nullable="false" />
               </RowType>
             </CollectionType>
           </ReturnType>
-        </Function>
-        <Function Name="udpateIngredient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="recipe_id" Type="int" Mode="In" />
-          <Parameter Name="ingredient_id" Type="int" Mode="In" />
-          <Parameter Name="new_quantity" Type="float" Mode="In" />
         </Function>
         <Function Name="updateCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -1311,6 +1321,11 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           <Parameter Name="products_sold_id" Type="int" Mode="In" />
           <Parameter Name="new_quantity" Type="smallint" Mode="In" />
         </Function>
+        <Function Name="updateIngredient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="recipe_id" Type="int" Mode="In" />
+          <Parameter Name="ingredient_id" Type="int" Mode="In" />
+          <Parameter Name="new_quantity" Type="float" Mode="In" />
+        </Function>
         <Function Name="updateLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="new_name" Type="nvarchar" Mode="In" />
@@ -1322,7 +1337,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
         </Function>
         <Function Name="updatePrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="priduct_id" Type="int" Mode="In" />
-          <Parameter Name="new_price" Type="float" Mode="In" />
+          <Parameter Name="new_price" Type="money" Mode="In" />
         </Function>
         <Function Name="updateProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -1566,113 +1581,117 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
     [database_firewall_rules].[modify_date] AS [modify_date]
     FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__Categorie__overr__6F00685E" Association="Self.FK__Categorie__overr__6F00685E">
+          <AssociationSet Name="FK__Categorie__overr__7E2D9D55" Association="Self.FK__Categorie__overr__7E2D9D55">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Categories1" EntitySet="Categories" />
           </AssociationSet>
-          <AssociationSet Name="FK__Client_or__clien__2B155265" Association="Self.FK__Client_or__clien__2B155265">
+          <AssociationSet Name="FK__Client_or__clien__3B36AB95" Association="Self.FK__Client_or__clien__3B36AB95">
             <End Role="Client_orders" EntitySet="Client_orders" />
             <End Role="Client_order_details" EntitySet="Client_order_details" />
           </AssociationSet>
-          <AssociationSet Name="FK__Client_or__emplo__2744C181" Association="Self.FK__Client_or__emplo__2744C181">
+          <AssociationSet Name="FK__Client_or__emplo__37661AB1" Association="Self.FK__Client_or__emplo__37661AB1">
             <End Role="Users" EntitySet="Users" />
             <End Role="Client_orders" EntitySet="Client_orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Client_or__produ__2C09769E" Association="Self.FK__Client_or__produ__2C09769E">
+          <AssociationSet Name="FK__Client_or__produ__3C2ACFCE" Association="Self.FK__Client_or__produ__3C2ACFCE">
             <End Role="ProductsSold" EntitySet="ProductsSold" />
             <End Role="Client_order_details" EntitySet="Client_order_details" />
           </AssociationSet>
-          <AssociationSet Name="FK__Client_or__spot___26509D48" Association="Self.FK__Client_or__spot___26509D48">
+          <AssociationSet Name="FK__Client_or__spot___3671F678" Association="Self.FK__Client_or__spot___3671F678">
             <End Role="Spots" EntitySet="Spots" />
             <End Role="Client_orders" EntitySet="Client_orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Ingredien__ingre__02133CD2" Association="Self.FK__Ingredien__ingre__02133CD2">
+          <AssociationSet Name="FK__Ingredien__ingre__114071C9" Association="Self.FK__Ingredien__ingre__114071C9">
             <End Role="ProductsStored" EntitySet="ProductsStored" />
             <End Role="Ingredients" EntitySet="Ingredients" />
           </AssociationSet>
-          <AssociationSet Name="FK__Ingredien__recip__011F1899" Association="Self.FK__Ingredien__recip__011F1899">
+          <AssociationSet Name="FK__Ingredien__recip__104C4D90" Association="Self.FK__Ingredien__recip__104C4D90">
             <End Role="Recipes" EntitySet="Recipes" />
             <End Role="Ingredients" EntitySet="Ingredients" />
           </AssociationSet>
-          <AssociationSet Name="FK__Prices__product___05E3CDB6" Association="Self.FK__Prices__product___05E3CDB6">
+          <AssociationSet Name="FK__Prices__product___151102AD" Association="Self.FK__Prices__product___151102AD">
             <End Role="ProductsSold" EntitySet="ProductsSold" />
             <End Role="Prices" EntitySet="Prices" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products__catego__72D0F942" Association="Self.FK__Products__catego__72D0F942">
+          <AssociationSet Name="FK__Products__catego__01FE2E39" Association="Self.FK__Products__catego__01FE2E39">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products__tax_id__74B941B4" Association="Self.FK__Products__tax_id__74B941B4">
+          <AssociationSet Name="FK__Products__tax_id__03E676AB" Association="Self.FK__Products__tax_id__03E676AB">
             <End Role="Taxes" EntitySet="Taxes" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products__unit_i__73C51D7B" Association="Self.FK__Products__unit_i__73C51D7B">
+          <AssociationSet Name="FK__Products__unit_i__02F25272" Association="Self.FK__Products__unit_i__02F25272">
             <End Role="Units" EntitySet="Units" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK__ProductsS__recip__7D4E87B5" Association="Self.FK__ProductsS__recip__7D4E87B5">
+          <AssociationSet Name="FK__ProductsS__recip__0C7BBCAC" Association="Self.FK__ProductsS__recip__0C7BBCAC">
             <End Role="Recipes" EntitySet="Recipes" />
             <End Role="ProductsSold" EntitySet="ProductsSold" />
           </AssociationSet>
-          <AssociationSet Name="FK__ProductsStor__id__7795AE5F" Association="Self.FK__ProductsStor__id__7795AE5F">
+          <AssociationSet Name="FK__ProductsStor__id__06C2E356" Association="Self.FK__ProductsStor__id__06C2E356">
             <End Role="Products" EntitySet="Products" />
             <End Role="ProductsStored" EntitySet="ProductsStored" />
           </AssociationSet>
-          <AssociationSet Name="FK__ProductsU__produ__0AA882D3" Association="Self.FK__ProductsU__produ__0AA882D3">
+          <AssociationSet Name="FK__ProductsU__produ__1AC9DC03" Association="Self.FK__ProductsU__produ__1AC9DC03">
             <End Role="Products" EntitySet="Products" />
             <End Role="ProductsUsage" EntitySet="ProductsUsage" />
           </AssociationSet>
-          <AssociationSet Name="FK__Spots__location___22800C64" Association="Self.FK__Spots__location___22800C64">
+          <AssociationSet Name="FK__Spots__location___32A16594" Association="Self.FK__Spots__location___32A16594">
             <End Role="Locations" EntitySet="Locations" />
             <End Role="Spots" EntitySet="Spots" />
           </AssociationSet>
-          <AssociationSet Name="FK__Units__unit_type__666B225D" Association="Self.FK__Units__unit_type__666B225D">
+          <AssociationSet Name="FK__Units__unit_type__75985754" Association="Self.FK__Units__unit_type__75985754">
             <End Role="UnitTypes" EntitySet="UnitTypes" />
             <End Role="Units" EntitySet="Units" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__permissio__3A8CA01F" Association="Self.FK__Users__permissio__3A8CA01F">
+          <AssociationSet Name="FK__Users__permissio__6C0EED1A" Association="Self.FK__Users__permissio__6C0EED1A">
             <End Role="EmployePermissions" EntitySet="EmployePermissions" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__Warehouse__emplo__18027DF1" Association="Self.FK__Warehouse__emplo__18027DF1">
+          <AssociationSet Name="FK__Warehouse__emplo__2823D721" Association="Self.FK__Warehouse__emplo__2823D721">
             <End Role="Users" EntitySet="Users" />
             <End Role="Warehouse_orders" EntitySet="Warehouse_orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Warehouse__locat__11558062" Association="Self.FK__Warehouse__locat__11558062">
+          <AssociationSet Name="FK__Warehouse__locat__2176D992" Association="Self.FK__Warehouse__locat__2176D992">
             <End Role="Locations" EntitySet="Locations" />
             <End Role="Warehouse" EntitySet="Warehouse" />
           </AssociationSet>
-          <AssociationSet Name="FK__Warehouse__locat__19EAC663" Association="Self.FK__Warehouse__locat__19EAC663">
+          <AssociationSet Name="FK__Warehouse__locat__2A0C1F93" Association="Self.FK__Warehouse__locat__2A0C1F93">
             <End Role="Locations" EntitySet="Locations" />
             <End Role="Warehouse_orders" EntitySet="Warehouse_orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Warehouse__produ__1249A49B" Association="Self.FK__Warehouse__produ__1249A49B">
+          <AssociationSet Name="FK__Warehouse__produ__226AFDCB" Association="Self.FK__Warehouse__produ__226AFDCB">
             <End Role="Products" EntitySet="Products" />
             <End Role="Warehouse" EntitySet="Warehouse" />
           </AssociationSet>
-          <AssociationSet Name="FK__Warehouse__produ__1FA39FB9" Association="Self.FK__Warehouse__produ__1FA39FB9">
+          <AssociationSet Name="FK__Warehouse__produ__2FC4F8E9" Association="Self.FK__Warehouse__produ__2FC4F8E9">
             <End Role="Products" EntitySet="Products" />
             <End Role="Warehouse_order_details" EntitySet="Warehouse_order_details" />
           </AssociationSet>
-          <AssociationSet Name="FK__Warehouse__suppl__18F6A22A" Association="Self.FK__Warehouse__suppl__18F6A22A">
+          <AssociationSet Name="FK__Warehouse__suppl__2917FB5A" Association="Self.FK__Warehouse__suppl__2917FB5A">
             <End Role="Suppliers" EntitySet="Suppliers" />
             <End Role="Warehouse_orders" EntitySet="Warehouse_orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Warehouse__wareh__1EAF7B80" Association="Self.FK__Warehouse__wareh__1EAF7B80">
+          <AssociationSet Name="FK__Warehouse__wareh__2ED0D4B0" Association="Self.FK__Warehouse__wareh__2ED0D4B0">
             <End Role="Warehouse_orders" EntitySet="Warehouse_orders" />
             <End Role="Warehouse_order_details" EntitySet="Warehouse_order_details" />
           </AssociationSet>
-          <AssociationSet Name="FK__Workstati__emplo__32B6742D" Association="Self.FK__Workstati__emplo__32B6742D">
+          <AssociationSet Name="FK__Workstati__emplo__42D7CD5D" Association="Self.FK__Workstati__emplo__42D7CD5D">
             <End Role="EmployePermissions" EntitySet="EmployePermissions" />
             <End Role="Workstation_rights" EntitySet="Workstation_rights" />
           </AssociationSet>
-          <AssociationSet Name="FK__Workstati__locat__2EE5E349" Association="Self.FK__Workstati__locat__2EE5E349">
+          <AssociationSet Name="FK__Workstati__locat__3F073C79" Association="Self.FK__Workstati__locat__3F073C79">
             <End Role="Locations" EntitySet="Locations" />
             <End Role="Workstations" EntitySet="Workstations" />
           </AssociationSet>
-          <AssociationSet Name="FK__Workstati__works__31C24FF4" Association="Self.FK__Workstati__works__31C24FF4">
+          <AssociationSet Name="FK__Workstati__works__41E3A924" Association="Self.FK__Workstati__works__41E3A924">
             <End Role="Workstations" EntitySet="Workstations" />
             <End Role="Workstation_rights" EntitySet="Workstation_rights" />
+          </AssociationSet>
+          <AssociationSet Name="fk_price_prod" Association="Self.fk_price_prod">
+            <End Role="ProductsSold" EntitySet="ProductsSold" />
+            <End Role="Prices" EntitySet="Prices" />
           </AssociationSet>
           <AssociationSet Name="fk_sold_base_prod" Association="Self.fk_sold_base_prod">
             <End Role="Products" EntitySet="Products" />
@@ -1784,11 +1803,11 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
         <ComplexType Name="productDetails_Result">
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="category_id" Type="Int32" />
+          <Property Name="category_id" Type="Int32" Nullable="false" />
           <Property Name="category_name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="unit_id" Type="Int32" />
+          <Property Name="unit_id" Type="Int32" Nullable="false" />
           <Property Name="unit_name" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="tax_id" Type="Int32" />
+          <Property Name="tax_id" Type="Int32" Nullable="false" />
           <Property Name="tax_name" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="tax_value" Type="Double" Nullable="false" />
         </ComplexType>
@@ -1805,16 +1824,17 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
         <ComplexType Name="recipeDetails_Result">
           <Property Name="recipe_id" Type="Int32" Nullable="false" />
           <Property Name="ingredient_id" Type="Int32" Nullable="false" />
+          <Property Name="ingredient_name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="quantity" Type="Double" Nullable="false" />
         </ComplexType>
         <ComplexType Name="soldProductDetails_Result">
           <Property Name="product_id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="category_id" Type="Int32" />
+          <Property Name="category_id" Type="Int32" Nullable="false" />
           <Property Name="category_name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="unit_id" Type="Int32" />
+          <Property Name="unit_id" Type="Int32" Nullable="false" />
           <Property Name="unit_name" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="tax_id" Type="Int32" />
+          <Property Name="tax_id" Type="Int32" Nullable="false" />
           <Property Name="tax_name" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="tax_value" Type="Double" Nullable="false" />
           <Property Name="recipe_id" Type="Int32" />
@@ -1829,9 +1849,9 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           <Property Name="slug" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="category_name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="overriding_category" Type="Int32" />
-          <NavigationProperty Name="Categories1" Relationship="Self.FK__Categorie__overr__6F00685E" FromRole="Categories" ToRole="Categories1" />
-          <NavigationProperty Name="Category1" Relationship="Self.FK__Categorie__overr__6F00685E" FromRole="Categories1" ToRole="Categories" />
-          <NavigationProperty Name="Products" Relationship="Self.FK__Products__catego__72D0F942" FromRole="Categories" ToRole="Products" />
+          <NavigationProperty Name="Categories1" Relationship="Self.FK__Categorie__overr__7E2D9D55" FromRole="Categories" ToRole="Categories1" />
+          <NavigationProperty Name="Category1" Relationship="Self.FK__Categorie__overr__7E2D9D55" FromRole="Categories1" ToRole="Categories" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Products__catego__01FE2E39" FromRole="Categories" ToRole="Products" />
         </EntityType>
         <EntityType Name="Client_order_details">
           <Key>
@@ -1841,8 +1861,8 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           <Property Name="client_order_id" Type="Int32" Nullable="false" />
           <Property Name="products_sold_id" Type="Int32" Nullable="false" />
           <Property Name="quantity" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="Client_orders" Relationship="Self.FK__Client_or__clien__2B155265" FromRole="Client_order_details" ToRole="Client_orders" />
-          <NavigationProperty Name="ProductsSold" Relationship="Self.FK__Client_or__produ__2C09769E" FromRole="Client_order_details" ToRole="ProductsSold" />
+          <NavigationProperty Name="Client_orders" Relationship="Self.FK__Client_or__clien__3B36AB95" FromRole="Client_order_details" ToRole="Client_orders" />
+          <NavigationProperty Name="ProductsSold" Relationship="Self.FK__Client_or__produ__3C2ACFCE" FromRole="Client_order_details" ToRole="ProductsSold" />
         </EntityType>
         <EntityType Name="Client_orders">
           <Key>
@@ -1853,9 +1873,9 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           <Property Name="employee_id" Type="Int32" Nullable="false" />
           <Property Name="order_time" Type="DateTime" Precision="3" />
           <Property Name="payment_time" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Client_order_details" Relationship="Self.FK__Client_or__clien__2B155265" FromRole="Client_orders" ToRole="Client_order_details" />
-          <NavigationProperty Name="User" Relationship="Self.FK__Client_or__emplo__2744C181" FromRole="Client_orders" ToRole="Users" />
-          <NavigationProperty Name="Spot" Relationship="Self.FK__Client_or__spot___26509D48" FromRole="Client_orders" ToRole="Spots" />
+          <NavigationProperty Name="Client_order_details" Relationship="Self.FK__Client_or__clien__3B36AB95" FromRole="Client_orders" ToRole="Client_order_details" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Client_or__emplo__37661AB1" FromRole="Client_orders" ToRole="Users" />
+          <NavigationProperty Name="Spot" Relationship="Self.FK__Client_or__spot___3671F678" FromRole="Client_orders" ToRole="Spots" />
         </EntityType>
         <EntityType Name="EmployePermission">
           <Key>
@@ -1864,7 +1884,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           <Property Name="id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="value" Type="Byte" />
           <Property Name="name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Users__permissio__3A8CA01F" FromRole="EmployePermissions" ToRole="Users" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Users__permissio__6C0EED1A" FromRole="EmployePermissions" ToRole="Users" />
           <NavigationProperty Name="Workstations" Relationship="Self.Workstation_rights" FromRole="EmployePermissions" ToRole="Workstations" />
         </EntityType>
         <EntityType Name="Ingredient">
@@ -1875,8 +1895,8 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           <Property Name="recipe_id" Type="Int32" Nullable="false" />
           <Property Name="ingredient_id" Type="Int32" Nullable="false" />
           <Property Name="quantity" Type="Double" Nullable="false" />
-          <NavigationProperty Name="ProductsStored" Relationship="Self.FK__Ingredien__ingre__02133CD2" FromRole="Ingredients" ToRole="ProductsStored" />
-          <NavigationProperty Name="Recipe" Relationship="Self.FK__Ingredien__recip__011F1899" FromRole="Ingredients" ToRole="Recipes" />
+          <NavigationProperty Name="ProductsStored" Relationship="Self.FK__Ingredien__ingre__114071C9" FromRole="Ingredients" ToRole="ProductsStored" />
+          <NavigationProperty Name="Recipe" Relationship="Self.FK__Ingredien__recip__104C4D90" FromRole="Ingredients" ToRole="Recipes" />
         </EntityType>
         <EntityType Name="InternalError">
           <Key>
@@ -1901,10 +1921,10 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           <Property Name="postal_code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="country" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="phone" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Spots" Relationship="Self.FK__Spots__location___22800C64" FromRole="Locations" ToRole="Spots" />
-          <NavigationProperty Name="Warehouses" Relationship="Self.FK__Warehouse__locat__11558062" FromRole="Locations" ToRole="Warehouse" />
-          <NavigationProperty Name="Warehouse_orders" Relationship="Self.FK__Warehouse__locat__19EAC663" FromRole="Locations" ToRole="Warehouse_orders" />
-          <NavigationProperty Name="Workstations" Relationship="Self.FK__Workstati__locat__2EE5E349" FromRole="Locations" ToRole="Workstations" />
+          <NavigationProperty Name="Spots" Relationship="Self.FK__Spots__location___32A16594" FromRole="Locations" ToRole="Spots" />
+          <NavigationProperty Name="Warehouses" Relationship="Self.FK__Warehouse__locat__2176D992" FromRole="Locations" ToRole="Warehouse" />
+          <NavigationProperty Name="Warehouse_orders" Relationship="Self.FK__Warehouse__locat__2A0C1F93" FromRole="Locations" ToRole="Warehouse_orders" />
+          <NavigationProperty Name="Workstations" Relationship="Self.FK__Workstati__locat__3F073C79" FromRole="Locations" ToRole="Workstations" />
         </EntityType>
         <EntityType Name="Price">
           <Key>
@@ -1912,26 +1932,27 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             <PropertyRef Name="period_start" />
           </Key>
           <Property Name="product_id" Type="Int32" Nullable="false" />
-          <Property Name="period_start" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="period_start" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="price1" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <NavigationProperty Name="ProductsSold" Relationship="Self.FK__Prices__product___05E3CDB6" FromRole="Prices" ToRole="ProductsSold" />
+          <NavigationProperty Name="ProductsSold" Relationship="Self.FK__Prices__product___151102AD" FromRole="Prices" ToRole="ProductsSold" />
+          <NavigationProperty Name="ProductsSold1" Relationship="Self.fk_price_prod" FromRole="Prices" ToRole="ProductsSold" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="category_id" Type="Int32" />
-          <Property Name="unit_id" Type="Int32" />
-          <Property Name="tax_id" Type="Int32" />
+          <Property Name="category_id" Type="Int32" Nullable="false" />
+          <Property Name="unit_id" Type="Int32" Nullable="false" />
+          <Property Name="tax_id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Category" Relationship="Self.FK__Products__catego__72D0F942" FromRole="Products" ToRole="Categories" />
-          <NavigationProperty Name="Tax" Relationship="Self.FK__Products__tax_id__74B941B4" FromRole="Products" ToRole="Taxes" />
-          <NavigationProperty Name="Unit" Relationship="Self.FK__Products__unit_i__73C51D7B" FromRole="Products" ToRole="Units" />
-          <NavigationProperty Name="ProductsStored" Relationship="Self.FK__ProductsStor__id__7795AE5F" FromRole="Products" ToRole="ProductsStored" />
-          <NavigationProperty Name="ProductsUsages" Relationship="Self.FK__ProductsU__produ__0AA882D3" FromRole="Products" ToRole="ProductsUsage" />
-          <NavigationProperty Name="Warehouses" Relationship="Self.FK__Warehouse__produ__1249A49B" FromRole="Products" ToRole="Warehouse" />
-          <NavigationProperty Name="Warehouse_order_details" Relationship="Self.FK__Warehouse__produ__1FA39FB9" FromRole="Products" ToRole="Warehouse_order_details" />
+          <NavigationProperty Name="Category" Relationship="Self.FK__Products__catego__01FE2E39" FromRole="Products" ToRole="Categories" />
+          <NavigationProperty Name="Tax" Relationship="Self.FK__Products__tax_id__03E676AB" FromRole="Products" ToRole="Taxes" />
+          <NavigationProperty Name="Unit" Relationship="Self.FK__Products__unit_i__02F25272" FromRole="Products" ToRole="Units" />
+          <NavigationProperty Name="ProductsStored" Relationship="Self.FK__ProductsStor__id__06C2E356" FromRole="Products" ToRole="ProductsStored" />
+          <NavigationProperty Name="ProductsUsages" Relationship="Self.FK__ProductsU__produ__1AC9DC03" FromRole="Products" ToRole="ProductsUsage" />
+          <NavigationProperty Name="Warehouses" Relationship="Self.FK__Warehouse__produ__226AFDCB" FromRole="Products" ToRole="Warehouse" />
+          <NavigationProperty Name="Warehouse_order_details" Relationship="Self.FK__Warehouse__produ__2FC4F8E9" FromRole="Products" ToRole="Warehouse_order_details" />
           <NavigationProperty Name="ProductsSold" Relationship="Self.fk_sold_base_prod" FromRole="Products" ToRole="ProductsSold" />
           <NavigationProperty Name="ProductsStored1" Relationship="Self.fk_stored_base_prod" FromRole="Products" ToRole="ProductsStored" />
         </EntityType>
@@ -1941,18 +1962,19 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="recipe_id" Type="Int32" />
-          <NavigationProperty Name="Client_order_details" Relationship="Self.FK__Client_or__produ__2C09769E" FromRole="ProductsSold" ToRole="Client_order_details" />
-          <NavigationProperty Name="Prices" Relationship="Self.FK__Prices__product___05E3CDB6" FromRole="ProductsSold" ToRole="Prices" />
+          <NavigationProperty Name="Client_order_details" Relationship="Self.FK__Client_or__produ__3C2ACFCE" FromRole="ProductsSold" ToRole="Client_order_details" />
+          <NavigationProperty Name="Prices" Relationship="Self.FK__Prices__product___151102AD" FromRole="ProductsSold" ToRole="Prices" />
+          <NavigationProperty Name="Prices1" Relationship="Self.fk_price_prod" FromRole="ProductsSold" ToRole="Prices" />
           <NavigationProperty Name="Product" Relationship="Self.fk_sold_base_prod" FromRole="ProductsSold" ToRole="Products" />
-          <NavigationProperty Name="Recipe" Relationship="Self.FK__ProductsS__recip__7D4E87B5" FromRole="ProductsSold" ToRole="Recipes" />
+          <NavigationProperty Name="Recipe" Relationship="Self.FK__ProductsS__recip__0C7BBCAC" FromRole="ProductsSold" ToRole="Recipes" />
         </EntityType>
         <EntityType Name="ProductsStored">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Ingredients" Relationship="Self.FK__Ingredien__ingre__02133CD2" FromRole="ProductsStored" ToRole="Ingredients" />
-          <NavigationProperty Name="Product" Relationship="Self.FK__ProductsStor__id__7795AE5F" FromRole="ProductsStored" ToRole="Products" />
+          <NavigationProperty Name="Ingredients" Relationship="Self.FK__Ingredien__ingre__114071C9" FromRole="ProductsStored" ToRole="Ingredients" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__ProductsStor__id__06C2E356" FromRole="ProductsStored" ToRole="Products" />
           <NavigationProperty Name="Product1" Relationship="Self.fk_stored_base_prod" FromRole="ProductsStored" ToRole="Products" />
         </EntityType>
         <EntityType Name="Recipe">
@@ -1961,8 +1983,8 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="description" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ingredients" Relationship="Self.FK__Ingredien__recip__011F1899" FromRole="Recipes" ToRole="Ingredients" />
-          <NavigationProperty Name="ProductsSolds" Relationship="Self.FK__ProductsS__recip__7D4E87B5" FromRole="Recipes" ToRole="ProductsSold" />
+          <NavigationProperty Name="Ingredients" Relationship="Self.FK__Ingredien__recip__104C4D90" FromRole="Recipes" ToRole="Ingredients" />
+          <NavigationProperty Name="ProductsSolds" Relationship="Self.FK__ProductsS__recip__0C7BBCAC" FromRole="Recipes" ToRole="ProductsSold" />
         </EntityType>
         <EntityType Name="Spot">
           <Key>
@@ -1971,8 +1993,8 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="location_id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Client_orders" Relationship="Self.FK__Client_or__spot___26509D48" FromRole="Spots" ToRole="Client_orders" />
-          <NavigationProperty Name="Location" Relationship="Self.FK__Spots__location___22800C64" FromRole="Spots" ToRole="Locations" />
+          <NavigationProperty Name="Client_orders" Relationship="Self.FK__Client_or__spot___3671F678" FromRole="Spots" ToRole="Client_orders" />
+          <NavigationProperty Name="Location" Relationship="Self.FK__Spots__location___32A16594" FromRole="Spots" ToRole="Locations" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -1988,7 +2010,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           <Property Name="phone" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <Property Name="fax" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <Property Name="website" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Warehouse_orders" Relationship="Self.FK__Warehouse__suppl__18F6A22A" FromRole="Suppliers" ToRole="Warehouse_orders" />
+          <NavigationProperty Name="Warehouse_orders" Relationship="Self.FK__Warehouse__suppl__2917FB5A" FromRole="Suppliers" ToRole="Warehouse_orders" />
         </EntityType>
         <EntityType Name="Tax">
           <Key>
@@ -1997,7 +2019,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="tax_name" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="tax_value" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Products" Relationship="Self.FK__Products__tax_id__74B941B4" FromRole="Taxes" ToRole="Products" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Products__tax_id__03E676AB" FromRole="Taxes" ToRole="Products" />
         </EntityType>
         <EntityType Name="Unit">
           <Key>
@@ -2007,8 +2029,8 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           <Property Name="unit_name" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="convert_factor" Type="Double" Nullable="false" />
           <Property Name="unit_type" Type="Int32" />
-          <NavigationProperty Name="Products" Relationship="Self.FK__Products__unit_i__73C51D7B" FromRole="Units" ToRole="Products" />
-          <NavigationProperty Name="UnitType" Relationship="Self.FK__Units__unit_type__666B225D" FromRole="Units" ToRole="UnitTypes" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Products__unit_i__02F25272" FromRole="Units" ToRole="Products" />
+          <NavigationProperty Name="UnitType" Relationship="Self.FK__Units__unit_type__75985754" FromRole="Units" ToRole="UnitTypes" />
         </EntityType>
         <EntityType Name="UnitType">
           <Key>
@@ -2016,7 +2038,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="type_name" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Units" Relationship="Self.FK__Units__unit_type__666B225D" FromRole="UnitTypes" ToRole="Units" />
+          <NavigationProperty Name="Units" Relationship="Self.FK__Units__unit_type__75985754" FromRole="UnitTypes" ToRole="Units" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -2029,9 +2051,9 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           <Property Name="name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="surname" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="permission" Type="Byte" />
-          <NavigationProperty Name="Client_orders" Relationship="Self.FK__Client_or__emplo__2744C181" FromRole="Users" ToRole="Client_orders" />
-          <NavigationProperty Name="EmployePermission" Relationship="Self.FK__Users__permissio__3A8CA01F" FromRole="Users" ToRole="EmployePermissions" />
-          <NavigationProperty Name="Warehouse_orders" Relationship="Self.FK__Warehouse__emplo__18027DF1" FromRole="Users" ToRole="Warehouse_orders" />
+          <NavigationProperty Name="Client_orders" Relationship="Self.FK__Client_or__emplo__37661AB1" FromRole="Users" ToRole="Client_orders" />
+          <NavigationProperty Name="EmployePermission" Relationship="Self.FK__Users__permissio__6C0EED1A" FromRole="Users" ToRole="EmployePermissions" />
+          <NavigationProperty Name="Warehouse_orders" Relationship="Self.FK__Warehouse__emplo__2823D721" FromRole="Users" ToRole="Warehouse_orders" />
         </EntityType>
         <EntityType Name="Warehouse">
           <Key>
@@ -2041,8 +2063,8 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           <Property Name="location_id" Type="Int32" Nullable="false" />
           <Property Name="product_in_stock_id" Type="Int32" Nullable="false" />
           <Property Name="quantity" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="Location" Relationship="Self.FK__Warehouse__locat__11558062" FromRole="Warehouse" ToRole="Locations" />
-          <NavigationProperty Name="Product" Relationship="Self.FK__Warehouse__produ__1249A49B" FromRole="Warehouse" ToRole="Products" />
+          <NavigationProperty Name="Location" Relationship="Self.FK__Warehouse__locat__2176D992" FromRole="Warehouse" ToRole="Locations" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Warehouse__produ__226AFDCB" FromRole="Warehouse" ToRole="Products" />
         </EntityType>
         <EntityType Name="Warehouse_order_details">
           <Key>
@@ -2053,8 +2075,8 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           <Property Name="product_id" Type="Int32" Nullable="false" />
           <Property Name="unit_price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="quantity" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="Product" Relationship="Self.FK__Warehouse__produ__1FA39FB9" FromRole="Warehouse_order_details" ToRole="Products" />
-          <NavigationProperty Name="Warehouse_orders" Relationship="Self.FK__Warehouse__wareh__1EAF7B80" FromRole="Warehouse_order_details" ToRole="Warehouse_orders" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Warehouse__produ__2FC4F8E9" FromRole="Warehouse_order_details" ToRole="Products" />
+          <NavigationProperty Name="Warehouse_orders" Relationship="Self.FK__Warehouse__wareh__2ED0D4B0" FromRole="Warehouse_order_details" ToRole="Warehouse_orders" />
         </EntityType>
         <EntityType Name="Warehouse_orders">
           <Key>
@@ -2067,10 +2089,10 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           <Property Name="order_date" Type="DateTime" Precision="3" />
           <Property Name="required_date" Type="DateTime" Precision="3" />
           <Property Name="delivery_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Location" Relationship="Self.FK__Warehouse__locat__19EAC663" FromRole="Warehouse_orders" ToRole="Locations" />
-          <NavigationProperty Name="Supplier" Relationship="Self.FK__Warehouse__suppl__18F6A22A" FromRole="Warehouse_orders" ToRole="Suppliers" />
-          <NavigationProperty Name="User" Relationship="Self.FK__Warehouse__emplo__18027DF1" FromRole="Warehouse_orders" ToRole="Users" />
-          <NavigationProperty Name="Warehouse_order_details" Relationship="Self.FK__Warehouse__wareh__1EAF7B80" FromRole="Warehouse_orders" ToRole="Warehouse_order_details" />
+          <NavigationProperty Name="Location" Relationship="Self.FK__Warehouse__locat__2A0C1F93" FromRole="Warehouse_orders" ToRole="Locations" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK__Warehouse__suppl__2917FB5A" FromRole="Warehouse_orders" ToRole="Suppliers" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Warehouse__emplo__2823D721" FromRole="Warehouse_orders" ToRole="Users" />
+          <NavigationProperty Name="Warehouse_order_details" Relationship="Self.FK__Warehouse__wareh__2ED0D4B0" FromRole="Warehouse_orders" ToRole="Warehouse_order_details" />
         </EntityType>
         <EntityType Name="Workstation">
           <Key>
@@ -2079,7 +2101,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="location_id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Location" Relationship="Self.FK__Workstati__locat__2EE5E349" FromRole="Workstations" ToRole="Locations" />
+          <NavigationProperty Name="Location" Relationship="Self.FK__Workstati__locat__3F073C79" FromRole="Workstations" ToRole="Locations" />
           <NavigationProperty Name="EmployePermissions" Relationship="Self.Workstation_rights" FromRole="Workstations" ToRole="EmployePermissions" />
         </EntityType>
         <EntityType Name="LoginLog">
@@ -2098,7 +2120,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           <Property Name="product_id" Type="Int32" Nullable="false" />
           <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="quantity" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Product" Relationship="Self.FK__ProductsU__produ__0AA882D3" FromRole="ProductsUsage" ToRole="Products" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__ProductsU__produ__1AC9DC03" FromRole="ProductsUsage" ToRole="Products" />
         </EntityType>
         <EntityType Name="Client_order_details_pretty">
           <Key>
@@ -2181,7 +2203,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           </Key>
           <Property Name="product_id" Type="Int32" Nullable="false" />
           <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="period_start" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="period_start" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="productsLastPricesWithName">
           <Key>
@@ -2193,7 +2215,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           <Property Name="product_id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="period_start" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="period_start" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="Warehouse_order_details_pretty">
           <Key>
@@ -2303,7 +2325,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <Association Name="FK__Categorie__overr__6F00685E">
+        <Association Name="FK__Categorie__overr__7E2D9D55">
           <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
           <End Role="Categories1" Type="Self.Category" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2315,8 +2337,8 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products__catego__72D0F942">
-          <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
+        <Association Name="FK__Products__catego__01FE2E39">
+          <End Role="Categories" Type="Self.Category" Multiplicity="1" />
           <End Role="Products" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categories">
@@ -2327,7 +2349,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Client_or__clien__2B155265">
+        <Association Name="FK__Client_or__clien__3B36AB95">
           <End Role="Client_orders" Type="Self.Client_orders" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2341,7 +2363,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Client_or__produ__2C09769E">
+        <Association Name="FK__Client_or__produ__3C2ACFCE">
           <End Role="ProductsSold" Type="Self.ProductsSold" Multiplicity="1" />
           <End Role="Client_order_details" Type="Self.Client_order_details" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2353,7 +2375,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Client_or__emplo__2744C181">
+        <Association Name="FK__Client_or__emplo__37661AB1">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="Client_orders" Type="Self.Client_orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2365,7 +2387,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Client_or__spot___26509D48">
+        <Association Name="FK__Client_or__spot___3671F678">
           <End Role="Spots" Type="Self.Spot" Multiplicity="1" />
           <End Role="Client_orders" Type="Self.Client_orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2377,7 +2399,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__permissio__3A8CA01F">
+        <Association Name="FK__Users__permissio__6C0EED1A">
           <End Role="EmployePermissions" Type="Self.EmployePermission" Multiplicity="0..1" />
           <End Role="Users" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2389,7 +2411,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Ingredien__ingre__02133CD2">
+        <Association Name="FK__Ingredien__ingre__114071C9">
           <End Role="ProductsStored" Type="Self.ProductsStored" Multiplicity="1" />
           <End Role="Ingredients" Type="Self.Ingredient" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2401,7 +2423,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Ingredien__recip__011F1899">
+        <Association Name="FK__Ingredien__recip__104C4D90">
           <End Role="Recipes" Type="Self.Recipe" Multiplicity="1" />
           <End Role="Ingredients" Type="Self.Ingredient" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2413,7 +2435,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Spots__location___22800C64">
+        <Association Name="FK__Spots__location___32A16594">
           <End Role="Locations" Type="Self.Location" Multiplicity="1" />
           <End Role="Spots" Type="Self.Spot" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2425,7 +2447,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Warehouse__locat__11558062">
+        <Association Name="FK__Warehouse__locat__2176D992">
           <End Role="Locations" Type="Self.Location" Multiplicity="1" />
           <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2437,7 +2459,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Warehouse__locat__19EAC663">
+        <Association Name="FK__Warehouse__locat__2A0C1F93">
           <End Role="Locations" Type="Self.Location" Multiplicity="1" />
           <End Role="Warehouse_orders" Type="Self.Warehouse_orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2449,7 +2471,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Workstati__locat__2EE5E349">
+        <Association Name="FK__Workstati__locat__3F073C79">
           <End Role="Locations" Type="Self.Location" Multiplicity="1" />
           <End Role="Workstations" Type="Self.Workstation" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2461,7 +2483,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Prices__product___05E3CDB6">
+        <Association Name="FK__Prices__product___151102AD">
           <End Role="ProductsSold" Type="Self.ProductsSold" Multiplicity="1" />
           <End Role="Prices" Type="Self.Price" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2473,8 +2495,22 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products__tax_id__74B941B4">
-          <End Role="Taxes" Type="Self.Tax" Multiplicity="0..1" />
+        <Association Name="fk_price_prod">
+          <End Role="ProductsSold" Type="Self.ProductsSold" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Prices" Type="Self.Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductsSold">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Prices">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products__tax_id__03E676AB">
+          <End Role="Taxes" Type="Self.Tax" Multiplicity="1" />
           <End Role="Products" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Taxes">
@@ -2485,8 +2521,8 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products__unit_i__73C51D7B">
-          <End Role="Units" Type="Self.Unit" Multiplicity="0..1" />
+        <Association Name="FK__Products__unit_i__02F25272">
+          <End Role="Units" Type="Self.Unit" Multiplicity="1" />
           <End Role="Products" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Units">
@@ -2497,7 +2533,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ProductsStor__id__7795AE5F">
+        <Association Name="FK__ProductsStor__id__06C2E356">
           <End Role="Products" Type="Self.Product" Multiplicity="1" />
           <End Role="ProductsStored" Type="Self.ProductsStored" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -2509,7 +2545,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ProductsU__produ__0AA882D3">
+        <Association Name="FK__ProductsU__produ__1AC9DC03">
           <End Role="Products" Type="Self.Product" Multiplicity="1" />
           <End Role="ProductsUsage" Type="Self.ProductsUsage" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2521,7 +2557,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Warehouse__produ__1249A49B">
+        <Association Name="FK__Warehouse__produ__226AFDCB">
           <End Role="Products" Type="Self.Product" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2535,7 +2571,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Warehouse__produ__1FA39FB9">
+        <Association Name="FK__Warehouse__produ__2FC4F8E9">
           <End Role="Products" Type="Self.Product" Multiplicity="1" />
           <End Role="Warehouse_order_details" Type="Self.Warehouse_order_details" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2575,7 +2611,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ProductsS__recip__7D4E87B5">
+        <Association Name="FK__ProductsS__recip__0C7BBCAC">
           <End Role="Recipes" Type="Self.Recipe" Multiplicity="0..1" />
           <End Role="ProductsSold" Type="Self.ProductsSold" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2587,7 +2623,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Warehouse__suppl__18F6A22A">
+        <Association Name="FK__Warehouse__suppl__2917FB5A">
           <End Role="Suppliers" Type="Self.Supplier" Multiplicity="1" />
           <End Role="Warehouse_orders" Type="Self.Warehouse_orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2599,7 +2635,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Units__unit_type__666B225D">
+        <Association Name="FK__Units__unit_type__75985754">
           <End Role="UnitTypes" Type="Self.UnitType" Multiplicity="0..1" />
           <End Role="Units" Type="Self.Unit" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2611,7 +2647,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Warehouse__emplo__18027DF1">
+        <Association Name="FK__Warehouse__emplo__2823D721">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="Warehouse_orders" Type="Self.Warehouse_orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2623,7 +2659,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Warehouse__wareh__1EAF7B80">
+        <Association Name="FK__Warehouse__wareh__2ED0D4B0">
           <End Role="Warehouse_orders" Type="Self.Warehouse_orders" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2676,83 +2712,87 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           <EntitySet Name="Warehouse_pretty" EntityType="Self.Warehouse_pretty" />
           <EntitySet Name="Workstations_with_rights_pretty" EntityType="Self.Workstations_with_rights_pretty" />
           <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" />
-          <AssociationSet Name="FK__Categorie__overr__6F00685E" Association="Self.FK__Categorie__overr__6F00685E">
+          <AssociationSet Name="FK__Categorie__overr__7E2D9D55" Association="Self.FK__Categorie__overr__7E2D9D55">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Categories1" EntitySet="Categories" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products__catego__72D0F942" Association="Self.FK__Products__catego__72D0F942">
+          <AssociationSet Name="FK__Products__catego__01FE2E39" Association="Self.FK__Products__catego__01FE2E39">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK__Client_or__clien__2B155265" Association="Self.FK__Client_or__clien__2B155265">
+          <AssociationSet Name="FK__Client_or__clien__3B36AB95" Association="Self.FK__Client_or__clien__3B36AB95">
             <End Role="Client_orders" EntitySet="Client_orders" />
             <End Role="Client_order_details" EntitySet="Client_order_details" />
           </AssociationSet>
-          <AssociationSet Name="FK__Client_or__produ__2C09769E" Association="Self.FK__Client_or__produ__2C09769E">
+          <AssociationSet Name="FK__Client_or__produ__3C2ACFCE" Association="Self.FK__Client_or__produ__3C2ACFCE">
             <End Role="ProductsSold" EntitySet="ProductsSolds" />
             <End Role="Client_order_details" EntitySet="Client_order_details" />
           </AssociationSet>
-          <AssociationSet Name="FK__Client_or__emplo__2744C181" Association="Self.FK__Client_or__emplo__2744C181">
+          <AssociationSet Name="FK__Client_or__emplo__37661AB1" Association="Self.FK__Client_or__emplo__37661AB1">
             <End Role="Users" EntitySet="Users" />
             <End Role="Client_orders" EntitySet="Client_orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Client_or__spot___26509D48" Association="Self.FK__Client_or__spot___26509D48">
+          <AssociationSet Name="FK__Client_or__spot___3671F678" Association="Self.FK__Client_or__spot___3671F678">
             <End Role="Spots" EntitySet="Spots" />
             <End Role="Client_orders" EntitySet="Client_orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__permissio__3A8CA01F" Association="Self.FK__Users__permissio__3A8CA01F">
+          <AssociationSet Name="FK__Users__permissio__6C0EED1A" Association="Self.FK__Users__permissio__6C0EED1A">
             <End Role="EmployePermissions" EntitySet="EmployePermissions" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__Ingredien__ingre__02133CD2" Association="Self.FK__Ingredien__ingre__02133CD2">
+          <AssociationSet Name="FK__Ingredien__ingre__114071C9" Association="Self.FK__Ingredien__ingre__114071C9">
             <End Role="ProductsStored" EntitySet="ProductsStoreds" />
             <End Role="Ingredients" EntitySet="Ingredients" />
           </AssociationSet>
-          <AssociationSet Name="FK__Ingredien__recip__011F1899" Association="Self.FK__Ingredien__recip__011F1899">
+          <AssociationSet Name="FK__Ingredien__recip__104C4D90" Association="Self.FK__Ingredien__recip__104C4D90">
             <End Role="Recipes" EntitySet="Recipes" />
             <End Role="Ingredients" EntitySet="Ingredients" />
           </AssociationSet>
-          <AssociationSet Name="FK__Spots__location___22800C64" Association="Self.FK__Spots__location___22800C64">
+          <AssociationSet Name="FK__Spots__location___32A16594" Association="Self.FK__Spots__location___32A16594">
             <End Role="Locations" EntitySet="Locations" />
             <End Role="Spots" EntitySet="Spots" />
           </AssociationSet>
-          <AssociationSet Name="FK__Warehouse__locat__11558062" Association="Self.FK__Warehouse__locat__11558062">
+          <AssociationSet Name="FK__Warehouse__locat__2176D992" Association="Self.FK__Warehouse__locat__2176D992">
             <End Role="Locations" EntitySet="Locations" />
             <End Role="Warehouse" EntitySet="Warehouses" />
           </AssociationSet>
-          <AssociationSet Name="FK__Warehouse__locat__19EAC663" Association="Self.FK__Warehouse__locat__19EAC663">
+          <AssociationSet Name="FK__Warehouse__locat__2A0C1F93" Association="Self.FK__Warehouse__locat__2A0C1F93">
             <End Role="Locations" EntitySet="Locations" />
             <End Role="Warehouse_orders" EntitySet="Warehouse_orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Workstati__locat__2EE5E349" Association="Self.FK__Workstati__locat__2EE5E349">
+          <AssociationSet Name="FK__Workstati__locat__3F073C79" Association="Self.FK__Workstati__locat__3F073C79">
             <End Role="Locations" EntitySet="Locations" />
             <End Role="Workstations" EntitySet="Workstations" />
           </AssociationSet>
-          <AssociationSet Name="FK__Prices__product___05E3CDB6" Association="Self.FK__Prices__product___05E3CDB6">
+          <AssociationSet Name="FK__Prices__product___151102AD" Association="Self.FK__Prices__product___151102AD">
             <End Role="ProductsSold" EntitySet="ProductsSolds" />
             <End Role="Prices" EntitySet="Prices" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products__tax_id__74B941B4" Association="Self.FK__Products__tax_id__74B941B4">
+          <AssociationSet Name="fk_price_prod" Association="Self.fk_price_prod">
+            <End Role="ProductsSold" EntitySet="ProductsSolds" />
+            <End Role="Prices" EntitySet="Prices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products__tax_id__03E676AB" Association="Self.FK__Products__tax_id__03E676AB">
             <End Role="Taxes" EntitySet="Taxes" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products__unit_i__73C51D7B" Association="Self.FK__Products__unit_i__73C51D7B">
+          <AssociationSet Name="FK__Products__unit_i__02F25272" Association="Self.FK__Products__unit_i__02F25272">
             <End Role="Units" EntitySet="Units" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK__ProductsStor__id__7795AE5F" Association="Self.FK__ProductsStor__id__7795AE5F">
+          <AssociationSet Name="FK__ProductsStor__id__06C2E356" Association="Self.FK__ProductsStor__id__06C2E356">
             <End Role="Products" EntitySet="Products" />
             <End Role="ProductsStored" EntitySet="ProductsStoreds" />
           </AssociationSet>
-          <AssociationSet Name="FK__ProductsU__produ__0AA882D3" Association="Self.FK__ProductsU__produ__0AA882D3">
+          <AssociationSet Name="FK__ProductsU__produ__1AC9DC03" Association="Self.FK__ProductsU__produ__1AC9DC03">
             <End Role="Products" EntitySet="Products" />
             <End Role="ProductsUsage" EntitySet="ProductsUsages" />
           </AssociationSet>
-          <AssociationSet Name="FK__Warehouse__produ__1249A49B" Association="Self.FK__Warehouse__produ__1249A49B">
+          <AssociationSet Name="FK__Warehouse__produ__226AFDCB" Association="Self.FK__Warehouse__produ__226AFDCB">
             <End Role="Products" EntitySet="Products" />
             <End Role="Warehouse" EntitySet="Warehouses" />
           </AssociationSet>
-          <AssociationSet Name="FK__Warehouse__produ__1FA39FB9" Association="Self.FK__Warehouse__produ__1FA39FB9">
+          <AssociationSet Name="FK__Warehouse__produ__2FC4F8E9" Association="Self.FK__Warehouse__produ__2FC4F8E9">
             <End Role="Products" EntitySet="Products" />
             <End Role="Warehouse_order_details" EntitySet="Warehouse_order_details" />
           </AssociationSet>
@@ -2764,23 +2804,23 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             <End Role="Products" EntitySet="Products" />
             <End Role="ProductsStored" EntitySet="ProductsStoreds" />
           </AssociationSet>
-          <AssociationSet Name="FK__ProductsS__recip__7D4E87B5" Association="Self.FK__ProductsS__recip__7D4E87B5">
+          <AssociationSet Name="FK__ProductsS__recip__0C7BBCAC" Association="Self.FK__ProductsS__recip__0C7BBCAC">
             <End Role="Recipes" EntitySet="Recipes" />
             <End Role="ProductsSold" EntitySet="ProductsSolds" />
           </AssociationSet>
-          <AssociationSet Name="FK__Warehouse__suppl__18F6A22A" Association="Self.FK__Warehouse__suppl__18F6A22A">
+          <AssociationSet Name="FK__Warehouse__suppl__2917FB5A" Association="Self.FK__Warehouse__suppl__2917FB5A">
             <End Role="Suppliers" EntitySet="Suppliers" />
             <End Role="Warehouse_orders" EntitySet="Warehouse_orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Units__unit_type__666B225D" Association="Self.FK__Units__unit_type__666B225D">
+          <AssociationSet Name="FK__Units__unit_type__75985754" Association="Self.FK__Units__unit_type__75985754">
             <End Role="UnitTypes" EntitySet="UnitTypes" />
             <End Role="Units" EntitySet="Units" />
           </AssociationSet>
-          <AssociationSet Name="FK__Warehouse__emplo__18027DF1" Association="Self.FK__Warehouse__emplo__18027DF1">
+          <AssociationSet Name="FK__Warehouse__emplo__2823D721" Association="Self.FK__Warehouse__emplo__2823D721">
             <End Role="Users" EntitySet="Users" />
             <End Role="Warehouse_orders" EntitySet="Warehouse_orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Warehouse__wareh__1EAF7B80" Association="Self.FK__Warehouse__wareh__1EAF7B80">
+          <AssociationSet Name="FK__Warehouse__wareh__2ED0D4B0" Association="Self.FK__Warehouse__wareh__2ED0D4B0">
             <End Role="Warehouse_orders" EntitySet="Warehouse_orders" />
             <End Role="Warehouse_order_details" EntitySet="Warehouse_order_details" />
           </AssociationSet>
@@ -3038,11 +3078,6 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             <Parameter Name="workstation_id" Mode="In" Type="Int32" />
             <Parameter Name="employe_permission" Mode="In" Type="Byte" />
           </FunctionImport>
-          <FunctionImport Name="udpateIngredient">
-            <Parameter Name="recipe_id" Mode="In" Type="Int32" />
-            <Parameter Name="ingredient_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_quantity" Mode="In" Type="Double" />
-          </FunctionImport>
           <FunctionImport Name="updateCategory">
             <Parameter Name="id" Mode="In" Type="Int32" />
             <Parameter Name="new_slug" Mode="In" Type="String" />
@@ -3061,6 +3096,11 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
             <Parameter Name="products_sold_id" Mode="In" Type="Int32" />
             <Parameter Name="new_quantity" Mode="In" Type="Int16" />
           </FunctionImport>
+          <FunctionImport Name="updateIngredient">
+            <Parameter Name="recipe_id" Mode="In" Type="Int32" />
+            <Parameter Name="ingredient_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_quantity" Mode="In" Type="Double" />
+          </FunctionImport>
           <FunctionImport Name="updateLocation">
             <Parameter Name="id" Mode="In" Type="Int32" />
             <Parameter Name="new_name" Mode="In" Type="String" />
@@ -3072,7 +3112,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           </FunctionImport>
           <FunctionImport Name="updatePrice">
             <Parameter Name="priduct_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_price" Mode="In" Type="Double" />
+            <Parameter Name="new_price" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="updateProduct">
             <Parameter Name="id" Mode="In" Type="Int32" />
@@ -3729,6 +3769,7 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
               <ComplexTypeMapping TypeName="BarProjectModel.recipeDetails_Result">
                 <ScalarProperty Name="recipe_id" ColumnName="recipe_id" />
                 <ScalarProperty Name="ingredient_id" ColumnName="ingredient_id" />
+                <ScalarProperty Name="ingredient_name" ColumnName="ingredient_name" />
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
               </ComplexTypeMapping>
             </ResultMapping>
@@ -3798,10 +3839,10 @@ warning 6035: The relationship 'FK__LoginLog__userna__08C03A61' has columns that
           <FunctionImportMapping FunctionImportName="removeWarehouseOrderDetail" FunctionName="BarProjectModel.Store.removeWarehouseOrderDetail" />
           <FunctionImportMapping FunctionImportName="removeWorkstation" FunctionName="BarProjectModel.Store.removeWorkstation" />
           <FunctionImportMapping FunctionImportName="removeWorkstationRights" FunctionName="BarProjectModel.Store.removeWorkstationRights" />
-          <FunctionImportMapping FunctionImportName="udpateIngredient" FunctionName="BarProjectModel.Store.udpateIngredient" />
           <FunctionImportMapping FunctionImportName="updateCategory" FunctionName="BarProjectModel.Store.updateCategory" />
           <FunctionImportMapping FunctionImportName="updateClientOrder" FunctionName="BarProjectModel.Store.updateClientOrder" />
           <FunctionImportMapping FunctionImportName="updateClientOrderDetail" FunctionName="BarProjectModel.Store.updateClientOrderDetail" />
+          <FunctionImportMapping FunctionImportName="updateIngredient" FunctionName="BarProjectModel.Store.updateIngredient" />
           <FunctionImportMapping FunctionImportName="updateLocation" FunctionName="BarProjectModel.Store.updateLocation" />
           <FunctionImportMapping FunctionImportName="updatePrice" FunctionName="BarProjectModel.Store.updatePrice" />
           <FunctionImportMapping FunctionImportName="updateProduct" FunctionName="BarProjectModel.Store.updateProduct" />

@@ -19,5 +19,6 @@ namespace BarProject.DatabaseConnector
         public decimal price1 { get; set; }
     
         public virtual ProductsSold ProductsSold { get; set; }
+        public virtual ProductsSold ProductsSold1 { get; set; }
     }
 }

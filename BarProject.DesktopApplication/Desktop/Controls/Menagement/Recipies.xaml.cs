@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Input;
@@ -20,8 +22,14 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
     public partial class Recipies : UserControl
     {
         private ObservableCollection<ShowableReceipt> _recipiesData;
-        private object ReceiptDataLock = new object();
-
+        private readonly object productsLocker = new object();
+        private List<string> _productNames;
+        private readonly object ReceiptDataLock = new object();
+        public List<string> ProductNames
+        {
+            get { lock (productsLocker) { return _productNames; } }
+            set { lock (productsLocker) { _productNames = value; } }
+        }
         public ObservableCollection<ShowableReceipt> RecipiesData
         {
             get
@@ -145,6 +153,19 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         private void RefreshData()
         {
             this.Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoRefreshData));
+            Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoGetProducts));
+        }
+        private async void DoGetProducts()
+        {
+            var tmp = await RestClient.Client().GetOrderableProductNames();
+            if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
+            {
+                MessageBoxesHelper.ShowProblemWithRequest(tmp);
+            }
+            else
+            {
+                ProductNames = tmp.Data.ToList(); 
+            }
         }
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -155,7 +176,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 var receipt = (ShowableReceipt)dgr.Item;
                 if (receipt.Id == null)
                     return;
-                var window = new RecipieDetailsWindow(receipt.Id.Value);
+                var window = new RecipieDetailsWindow(receipt.Id.Value, ProductNames);
                 window.ShowDialog();
             }
         }

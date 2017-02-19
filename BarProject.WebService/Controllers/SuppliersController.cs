@@ -17,7 +17,7 @@ namespace BarProject.WebService.Controllers
     public class SuppliersController : ApiController
     {
         [HttpGet, Route("")]
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [ResponseType(typeof(IEnumerable<ShowableSupplier>))]
         public IHttpActionResult Get()
         {
@@ -32,7 +32,7 @@ namespace BarProject.WebService.Controllers
         }
 
         [HttpPost, Route("")]
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         public IHttpActionResult Post(ShowableSupplier category)
         {
             try
@@ -47,7 +47,7 @@ namespace BarProject.WebService.Controllers
         }
 
         [HttpDelete]
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [Route("{id}")]
         public IHttpActionResult Delete(int id)
         {
@@ -63,7 +63,7 @@ namespace BarProject.WebService.Controllers
         }
 
         [HttpPatch]
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [Route("{id}")]
         public IHttpActionResult Patch(int id, ShowableSupplier supplier)
         {

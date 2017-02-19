@@ -14,7 +14,7 @@ namespace BarProject.WebService.Controllers
     public class UnitsController : ApiController
     {
         [HttpGet]
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [ResponseType(typeof(IEnumerable<string>))]
         [Route("types")]
         public IHttpActionResult GetTypes()
@@ -29,7 +29,7 @@ namespace BarProject.WebService.Controllers
             }
         }
         [HttpGet]
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [ResponseType(typeof(IEnumerable<ShowableUnit>))]
         [Route("")]
         public IHttpActionResult Get()
@@ -43,7 +43,7 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [HttpPost, Route(""), ActionName("Add product as admin")]
         public IHttpActionResult Post([FromBody]ShowableUnit unit)
         {
@@ -58,7 +58,7 @@ namespace BarProject.WebService.Controllers
             }
         }
         [HttpDelete]
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [Route("{id}")]
         public IHttpActionResult Delete(int id)
         {
@@ -72,7 +72,7 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [HttpPatch, Route("{id}")]
         public IHttpActionResult Patch(int id, ShowableUnit unit)
         {

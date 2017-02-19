@@ -40,7 +40,7 @@ namespace BarProject.DatabaseProxy.Functions
                 db.removeRecipe(id);
             }
         }
-        public static List<ShowableRecipitDetails> GetDetails(int id)
+        public static List<ShowableRecipitDetail> GetDetails(int id)
         {
             using (var db = new Entities())
             {
@@ -48,12 +48,37 @@ namespace BarProject.DatabaseProxy.Functions
                         join R in db.Recipes on I.recipe_id equals R.id
                         join P in db.Products on I.ingredient_id equals P.id
                         where I.recipe_id == id
-                        select new ShowableRecipitDetails()
+                        select new ShowableRecipitDetail()
                         {
                             ProductName = P.name,
                             Quantity = I.quantity,
                         }
                 ).ToList();
+            }
+        }
+
+        public static void RemoveReciptDetails(int id, int id2)
+        {
+            using (var db = new Entities())
+            {
+                db.removeIngredient(id, id2);
+            }
+        }
+
+        public static void AddReciptDetails(int id, ShowableRecipitDetail receipt)
+        {
+            using (var db = new Entities())
+            {
+                var product = db.Products.FirstOrDefault(x => x.name == receipt.ProductName);
+                db.addIngredient(id, product?.id, receipt.Quantity);
+            }
+        }
+
+        public static void UpdateReciptDetails(int id, ShowableRecipitDetail tax)
+        {
+            using (var db = new Entities())
+            {
+                db.updateIngredient(id, tax.ProductId, tax.Quantity);
             }
         }
     }

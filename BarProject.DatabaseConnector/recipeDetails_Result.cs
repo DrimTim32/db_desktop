@@ -15,6 +15,7 @@ namespace BarProject.DatabaseConnector
     {
         public int recipe_id { get; set; }
         public int ingredient_id { get; set; }
+        public string ingredient_name { get; set; }
         public double quantity { get; set; }
     }
 }

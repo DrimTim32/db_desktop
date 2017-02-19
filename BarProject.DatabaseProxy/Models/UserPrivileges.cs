@@ -14,8 +14,8 @@
         Waitress = 1,                       // 00000001
         [Description("Chef")]
         Cook = 2,                           // 00000010
-        [Description("Warehouse Administrator")]
-        WarehouseAdministrator = 16,        // 00010000
+        [Description("Warehouse")]
+        Warehouse = 16,        // 00010000
         [Description("Owner")]
         Owner = 127,                        // 01111111
         [Description("Admin")]
@@ -31,7 +31,7 @@
             {UserPrivileges.NoUser,  UserPrivileges.NoUser.GetEnumDescription()},
             {UserPrivileges.Waitress,UserPrivileges.Waitress.GetEnumDescription()},
             {UserPrivileges.Cook,UserPrivileges.Cook.GetEnumDescription()},
-            {UserPrivileges.WarehouseAdministrator,UserPrivileges.WarehouseAdministrator.GetEnumDescription()},
+            {UserPrivileges.Warehouse,UserPrivileges.Warehouse.GetEnumDescription()},
             {UserPrivileges.Owner,UserPrivileges.Owner.GetEnumDescription()},
             {UserPrivileges.Admin,UserPrivileges.Admin.GetEnumDescription()},
 
@@ -40,7 +40,7 @@
         public static readonly List<string> GetManagable = new List<string>()
         {
             PrivligesNames[UserPrivileges.Waitress], PrivligesNames[UserPrivileges.Cook],
-            PrivligesNames[UserPrivileges.WarehouseAdministrator], PrivligesNames[ UserPrivileges.NoUser]
+            PrivligesNames[UserPrivileges.Warehouse], PrivligesNames[ UserPrivileges.NoUser]
         };
         public static string ToReadable(this UserPrivileges data)
         {

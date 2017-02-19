@@ -18,7 +18,7 @@ namespace BarProject.WebService.Controllers
     public class ProductsController : ApiController
     {
         [HttpGet]
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [ResponseType(typeof(IEnumerable<ShowableSimpleProduct>))]
         [Route("")]
         public IHttpActionResult Get()
@@ -33,7 +33,7 @@ namespace BarProject.WebService.Controllers
             }
         }
         [HttpGet]
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [ResponseType(typeof(IEnumerable<ShowableSimpleProduct>))]
         [Route("stored/{id}")]
         public IHttpActionResult GetStored(int id)
@@ -48,7 +48,7 @@ namespace BarProject.WebService.Controllers
             }
         }
         [HttpGet]
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [ResponseType(typeof(ShowableSoldProduct))]
         [Route("sold/{id}")]
         public IHttpActionResult GetSold(int id)
@@ -64,7 +64,7 @@ namespace BarProject.WebService.Controllers
             }
         }
         [HttpGet]
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [ResponseType(typeof(List<ShowablePricesHistory>))]
         [Route("history/{id}")]
         public IHttpActionResult GetHistory(int id)
@@ -78,7 +78,7 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [HttpPatch, Route("{id}")]
         public IHttpActionResult UpdateProduct(int id, [FromBody]ShowableProductBase product)
         {
@@ -92,7 +92,7 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [HttpDelete, Route("{id}")]
         public IHttpActionResult UpdateProduct(int id)
         {
@@ -106,7 +106,7 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [HttpPost, Route("")]
         public IHttpActionResult Post([FromBody]WritableProduct product)
         {
@@ -120,7 +120,7 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [ResponseType(typeof(List<string>))]
         [HttpGet, Route("orderable")]
         public IHttpActionResult GetProductsForOrder()

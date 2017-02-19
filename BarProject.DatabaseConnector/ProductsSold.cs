@@ -19,6 +19,7 @@ namespace BarProject.DatabaseConnector
         {
             this.Client_order_details = new HashSet<Client_order_details>();
             this.Prices = new HashSet<Price>();
+            this.Prices1 = new HashSet<Price>();
         }
     
         public int id { get; set; }
@@ -28,6 +29,8 @@ namespace BarProject.DatabaseConnector
         public virtual ICollection<Client_order_details> Client_order_details { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Price> Prices { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Price> Prices1 { get; set; }
         public virtual Product Product { get; set; }
         public virtual Recipe Recipe { get; set; }
     }

@@ -7,15 +7,19 @@ using BarProject.DatabaseConnector;
 
 namespace BarProject.DatabaseProxy.Models.ReadModels
 {
-    public class ShowableRecipitDetails
+    public class ShowableRecipitDetail
     {
         public int? Id { get; set; }
+        public int? ProductId { get; set; }
         public string ProductName { get; set; }
         public double Quantity { get; set; }
-        public ShowableRecipitDetails() { }
+        public ShowableRecipitDetail() { }
 
-        public ShowableRecipitDetails(recipeDetails_Result result)
+        public ShowableRecipitDetail(recipeDetails_Result result)
         {
+            Id = result.ingredient_id;
+            Quantity = result.quantity;
+            ProductId = result.ingredient_id;
             //TODO : !!!
         }
     }

@@ -1,24 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Threading;
+using BarProject.DesktopApplication.Library.RestHelpers;
 
-namespace BarProject.DesktopApplication.Desktop.Controls
+namespace BarProject.DesktopApplication.Desktop.Controls.Administration
 {
-    using System.Threading;
-    using System.Windows.Threading;
-    using Library.RestHelpers;
-
     /// <summary>
     /// Interaction logic for AdministrationUserControl.xaml
     /// </summary>

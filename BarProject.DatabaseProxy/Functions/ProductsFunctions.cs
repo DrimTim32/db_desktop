@@ -112,9 +112,9 @@ namespace BarProject.DatabaseProxy.Functions
                 var category = db.Categories.FirstOrDefault(x => x.category_name == product.CategoryName);
                 var prod = new Product
                 {
-                    category_id = category?.id,
-                    unit_id = unit?.id,
-                    tax_id = tax?.id,
+                    category_id = category.id,
+                    unit_id = unit.id,
+                    tax_id = tax.id,
                     name = product.Name
                 };
                 db.Products.AddOrUpdate(prod);

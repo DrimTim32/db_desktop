@@ -31,18 +31,14 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
     public partial class Orders : UserControl
     {
         private List<string> _productNames;
-        private List<string> _categoriesNames;
-        private List<string> _suppliersNames;
-        private List<string> _locationsNames;
+        private List<string> _categoriesNames; 
 
 
 
         private readonly SafeCounter _counter = new SafeCounter();
         private readonly object counterLocker = new object();
         private readonly object productsLocker = new object();
-        private readonly object categoriesLocker = new object();
-        private readonly object suppliersLocker = new object();
-        private readonly object locationsLocker = new object();
+        private readonly object categoriesLocker = new object(); 
         public List<string> ProductNames
         {
             get { lock (productsLocker) { return _productNames; } }
@@ -52,17 +48,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
         {
             get { lock (categoriesLocker) { return _categoriesNames; } }
             set { lock (categoriesLocker) { _categoriesNames = value; } }
-        }
-        public List<string> SuppliersNames
-        {
-            get { lock (suppliersLocker) { return _productNames; } }
-            set { lock (suppliersLocker) { _productNames = value; } }
-        }
-        public List<string> LocationsNames
-        {
-            get { lock (locationsLocker) { return _categoriesNames; } }
-            set { lock (locationsLocker) { _categoriesNames = value; } }
-        }
+        } 
         public SafeCounter Counter
         {
             get

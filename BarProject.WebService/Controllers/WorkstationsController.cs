@@ -17,7 +17,7 @@ namespace BarProject.WebService.Controllers
     public class WorkstationsController : ApiController
     {
         [HttpGet]
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [ResponseType(typeof(List<ShowableWorkstation>))]
         [Route("")]
         public IHttpActionResult Get()

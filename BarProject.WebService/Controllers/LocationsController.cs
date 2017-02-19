@@ -17,7 +17,7 @@ namespace BarProject.WebService.Controllers
     public class LocationsController : ApiController
     {
         [HttpGet]
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [ResponseType(typeof(List<ShowableLocation>))]
         [Route("")]
         public IHttpActionResult Get()

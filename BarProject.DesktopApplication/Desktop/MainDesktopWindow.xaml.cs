@@ -1,20 +1,19 @@
 ﻿using System.Windows.Controls;
+using BarProject.DatabaseProxy.Models;
+using BarProject.DesktopApplication.Desktop.Controls.Administration;
 
 namespace BarProject.DesktopApplication.Desktop
 {
-    using Controls;
     using Controls.Menagement;
     using Controls.Organisation;
     using Controls.Warehouse;
     using MahApps.Metro.Controls;
-
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainDesktopWindow : MetroWindow
     {
-        public MainDesktopWindow()
+        private readonly UserPrivileges privileges;
+        public MainDesktopWindow(UserPrivileges privileges)
         {
+            this.privileges = privileges;
             InitializeComponent();
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             SetCards();
@@ -29,6 +28,7 @@ namespace BarProject.DesktopApplication.Desktop
                     case "Introduction":
                         tabItem.Content = new Introduction();
                         break;
+
                     case "Menagement":
                         tabItem.Content = new MenagementUserControl();
                         break;
@@ -38,12 +38,13 @@ namespace BarProject.DesktopApplication.Desktop
                         break;
 
                     case "Administration":
-                        tabItem.Content = new UsersUserControl();
+                        tabItem.Content = new AdministrationUserControl();
                         break;
 
                     case "Organisation":
                         tabItem.Content = new OrganisationUserControl();
                         break;
+
                     default:
                         return;
                 }
@@ -52,11 +53,13 @@ namespace BarProject.DesktopApplication.Desktop
 
         private void SetCards()
         {
-            var cards = new string[] { "Introduction", "Menagement", "Warehouse", "Administration", "Organisation" };
+            var cards = new string[] { "Introduction", "Menagement", "Warehouse", "Organisation", "Administration" };
+            if (privileges < UserPrivileges.Admin)
+                cards = new string[] { "Introduction", "Menagement", "Warehouse" };
             foreach (string cardName in cards)
             {
                 TabControl.Items.Add(new MetroTabItem() { Header = cardName });
-            } 
+            }
         }
 
     }

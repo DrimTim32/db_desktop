@@ -16,7 +16,7 @@ namespace BarProject.WebService.Controllers
     [RoutePrefix("api/prices")]
     public class PricesController : ApiController
     { 
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [ResponseType(typeof(List<ShowablePrices>))]
         [HttpGet, Route("")]
         public IHttpActionResult Get()

@@ -72,7 +72,7 @@
             {
                 LoginError("You do not have enough permissions to log in.");
             }
-            else if (privileges < UserPrivileges.WarehouseAdministrator)
+            else if (privileges < UserPrivileges.Warehouse)
             {
                 var window = new MainRemoteWindow(userName) { ShowActivated = true };
                 Application.Current.Dispatcher.Invoke(() =>
@@ -84,7 +84,7 @@
             }
             else
             {
-                var window = new MainDesktopWindow { ShowActivated = true };
+                var window = new MainDesktopWindow(privileges) { ShowActivated = true };
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Application.Current.MainWindow = window;

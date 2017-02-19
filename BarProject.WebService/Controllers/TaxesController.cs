@@ -17,7 +17,7 @@ namespace BarProject.WebService.Controllers
     public class TaxesController : ApiController
     {
         [HttpGet]
-        [Authorize(Roles = "Admin,Owner")]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [ResponseType(typeof(IEnumerable<ShowableTax>))]
         [Route("")]
         public IHttpActionResult Get()

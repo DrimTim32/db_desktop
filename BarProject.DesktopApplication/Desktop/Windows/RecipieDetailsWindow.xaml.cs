@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net;
 using System.Windows;
@@ -16,12 +17,11 @@ namespace BarProject.DesktopApplication.Desktop.Windows
 {
     public partial class RecipieDetailsWindow : MetroWindow
     {
-        private ObservableCollection<ShowableRecipitDetails> _detailsList;
+        private ObservableCollection<ShowableRecipitDetail> _detailsList;
         private readonly object DetailsLock = new object();
         private readonly object IdLock = new object();
         private int _id;
-
-        public ObservableCollection<ShowableRecipitDetails> DetailsList
+        public ObservableCollection<ShowableRecipitDetail> DetailsList
         {
             get
             {
@@ -29,7 +29,7 @@ namespace BarProject.DesktopApplication.Desktop.Windows
                 {
                     if (_detailsList == null)
                         _detailsList =
-                            new ObservableCollection<ShowableRecipitDetails>();
+                            new ObservableCollection<ShowableRecipitDetail>();
                     return _detailsList;
                 }
             }
@@ -48,13 +48,110 @@ namespace BarProject.DesktopApplication.Desktop.Windows
             }
         }
 
-        public RecipieDetailsWindow(int id)
+        public RecipieDetailsWindow(int id, List<string> productNames)
         {
             Id = id;
             InitializeComponent();
+            DataGridCombo.ItemsSource = productNames;
             Loaded += RecipieDetailsWindow_Loaded;
-        }
 
+            DataGrid.PreviewKeyDown += DataGrid_PreviewKeyDown;
+            DataGrid.RowEditEnding += DataGrid_RowEditEnding;
+        }
+        void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            DataGrid dg = sender as DataGrid;
+            if (dg != null && dg.SelectedIndex >= 0 && dg.SelectedIndex < dg.Items.Count - 1)
+            {
+                DataGridRow dgr = (DataGridRow)(dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex));
+                if (e.Key == Key.Delete && !dgr.IsEditing)
+                {
+                    // User is attempting to delete the row
+                    var resul = MessageBoxesHelper.ShowYesNoMessage("Delete", "About to delete the current row.\n\nProceed?");
+                    if (resul == MessageDialogResult.Negative)
+                    {
+                        e.Handled = true;
+                    }
+                    else
+                    {
+                        var cat = (ShowableRecipitDetail)dgr.Item;
+                        RemoveDetails(cat);
+                    }
+                }
+            }
+        }
+        private void DataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            var grid = sender as DataGrid;
+            if (DataGrid.SelectedItem != null && grid != null)
+            {
+                var cat = (ShowableRecipitDetail)e.Row.Item;
+                grid.RowEditEnding -= DataGrid_RowEditEnding;
+                grid.CommitEdit();
+                ProgressBarStart();
+                string message = "";
+                if (string.IsNullOrEmpty(cat.ProductName))
+                    message = "Product name must not be empty";
+                if (message != "")
+                {
+                    grid.CancelEdit();
+                    grid.RowEditEnding += DataGrid_RowEditEnding;
+                    MessageBoxesHelper.ShowWindowInformationAsync("Problem with new item!", message);
+                    RefreshData();
+                    ProgressBarStop();
+                    return;
+                }
+                grid.RowEditEnding += DataGrid_RowEditEnding;
+                if (cat.Id == null) // new row added
+                {
+                    AddRecipieDetails(cat);
+                }
+                else
+                {
+                    UpdateRecipieDetails(cat);
+                }
+            }
+        }
+        private void AddRecipieDetails(ShowableRecipitDetail cat)
+        {
+
+            RestClient.Client().AddReceiptDetails(Id, cat, (response, handle) =>
+             {
+                 if (response.ResponseStatus != ResponseStatus.Completed ||
+                     response.StatusCode != HttpStatusCode.OK)
+                 {
+                     MessageBoxesHelper.ShowProblemWithRequest(response);
+                 }
+                 RefreshData();
+             });
+        }
+        private void UpdateRecipieDetails(ShowableRecipitDetail cat)
+        {
+            RestClient.Client().UpdateReceiptDetails(Id, cat, (response, handle) =>
+             {
+                 if (response.ResponseStatus != ResponseStatus.Completed ||
+                     response.StatusCode != HttpStatusCode.OK)
+                 {
+                     MessageBoxesHelper.ShowProblemWithRequest(response);
+                 }
+                 RefreshData();
+             });
+        }
+        private void RemoveDetails(ShowableRecipitDetail cat)
+        {
+            RestClient.Client().RemoveReceiptDetails(Id, cat.Id,
+                (response, handle) =>
+                {
+                    if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
+                    {
+                        MessageBoxesHelper.ShowProblemWithRequest(response);
+                    }
+                    else
+                    {
+                        RefreshData();
+                    }
+                });
+        }
         private void RecipieDetailsWindow_Loaded(object sender, RoutedEventArgs e)
         {
             RefreshData();

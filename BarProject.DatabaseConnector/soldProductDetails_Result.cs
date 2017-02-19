@@ -15,11 +15,11 @@ namespace BarProject.DatabaseConnector
     {
         public int product_id { get; set; }
         public string name { get; set; }
-        public Nullable<int> category_id { get; set; }
+        public int category_id { get; set; }
         public string category_name { get; set; }
-        public Nullable<int> unit_id { get; set; }
+        public int unit_id { get; set; }
         public string unit_name { get; set; }
-        public Nullable<int> tax_id { get; set; }
+        public int tax_id { get; set; }
         public string tax_name { get; set; }
         public double tax_value { get; set; }
         public Nullable<int> recipe_id { get; set; }

@@ -15,8 +15,11 @@
                       ItemsSource="{Binding DetailsList}" SelectionMode="Single"  SelectionUnit="FullRow"
                       AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name"  Binding="{Binding ProductName}"/>
-                    <controls:DataGridNumericUpDownColumn Header="Quantity" Interval="0.1"  Binding="{Binding Quantity}"/>
+
+                    <DataGridComboBoxColumn Header="Name" 
+                                                SelectedItemBinding="{Binding ProductName}" 
+                                                ItemsSource="{Binding}" x:Name="DataGridCombo"/> 
+                    <controls:DataGridNumericUpDownColumn Header="Quantity" Interval="0.1"  Binding="{Binding Quantity}" Minimum="0" />
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

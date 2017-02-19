@@ -881,23 +881,6 @@ namespace BarProject.DatabaseConnector
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("removeWorkstationRights", workstation_idParameter, employe_permissionParameter);
         }
     
-        public virtual int udpateIngredient(Nullable<int> recipe_id, Nullable<int> ingredient_id, Nullable<double> new_quantity)
-        {
-            var recipe_idParameter = recipe_id.HasValue ?
-                new ObjectParameter("recipe_id", recipe_id) :
-                new ObjectParameter("recipe_id", typeof(int));
-    
-            var ingredient_idParameter = ingredient_id.HasValue ?
-                new ObjectParameter("ingredient_id", ingredient_id) :
-                new ObjectParameter("ingredient_id", typeof(int));
-    
-            var new_quantityParameter = new_quantity.HasValue ?
-                new ObjectParameter("new_quantity", new_quantity) :
-                new ObjectParameter("new_quantity", typeof(double));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("udpateIngredient", recipe_idParameter, ingredient_idParameter, new_quantityParameter);
-        }
-    
         public virtual int updateCategory(Nullable<int> id, string new_slug, string new_name, Nullable<int> new_overriding)
         {
             var idParameter = id.HasValue ?
@@ -959,6 +942,23 @@ namespace BarProject.DatabaseConnector
                 new ObjectParameter("new_quantity", typeof(short));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateClientOrderDetail", client_order_idParameter, products_sold_idParameter, new_quantityParameter);
+        }
+    
+        public virtual int updateIngredient(Nullable<int> recipe_id, Nullable<int> ingredient_id, Nullable<double> new_quantity)
+        {
+            var recipe_idParameter = recipe_id.HasValue ?
+                new ObjectParameter("recipe_id", recipe_id) :
+                new ObjectParameter("recipe_id", typeof(int));
+    
+            var ingredient_idParameter = ingredient_id.HasValue ?
+                new ObjectParameter("ingredient_id", ingredient_id) :
+                new ObjectParameter("ingredient_id", typeof(int));
+    
+            var new_quantityParameter = new_quantity.HasValue ?
+                new ObjectParameter("new_quantity", new_quantity) :
+                new ObjectParameter("new_quantity", typeof(double));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateIngredient", recipe_idParameter, ingredient_idParameter, new_quantityParameter);
         }
     
         public virtual int updateLocation(Nullable<int> id, string new_name, string new_address, string new_city, string new_postal_code, string new_country, string new_phone)
