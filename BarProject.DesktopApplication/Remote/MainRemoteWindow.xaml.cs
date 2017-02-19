@@ -1,8 +1,13 @@
-﻿using System.Windows;
+﻿using System;
+using System.Net;
+using System.Windows;
 using System.Windows.Navigation;
+using System.Windows.Threading;
 using BarProject.DatabaseProxy.Models.ReadModels;
 using BarProject.DatabaseProxy.Models.WriteModels;
-using BarProject.DesktopApplication.Library.RestHelpers;
+using BarProject.DesktopApplication.Common.Utils;
+using RestSharp;
+using RestClient = BarProject.DesktopApplication.Library.RestHelpers.RestClient;
 
 namespace BarProject.DesktopApplication.Remote
 {
@@ -25,11 +30,21 @@ namespace BarProject.DesktopApplication.Remote
         {
             RestClient.Client().AddOrder(Order, ((response, handle) =>
             {
-                Order.Clear();
-                OrderDetails.Visibility = Visibility.Hidden;
+                if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
+                {
+                    MessageBoxesHelper.ShowProblemWithRequest(response);
+                }
+                else
+                {
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
+                    { 
+                        Order.Clear();
+                        OrderDetails.Visibility = Visibility.Hidden;
+                    }));
+                }
             }));
 
-        }
+        } 
         public void DiscardOrder()
         {
             Order.Clear();
