@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BarProject.DatabaseProxy.Models.WriteModels;
 
 namespace BarProject.DesktopApplication.Library.RestHelpers
 {
@@ -63,7 +64,7 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
             request.AddBody(product);
             client.ExecuteAsync(request, callback);
         }
-        public void AddProduct(ShowableProductBase product, Action<IRestResponse, RestRequestAsyncHandle> callback)
+        public void AddProduct(WritableProduct product, Action<IRestResponse, RestRequestAsyncHandle> callback)
         {
             var request = new RestRequest($"api/products", Method.POST) { RequestFormat = DataFormat.Json };
             request.AddHeader("Authorization", $"bearer {token}");

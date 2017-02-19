@@ -147,7 +147,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             });
         }
 
-        async void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             DataGrid dg = sender as DataGrid;
             if (dg != null)

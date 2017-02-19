@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5ce68933cd7d443aba727f925632fdd3" Name="Diagram1" ZoomLevel="28">
+      <Diagram DiagramId="e16e3d5de20049c4b9160df8f0e8091e" Name="Diagram1">
         <EntityTypeShape EntityType="BarProjectModel.Category" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="BarProjectModel.Client_order_details" Width="1.5" PointX="9.75" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="BarProjectModel.Client_orders" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
@@ -41,8 +41,8 @@
         <EntityTypeShape EntityType="BarProjectModel.database_firewall_rules" Width="1.5" PointX="15.75" PointY="2.5" IsExpanded="true" />
         <AssociationConnector Association="BarProjectModel.FK__Categorie__overr__2BE97B0D" ManuallyRouted="false" />
         <AssociationConnector Association="BarProjectModel.FK__Products__catego__347EC10E" ManuallyRouted="false" />
-        <AssociationConnector Association="BarProjectModel.FK__Client_or__clien__2CDD9F46" ManuallyRouted="false" />
-        <AssociationConnector Association="BarProjectModel.FK__Client_or__produ__2DD1C37F" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Client_or__clien__2E90DD8E" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Client_or__produ__2F8501C7" ManuallyRouted="false" />
         <AssociationConnector Association="BarProjectModel.FK__Client_or__emplo__2EC5E7B8" ManuallyRouted="false" />
         <AssociationConnector Association="BarProjectModel.FK__Client_or__spot___2FBA0BF1" ManuallyRouted="false" />
         <AssociationConnector Association="BarProjectModel.FK__Users__permissio__3E082B48" ManuallyRouted="false" />
@@ -57,15 +57,15 @@
         <AssociationConnector Association="BarProjectModel.FK__Products__unit_i__36670980" ManuallyRouted="false" />
         <AssociationConnector Association="BarProjectModel.FK__ProductsStor__id__0E240DFC" ManuallyRouted="false" />
         <AssociationConnector Association="BarProjectModel.FK__ProductsU__produ__1C722D53" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Warehouse__produ__353DDB1D" ManuallyRouted="false" />
         <AssociationConnector Association="BarProjectModel.FK__Warehouse__produ__3FF073BA" ManuallyRouted="false" />
-        <AssociationConnector Association="BarProjectModel.FK__Warehouse__produ__40E497F3" ManuallyRouted="false" />
         <AssociationConnector Association="BarProjectModel.fk_sold_base_prod" ManuallyRouted="false" />
         <AssociationConnector Association="BarProjectModel.fk_stored_base_prod" ManuallyRouted="false" />
         <AssociationConnector Association="BarProjectModel.FK__ProductsS__recei__375B2DB9" ManuallyRouted="false" />
         <AssociationConnector Association="BarProjectModel.FK__Warehouse__suppl__44B528D7" ManuallyRouted="false" />
         <AssociationConnector Association="BarProjectModel.FK__Units__unit_type__3D14070F" ManuallyRouted="false" />
         <AssociationConnector Association="BarProjectModel.FK__Warehouse__emplo__42CCE065" ManuallyRouted="false" />
-        <AssociationConnector Association="BarProjectModel.FK__Warehouse__wareh__41D8BC2C" ManuallyRouted="false" />
+        <AssociationConnector Association="BarProjectModel.FK__Warehouse__wareh__3449B6E4" ManuallyRouted="false" />
         <AssociationConnector Association="BarProjectModel.Workstation_rights" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>

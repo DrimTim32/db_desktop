@@ -9,20 +9,23 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
 
-        <StackPanel Orientation="Vertical"> 
+        <StackPanel Orientation="Vertical">
             <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
-            <DataGrid Name="DataGrid"                       
+            <ContentControl>
+                <DataGrid Name="DataGrid"                       
                       DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:Products}}"
                       ItemsSource="{Binding ProductLists}"  SelectionMode="Single"  SelectionUnit="FullRow"      
                       AutoGenerateColumns="False" IsReadOnly="True">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name"  Binding="{Binding Name}"/>
-                    <DataGridTextColumn Header="Category Name"  Binding="{Binding CategoryName}"/>
-                    <DataGridCheckBoxColumn Header="Is stored" Binding="{Binding IsStored}"/>
-                    <DataGridCheckBoxColumn Header="Is sold" Binding="{Binding IsSold}" 
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name"  Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="Category Name"  Binding="{Binding CategoryName}"/>
+                        <DataGridCheckBoxColumn Header="Is stored" Binding="{Binding IsStored}"/>
+                        <DataGridCheckBoxColumn Header="Is sold" Binding="{Binding IsSold}" 
                                         EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ContentControl>
+            <Button x:Name="AddNew" Click="AddNew_OnClick" IsEnabled="False">Add new</Button>
         </StackPanel>
     </Grid>
 </UserControl>

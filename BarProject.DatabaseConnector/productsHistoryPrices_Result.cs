@@ -10,11 +10,11 @@
 namespace BarProject.DatabaseConnector
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class LoginLog
+    public partial class productsHistoryPrices_Result
     {
-        public string username { get; set; }
-        public Nullable<System.DateTime> login_time { get; set; }
+        public int product_id { get; set; }
+        public decimal price { get; set; }
+        public System.DateTime period_start { get; set; }
     }
 }

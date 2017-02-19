@@ -197,6 +197,9 @@
     <Compile Include="productsByCategory_Result.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="productsHistoryPrices_Result.cs">
+      <DependentUpon>BarProjectEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="productSimple.cs">
       <DependentUpon>BarProjectEntities.tt</DependentUpon>
     </Compile>

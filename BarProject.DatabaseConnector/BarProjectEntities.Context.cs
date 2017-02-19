@@ -15,10 +15,10 @@ namespace BarProject.DatabaseConnector
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class BarProjectEntities : DbContext
+    public partial class Entities : DbContext
     {
-        public BarProjectEntities()
-            : base("name=BarProjectEntities")
+        public Entities()
+            : base("name=Entities")
         {
         }
     
@@ -192,6 +192,16 @@ namespace BarProject.DatabaseConnector
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<productsByCategory_Result>("[Entities].[productsByCategory](@category_id)", category_idParameter);
         }
     
+        [DbFunction("Entities", "productsHistoryPrices")]
+        public virtual IQueryable<productsHistoryPrices_Result> productsHistoryPrices(Nullable<System.DateTime> date)
+        {
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("date", date) :
+                new ObjectParameter("date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<productsHistoryPrices_Result>("[Entities].[productsHistoryPrices](@date)", dateParameter);
+        }
+    
         [DbFunction("Entities", "receiptDetails")]
         public virtual IQueryable<receiptDetails_Result> receiptDetails(Nullable<int> receipt_id)
         {
@@ -313,7 +323,7 @@ namespace BarProject.DatabaseConnector
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addLocation", nameParameter, addressParameter, cityParameter, postal_codeParameter, countryParameter, phoneParameter);
         }
     
-        public virtual int addProduct(Nullable<int> category_id, Nullable<int> unit_id, Nullable<int> tax_id, string name)
+        public virtual ObjectResult<Nullable<int>> addProduct(Nullable<int> category_id, Nullable<int> unit_id, Nullable<int> tax_id, string name)
         {
             var category_idParameter = category_id.HasValue ?
                 new ObjectParameter("category_id", category_id) :
@@ -331,7 +341,7 @@ namespace BarProject.DatabaseConnector
                 new ObjectParameter("name", name) :
                 new ObjectParameter("name", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addProduct", category_idParameter, unit_idParameter, tax_idParameter, nameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("addProduct", category_idParameter, unit_idParameter, tax_idParameter, nameParameter);
         }
     
         public virtual int addReceipt(string description)
@@ -580,6 +590,23 @@ namespace BarProject.DatabaseConnector
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("changeReceipt", product_idParameter, new_receiptParameter);
         }
     
+        public virtual int changeStock(Nullable<int> product_id, Nullable<short> quantity_change, Nullable<int> location_id)
+        {
+            var product_idParameter = product_id.HasValue ?
+                new ObjectParameter("product_id", product_id) :
+                new ObjectParameter("product_id", typeof(int));
+    
+            var quantity_changeParameter = quantity_change.HasValue ?
+                new ObjectParameter("quantity_change", quantity_change) :
+                new ObjectParameter("quantity_change", typeof(short));
+    
+            var location_idParameter = location_id.HasValue ?
+                new ObjectParameter("location_id", location_id) :
+                new ObjectParameter("location_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("changeStock", product_idParameter, quantity_changeParameter, location_idParameter);
+        }
+    
         public virtual int checkCredentials(string username, string password, ObjectParameter tmp_credentials)
         {
             var usernameParameter = username != null ?
@@ -639,6 +666,37 @@ namespace BarProject.DatabaseConnector
         public virtual int getSalt(ObjectParameter salt)
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("getSalt", salt);
+        }
+    
+        public virtual int logLogin(string username, Nullable<System.DateTime> login_date)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            var login_dateParameter = login_date.HasValue ?
+                new ObjectParameter("login_date", login_date) :
+                new ObjectParameter("login_date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("logLogin", usernameParameter, login_dateParameter);
+        }
+    
+        public virtual int markDelivered(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("markDelivered", idParameter);
+        }
+    
+        public virtual int markPaid(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("markPaid", idParameter);
         }
     
         public virtual int removeCategory(Nullable<int> category_id)
@@ -1174,19 +1232,6 @@ namespace BarProject.DatabaseConnector
                 new ObjectParameter("login", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("userExists", loginParameter);
-        }
-    
-        public virtual int logLogin(string username, Nullable<System.DateTime> login_date)
-        {
-            var usernameParameter = username != null ?
-                new ObjectParameter("username", username) :
-                new ObjectParameter("username", typeof(string));
-    
-            var login_dateParameter = login_date.HasValue ?
-                new ObjectParameter("login_date", login_date) :
-                new ObjectParameter("login_date", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("logLogin", usernameParameter, login_dateParameter);
         }
     }
 }

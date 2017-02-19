@@ -59,6 +59,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         public List<string> UnitNames { get; set; }
         public List<string> TaxesNames { get; set; }
         public List<string> CategoriesNames { get; set; }
+        public List<string> RecipiesNames { get; set; }
         private readonly object counterLocker = new object();
         private readonly SafeCounter _counter = new SafeCounter();
         public SafeCounter Counter
@@ -98,8 +99,12 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         private void Products_Loaded(object sender, RoutedEventArgs e)
         {
             ProgressBarStart();
-            Counter.Counter = 3;
-            Counter.Event += (s, q) => { ProgressBarStop(); Debug.WriteLine("all done"); };
+            Counter.Counter = 4;
+            Counter.Event += (s, q) =>
+            {
+                ProgressBarStop();
+                AddNew.IsEnabled = true;
+            };
             RefreshData();
             GetAll();
         }
@@ -119,7 +124,6 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         }
         private async void DoRefreshData()
         {
-            ProgressBarStart();
             var tmp = await RestClient.Client().GetProducts();
             if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
             {
@@ -132,13 +136,14 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 {
                     ProductLists.Add(showableTax);
                 }
-                DataGrid.Items.Refresh();
+                DataGrid.Items.Refresh(); 
             }
-            ProgressBarStop();
         }
 
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if (Counter.Counter != 0)
+                return;
             var dg = sender as DataGrid;
             if (dg != null)
             {
@@ -168,6 +173,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 GetSources();
                 GetCategories();
                 GetUnits();
+                GetRecipies();
             }));
         }
 
@@ -183,6 +189,12 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         {
             Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoGetCategories));
         }
+
+        private void GetRecipies()
+        {
+            Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoGetRecipies));
+
+        }
         private async void DoGetUnits()
         {
             var tmp = await RestClient.Client().GetUnits();
@@ -194,6 +206,20 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             {
                 UnitNames = tmp.Data.Select(x => x.Name).ToList();
                 Debug.WriteLine("units done");
+                Counter.Counter -= 1;
+            }
+        }
+        private async void DoGetRecipies()
+        {
+            var tmp = await RestClient.Client().GetReceipts();
+            if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
+            {
+                MessageBoxesHelper.ShowProblemWithRequest(tmp);
+            }
+            else
+            {
+                RecipiesNames = tmp.Data.Select(x => x.Description).ToList();
+                RecipiesNames.Add("");
                 Counter.Counter -= 1;
             }
         }
@@ -227,5 +253,11 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         }
 
         #endregion
+
+        private void AddNew_OnClick(object sender, RoutedEventArgs e)
+        {
+            var window = new ProductAddWindow(TaxesNames, CategoriesNames, UnitNames, RecipiesNames);
+            window.ShowDialog();
+        }
     }
 }

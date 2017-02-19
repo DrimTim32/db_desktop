@@ -14,7 +14,7 @@ namespace BarProject.DatabaseProxy.Functions
     {
         public static List<ShowablePrices> GetPrices()
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 return db.productsLastPricesWithNames.Select(x => x).ToAnotherType<productsLastPricesWithName,ShowablePrices>().ToList();
             }

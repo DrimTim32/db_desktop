@@ -17,7 +17,7 @@
     {
         public static void LogUserLogin(string username)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 db.logLogin(username, DateTime.Now);
             }
@@ -25,7 +25,7 @@
         public static UserPrivileges GetPrivileges(string username, string password)
         {
             var toReturn = UserPrivileges.NoUser;
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 var parameter = new ObjectParameter("tmp_credentials", typeof(short));
                 db.checkCredentials(username, password, parameter);
@@ -46,7 +46,7 @@
         public static UserPrivileges GetPrivileges(string username)
         {
             var toReturn = UserPrivileges.NoUser;
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 var q = db.Users.First(x => x.username == username).EmployePermission.value;
                 if (q.HasValue)
@@ -60,7 +60,7 @@
 
         public static IEnumerable<ShowableUser> GetAllUsers()
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 return db.Users.Select(x => x).ToAnotherType<User, ShowableUser>().ToList();//.ToShowableUsers().ToList();
             }
@@ -68,7 +68,7 @@
 
         public static void AddUser(PureWritableUser userData)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 var permissionId = db.EmployePermissions.FirstOrDefault(x => x.value == (byte)userData.Permission);
                 if (permissionId == null)
@@ -79,7 +79,7 @@
 
         public static User GetUserFullData(string username)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 return db.Users.FirstOrDefault(x => x.username == username);
             }

@@ -1,4 +1,5 @@
-﻿using BarProject.DatabaseProxy.Models.WriteModels;
+﻿using System.Data.Entity.Migrations;
+using BarProject.DatabaseProxy.Models.WriteModels;
 
 namespace BarProject.DatabaseProxy.Functions
 {
@@ -12,7 +13,7 @@ namespace BarProject.DatabaseProxy.Functions
     {
         public static List<ShowableSimpleProduct> GetProductView()
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 return db.productSimples.ToAnotherType<productSimple, ShowableSimpleProduct>().ToList();
             }
@@ -20,7 +21,7 @@ namespace BarProject.DatabaseProxy.Functions
 
         public static ShowableSoldProduct GetSoldProductData(int id)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 return db.soldProductDetails(id).ToAnotherType<soldProductDetails_Result, ShowableSoldProduct>().FirstOrDefault();
             }
@@ -28,7 +29,7 @@ namespace BarProject.DatabaseProxy.Functions
 
         public static List<ShowablePricesHistory> GetPricesHistory(int id)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 return db.pricesHistory(id).ToAnotherType<pricesHistory_Result, ShowablePricesHistory>().ToList();
             }
@@ -36,7 +37,7 @@ namespace BarProject.DatabaseProxy.Functions
         }
         public static ShowableStoredProduct GetStoredProduct(int id)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 return db.productDetails(id).ToAnotherType<productDetails_Result, ShowableStoredProduct>().FirstOrDefault();
             }
@@ -45,14 +46,14 @@ namespace BarProject.DatabaseProxy.Functions
 
         public static List<ShowableSoldProduct> GetSoldableProductsByCategory(int id)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 return db.productsByCategory(id).ToAnotherType<productsByCategory_Result, ShowableSoldProduct>().ToList();
             }
         }
         public static void UpdateProduct(int id, ShowableProductBase product)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 var category = db.Categories.FirstOrDefault(x => x.category_name == product.CategoryName);
                 var unit = db.Units.FirstOrDefault(x => x.unit_name == product.UnitName);
@@ -62,24 +63,34 @@ namespace BarProject.DatabaseProxy.Functions
         }
         public static void AddProduct(WritableProduct product)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 var unit = db.Units.FirstOrDefault(x => x.unit_name == product.UnitName);
                 var tax = db.Taxes.FirstOrDefault(x => x.tax_name == product.TaxName);
                 var category = db.Categories.FirstOrDefault(x => x.category_name == product.CategoryName);
-                var productId = db.addProduct(category?.id, unit?.id, tax?.id, product.Name);
+                var prod = new Product
+                {
+                    category_id = category?.id,
+                    unit_id = unit?.id,
+                    tax_id = tax?.id,
+                    name = product.Name
+                };
+                db.Products.AddOrUpdate(prod);
+                db.SaveChanges();
+                int id = prod.id;
+
                 if (product.IsStored)
                 {
-                    db.addStoredProduct(productId);
+                    db.addStoredProduct(id);
                 }
                 if (product.IsSold)
                 {
                     if (string.IsNullOrEmpty(product.RecipitDescription))
-                        db.addSoldProduct(productId, null);
+                        db.addSoldProduct(id, null);
                     else
                     {
                         var recip = db.Receipts.FirstOrDefault(x => x.description == product.RecipitDescription);
-                        db.addSoldProduct(productId, recip?.id);
+                        db.addSoldProduct(id, recip?.id);
                     }
                 }
             }

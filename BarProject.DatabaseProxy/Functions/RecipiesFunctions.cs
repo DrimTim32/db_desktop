@@ -13,7 +13,7 @@ namespace BarProject.DatabaseProxy.Functions
     {
         public static List<ShowableReceipt> GetRecipts()
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 return db.Receipts.Select(x => x).ToAnotherType<Receipt, ShowableReceipt>().ToList();
             }
@@ -21,21 +21,21 @@ namespace BarProject.DatabaseProxy.Functions
 
         public static void AddRecipt(ShowableReceipt receipt)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 db.addReceipt(receipt.Description);
             }
         }
         public static void UpdateRecipt(int id, ShowableReceipt receipt)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 db.updateReceipt(id, receipt.Description);
             }
         }
         public static void RemoveRecipt(int id)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 db.removeReceipt(id);
             }

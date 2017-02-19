@@ -15,7 +15,7 @@ namespace BarProject.DatabaseProxy.Functions
     {
         public static List<ShowableCategory> GetAllCategories()
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 return (from data in db.Categories
                         orderby data.id
@@ -28,7 +28,7 @@ namespace BarProject.DatabaseProxy.Functions
         }
         public static List<ShowableCategory> GetSubCategories(int? id)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 return db.Categories.Where(x => x.overriding_category == id).ToAnotherType<Category, ShowableCategory>().ToList();
             }
@@ -37,7 +37,7 @@ namespace BarProject.DatabaseProxy.Functions
 
         public static void AddCategory(ShowableCategory cat)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 int? overriding = null;
                 if (cat.Overriding != "")
@@ -53,7 +53,7 @@ namespace BarProject.DatabaseProxy.Functions
         }
         public static void RemoveCategory(int? id)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 db.removeCategory(id);
             }
@@ -61,7 +61,7 @@ namespace BarProject.DatabaseProxy.Functions
 
         public static void UpdateCategory(int id, ShowableCategory category)
         {
-            using (var db = new BarProjectEntities())
+            using (var db = new Entities())
             {
                 if (string.IsNullOrEmpty(category.Overriding))
                 {
