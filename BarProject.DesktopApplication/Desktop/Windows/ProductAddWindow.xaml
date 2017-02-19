@@ -56,9 +56,9 @@
                               Text="{Binding Path=RecipitDescription, Mode=TwoWay}" ItemsSource="{Binding}" FontSize="15" />
                 </StackPanel>
                 <StackPanel Visibility="Hidden" x:Name="PriceStack">
-                    <Label Content="Recipit description" Target="{Binding ElementName=TextPriceName}"/>
+                    <Label Content="Price" Target="{Binding ElementName=TextPriceName}"/>
                     <xctk:DecimalUpDown x:Name="TextPriceName" Width="167" Increment="0.1"
-                              Text="{Binding Path=Price, Mode=TwoWay}" FontSize="15" />
+                              Text="{Binding Path=Price, Mode=TwoWay}" FontSize="15" Minimum="0" />
                 </StackPanel>
                 <Button Click="Save_Click">Save</Button>
             </StackPanel>

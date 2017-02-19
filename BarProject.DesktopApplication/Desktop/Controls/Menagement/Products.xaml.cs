@@ -151,7 +151,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             if (Counter.Counter > 0)
                 return;
             var dg = sender as DataGrid;
-            if (dg != null && dg.SelectedIndex >= 0 && dg.SelectedIndex < dg.Items.Count - 1)
+            if (dg != null && dg.SelectedIndex >= 0)
             {
                 var dgr = (DataGridRow)(dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex));
                 var product = (ShowableSimpleProduct)dgr.Item;
