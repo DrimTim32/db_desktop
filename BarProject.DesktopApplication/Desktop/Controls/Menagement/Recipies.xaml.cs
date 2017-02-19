@@ -157,14 +157,14 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         }
         private async void DoGetProducts()
         {
-            var tmp = await RestClient.Client().GetOrderableProductNames();
+            var tmp = await RestClient.Client().GetProducts();
             if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
             {
                 MessageBoxesHelper.ShowProblemWithRequest(tmp);
             }
             else
             {
-                ProductNames = tmp.Data.ToList(); 
+                ProductNames = tmp.Data.Where(x => x.IsStored).Select(x => x.Name).ToList();
             }
         }
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)

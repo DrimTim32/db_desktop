@@ -64,7 +64,7 @@ namespace BarProject.WebService.Controllers
         [Authorize(Roles = "Admin,Owner,Warehouse")]
         [HttpPost]
         [Route("orders/{id}/details")]
-        public IHttpActionResult AddDetails(int id, ShowableWarehouseOrderDetails details)
+        public IHttpActionResult PostDetails(int id, ShowableWarehouseOrderDetails details)
         {
             try
             {
