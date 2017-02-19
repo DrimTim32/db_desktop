@@ -160,7 +160,7 @@ namespace BarProject.DesktopApplication.Desktop.Windows
             }
             if (TextPrice.Value == null)
             {
-                message = "Sold product must have price!"; 
+                message = "Sold product must have price!";
             }
             if (message != "")
             {
@@ -174,7 +174,10 @@ namespace BarProject.DesktopApplication.Desktop.Windows
                     MessageBoxesHelper.ShowProblemWithRequest(response);
                 }
                 else
+                {
                     MessageBox.Show("Success");
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(Close));
+                }
             }));
         }
     }

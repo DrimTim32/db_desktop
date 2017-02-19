@@ -36,7 +36,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                     return _counter;
                 }
             }
-        } 
+        }
         private ObservableCollection<ShowableSimpleProduct> _productsList;
         private readonly object ShowableSimpleProductLock = new object();
 
@@ -65,9 +65,6 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         private void Products_Loaded(object sender, RoutedEventArgs e)
         {
             ProgressBarStart();
-            Counter.Counter = 4;
-            if (UnitNames != null)
-                Counter.Counter -= 1;
 
             Counter.Event += (s, q) =>
             {
@@ -127,6 +124,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         }
         private void RefreshData()
         {
+            Counter.Counter = 1;
             this.Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoRefreshData));
         }
         private async void DoRefreshData()
@@ -145,11 +143,12 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                 }
                 DataGrid.Items.Refresh();
             }
+            Counter.Counter -= 1;
         }
 
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (Counter.Counter != 0)
+            if (Counter.Counter > 0)
                 return;
             var dg = sender as DataGrid;
             if (dg != null)
@@ -163,7 +162,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                     window.Closed += (s, x) => RefreshData();
                     window.ShowDialog();
                 }
-                else if (product.IsStored)
+                else
                 {
                     var window = new StoredProductWindow(product.Id, TaxesNames, CategoriesNames, UnitNames);
                     window.Closed += (s, x) => RefreshData();
@@ -263,7 +262,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         {
             var window = new ProductAddWindow(TaxesNames, CategoriesNames, UnitNames, RecipiesNames);
             window.Closed +=
-                (s, q) => { this.Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoRefreshData)); };
+                (s, q) => { this.Dispatcher.Invoke(DispatcherPriority.Background, new Action(RefreshData)); };
             window.ShowDialog();
         }
     }

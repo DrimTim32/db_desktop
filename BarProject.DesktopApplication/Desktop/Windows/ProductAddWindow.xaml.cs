@@ -69,9 +69,12 @@ namespace BarProject.DesktopApplication.Desktop.Windows
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             ProgressBarStart();
+            bool anyChecked = false;
+
             if (SoldSwitch.IsChecked != null)
             {
                 WritableProduct.IsSold = SoldSwitch.IsChecked.Value;
+                anyChecked = true;
             }
             else
             {
@@ -80,12 +83,17 @@ namespace BarProject.DesktopApplication.Desktop.Windows
             if (StoredSwitch.IsChecked != null)
             {
                 WritableProduct.IsStored = StoredSwitch.IsChecked.Value;
+                anyChecked = true;
             }
             else
             {
                 WritableProduct.IsStored = false;
             }
             var message = "";
+            if (!anyChecked)
+            {
+                message = "Product must be sold or stored";
+            }
             if (string.IsNullOrEmpty(WritableProduct.CategoryName))
             {
                 message = "You cannot add product with no category";
@@ -100,7 +108,7 @@ namespace BarProject.DesktopApplication.Desktop.Windows
             }
             if (WritableProduct.IsSold && TextPriceName.Value == null)
             {
-                message = "Sold product must have price!";  
+                message = "Sold product must have price!";
             }
             if (message != "")
             {
