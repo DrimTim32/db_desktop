@@ -102,10 +102,13 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
         private void Orders_Loaded(object sender, RoutedEventArgs e)
         {
             ProgressBarStart();
-            Counter.Counter = 2;
+            Counter.Counter = 4;
+            DataGrid.IsReadOnly = true;
             Counter.Event += (s, q) =>
             {
                 ProgressBarStop();
+                DataGrid.IsReadOnly = false;
+
             };
             RefreshData();
             GetAll();
@@ -165,13 +168,16 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
                     grid.RowEditEnding += DataGrid_RowEditEnding;
                     return;
                 }
+                var message = "";
                 if (string.IsNullOrEmpty(order.LocationName))
+                    message = "You must provide location";
+                if (string.IsNullOrEmpty(order.SupplierName))
+                    message = "You must provide supplier";
+                if (message != "")
                 {
-                    var message = "You cannot create location with empty name";
                     grid.CancelEdit();
                     grid.RowEditEnding += DataGrid_RowEditEnding;
                     MessageBoxesHelper.ShowWindowInformationAsync("Problem with new item!", message);
-                    grid.Items.Refresh();
                     RefreshData();
                     ProgressBarStop();
                     return;
@@ -218,7 +224,10 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
             if (dg != null)
             {
                 var dgr = (DataGridRow)(dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex));
-                var product = (ShowableWarehouseOrder)dgr.Item;
+                var product = dgr.Item as ShowableWarehouseOrder;
+                if (product?.Id == null)
+                    return;
+                
                 var window = new OrdersDetailsWindow(product.Id.Value, ProductNames, CategoriesNames);
                 window.Closed += (s, x) => RefreshData();
                 window.ShowDialog();
@@ -232,17 +241,57 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
             {
                 GetProductNames();
                 GetCategoriesNames();
+                GetSuppliersNames();
+                GetLocationsNames();
             }));
         }
 
         private void GetProductNames()
         {
+            ProgressBarStart();
             Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoGetProducts));
+        }
+        private void GetSuppliersNames()
+        {
+            ProgressBarStart();
+            Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoGetSuppliers));
+        }
+        private void GetLocationsNames()
+        {
+            ProgressBarStart();
+            Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoGetLocations));
         }
 
         private void GetCategoriesNames()
         {
+            ProgressBarStart();
             Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoGetCategoriesNames));
+        }
+        private async void DoGetSuppliers()
+        {
+            var tmp = await RestClient.Client().GetSuppliers();
+            if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
+            {
+                MessageBoxesHelper.ShowProblemWithRequest(tmp);
+            }
+            else
+            {
+                SupplierBox.ItemsSource = tmp.Data.Select(x => x.Name).ToList();
+                Counter.Counter -= 1;
+            }
+        }
+        private async void DoGetLocations()
+        {
+            var tmp = await RestClient.Client().GetLocations();
+            if (tmp.ResponseStatus != ResponseStatus.Completed || tmp.StatusCode != HttpStatusCode.OK)
+            {
+                MessageBoxesHelper.ShowProblemWithRequest(tmp);
+            }
+            else
+            {
+                LocationBox.ItemsSource = tmp.Data.Select(x => x.Name).ToList();
+                Counter.Counter -= 1;
+            }
         }
         private async void DoGetProducts()
         {

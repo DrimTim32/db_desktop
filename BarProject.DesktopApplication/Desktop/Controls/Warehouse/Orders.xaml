@@ -2,24 +2,28 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:BarProject.DesktopApplication.Desktop.Controls.Warehouse"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:organisation="clr-namespace:BarProject.DesktopApplication.Desktop.Controls.Organisation"
+             xmlns:warehouse="clr-namespace:BarProject.DesktopApplication.Desktop.Controls.Warehouse"
              mc:Ignorable="d"  >
     <Grid>
         <StackPanel>
             <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
             <DataGrid Name="DataGrid"                       
-                      DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:Orders}}"
+                      DataContext="{Binding RelativeSource={RelativeSource AncestorType=warehouse:Orders}}"
                       ItemsSource="{Binding OrdersList}" SelectionMode="Single"  SelectionUnit="FullRow"
                       AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Employee name"  Binding="{Binding EmployeeName}"/>
+                    <DataGridTextColumn Header="Employee name"  Binding="{Binding EmployeeName}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Value"  Binding="{Binding Value}"/>
-                    <DataGridTextColumn Header="Supplier name"  Binding="{Binding SupplierName}"/>
-                    <DataGridTextColumn Header="Location name"  Binding="{Binding LocationName}"/>
-                    <DataGridTemplateColumn Header="Delivery date">
+                    <DataGridComboBoxColumn Header="Supplier" 
+                                                SelectedItemBinding="{Binding SupplierName}" 
+                                                ItemsSource="{Binding}" x:Name="SupplierBox"/>
+                    <DataGridComboBoxColumn Header="Location" 
+                                                SelectedItemBinding="{Binding LocationName}" 
+                                                ItemsSource="{Binding}" x:Name="LocationBox"/>
+                    <DataGridTemplateColumn Header="Delivery date" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <DatePicker SelectedDate="{Binding DeliveryDate}"/>
