@@ -23,13 +23,7 @@
                     <DataGridComboBoxColumn Header="Location" 
                                                 SelectedItemBinding="{Binding LocationName}" 
                                                 ItemsSource="{Binding}" x:Name="LocationBox"/>
-                    <DataGridTemplateColumn Header="Delivery date" IsReadOnly="True">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <DatePicker SelectedDate="{Binding DeliveryDate}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Delivery date" IsReadOnly="True" Binding="{Binding DeliveryDate}"/>
                     <DataGridTemplateColumn Header="Order date">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

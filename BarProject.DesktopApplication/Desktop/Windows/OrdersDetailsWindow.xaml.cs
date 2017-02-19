@@ -9,7 +9,6 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using BarProject.DatabaseProxy.Models.ReadModels;
 using BarProject.DesktopApplication.Common.Utils;
-using BarProject.DesktopApplication.Desktop.Controls.Menagement;
 using MahApps.Metro.Controls;
 using RestSharp;
 using RestClient = BarProject.DesktopApplication.Library.RestHelpers.RestClient;
