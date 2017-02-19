@@ -170,7 +170,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             DataGrid dg = sender as DataGrid;
-            if (dg != null)
+            if (dg != null && dg.SelectedIndex >= 0)
             {
                 DataGridRow dgr = (DataGridRow)(dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex));
                 if (e.Key == Key.Delete && !dgr.IsEditing)

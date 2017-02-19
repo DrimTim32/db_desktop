@@ -126,6 +126,7 @@
     <Compile Include="Models\ReadModels\ShowablePricesHistory.cs" />
     <Compile Include="Models\ReadModels\ShowableProductBase.cs" />
     <Compile Include="Models\ReadModels\ShowableReceipt.cs" />
+    <Compile Include="Models\ReadModels\ShowableRecipitDetails.cs" />
     <Compile Include="Models\ReadModels\ShowableSimpleProduct.cs" />
     <Compile Include="Models\ReadModels\ShowableSoldProduct.cs" />
     <Compile Include="Models\ReadModels\ShowableStoredProduct.cs" />

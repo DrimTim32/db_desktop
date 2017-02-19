@@ -15,7 +15,9 @@
                       ItemsSource="{Binding WorksationsList}" SelectionMode="Single"  SelectionUnit="FullRow"
                       AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name"  Binding="{Binding Name}"/> 
+                    <DataGridTextColumn Header="Name"  Binding="{Binding Name}"/>
+                    <DataGridComboBoxColumn Header="Name" SelectedItemBinding="{Binding LocationName}" 
+                                                ItemsSource="{Binding}" x:Name="DataGridCombo"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

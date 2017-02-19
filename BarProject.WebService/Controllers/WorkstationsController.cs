@@ -33,11 +33,11 @@ namespace BarProject.WebService.Controllers
         }
         [HttpPost, Route("")]
         [Authorize(Roles = "Admin,Owner")]
-        public IHttpActionResult Post(ShowableLocation location)
+        public IHttpActionResult Post([FromBody]ShowableWorkstation workstation)
         {
             try
             {
-                LocationsFunctions.AddLocation(location);
+                WorkstationsFunctions.AddWorkstation(workstation);
                 return Ok();
             }
             catch (Exception ex)
@@ -52,7 +52,7 @@ namespace BarProject.WebService.Controllers
         {
             try
             {
-                LocationsFunctions.RemoveLocation(id);
+                WorkstationsFunctions.RemoveWorkstation(id);
                 return Ok();
             }
             catch (Exception ex)
@@ -63,11 +63,11 @@ namespace BarProject.WebService.Controllers
         [HttpPatch]
         [Authorize(Roles = "Admin,Owner")]
         [Route("{id}")]
-        public IHttpActionResult Patch(int id, [FromBody]ShowableLocation location)
+        public IHttpActionResult Patch(int id, [FromBody]ShowableWorkstation location)
         {
             try
             {
-                LocationsFunctions.UpdateLocation(id, location);
+                WorkstationsFunctions.UpdateWorkstation(id, location);
                 return Ok();
             }
             catch (Exception ex)

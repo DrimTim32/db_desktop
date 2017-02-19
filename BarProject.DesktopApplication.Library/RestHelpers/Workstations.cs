@@ -27,20 +27,20 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
             request.AddHeader("Content-Type", "application/json");
             client.ExecuteAsync(request, callback);
         }
-        public void AddWorkstation(ShowableWorkstation category, Action<IRestResponse, RestRequestAsyncHandle> callback)
+        public void AddWorkstation(ShowableWorkstation workstation, Action<IRestResponse, RestRequestAsyncHandle> callback)
         {
             var request = new RestRequest("api/workstations/", Method.POST) { RequestFormat = DataFormat.Json };
             request.AddHeader("Authorization", $"bearer {token}");
             request.JsonSerializer = new JsonSerializer();
-            request.AddBody(category);
+            request.AddBody(workstation);
             client.ExecuteAsync(request, callback);
         }
-        public void UpdateWorkstation(ShowableWorkstation category, Action<IRestResponse, RestRequestAsyncHandle> callback)
+        public void UpdateWorkstation(ShowableWorkstation workstation, Action<IRestResponse, RestRequestAsyncHandle> callback)
         {
-            var request = new RestRequest($"api/workstations/{category.Id}", Method.PATCH) { RequestFormat = DataFormat.Json };
+            var request = new RestRequest($"api/workstations/{workstation.Id}", Method.PATCH) { RequestFormat = DataFormat.Json };
             request.AddHeader("Authorization", $"bearer {token}");
             request.JsonSerializer = new JsonSerializer();
-            request.AddBody(category);
+            request.AddBody(workstation);
             client.ExecuteAsync(request, callback);
         }
     }

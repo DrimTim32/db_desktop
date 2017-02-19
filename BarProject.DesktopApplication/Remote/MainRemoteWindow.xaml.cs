@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Navigation;
 using BarProject.DatabaseProxy.Models.ReadModels;
 using BarProject.DatabaseProxy.Models.WriteModels;
 
@@ -18,16 +19,24 @@ namespace BarProject.DesktopApplication.Remote
         {
             OrderDetails.Visibility = Visibility.Visible;
             Order.AddProduct(product, quantity);
-        } 
+        }
         public void AcceptOrder()
         {
             Order.Clear();
             OrderDetails.Visibility = Visibility.Hidden;
-        } 
+        }
         public void DiscardOrder()
         {
             Order.Clear();
             OrderDetails.Visibility = Visibility.Hidden;
+        }
+
+        public void GoToFirstPage()
+        {
+            while (Frame.NavigationService.CanGoBack)
+            {
+                Frame.NavigationService.GoBack();
+            }
         }
         private void CloseOrder_Click(object sender, RoutedEventArgs e)
         {
@@ -36,6 +45,8 @@ namespace BarProject.DesktopApplication.Remote
         private void DiscardOrder_Click(object sender, RoutedEventArgs e)
         {
             DiscardOrder();
+            GoToFirstPage();
         }
+
     }
 }

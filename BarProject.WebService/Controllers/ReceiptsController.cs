@@ -60,7 +60,22 @@ namespace BarProject.WebService.Controllers
             }
         }
         [Authorize(Roles = "Admin,Owner")]
-        [HttpDelete, Route("{id}")]
+        [HttpGet, Route("{id}/details")]
+        [ResponseType(typeof(IEnumerable<ShowableRecipitDetails>))]
+        public IHttpActionResult GetDetails(int id)
+        {
+            try
+            {
+                return Ok(RecipiesFunctions.GetDetails(id));
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+        [Authorize(Roles = "Admin,Owner")]
+        [HttpGet, Route("{id}")]
+        [ResponseType(typeof(IEnumerable<ShowableRecipitDetails>))]
         public IHttpActionResult Delete(int id)
         {
             try
@@ -72,6 +87,6 @@ namespace BarProject.WebService.Controllers
             {
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
-        }
+        } 
     }
 }

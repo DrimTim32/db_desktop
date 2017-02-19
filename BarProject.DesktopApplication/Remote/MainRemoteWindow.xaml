@@ -32,7 +32,7 @@
             <mah:Tile Content="Close order" Width="250" Height="50" FontSize="30" Click="CloseOrder_Click"/>
             <mah:Tile Content="Cancel order" Width="250" Height="50" FontSize="30" Click="DiscardOrder_Click"/>
         </StackPanel>
-        <Frame Source="MainPage.xaml" NavigationUIVisibility="Hidden" Grid.Row="1"/>
+        <Frame Source="MainPage.xaml" NavigationUIVisibility="Hidden" Grid.Row="1" x:Name="Frame"/>
         <Label x:Name="InfoLabel" Grid.Row="2"/>
     </Grid>
 </mah:MetroWindow>

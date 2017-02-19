@@ -40,5 +40,21 @@ namespace BarProject.DatabaseProxy.Functions
                 db.removeReceipt(id);
             }
         }
+        public static List<ShowableRecipitDetails> GetDetails(int id)
+        {
+            using (var db = new Entities())
+            {
+                return (from I in db.Ingredients
+                        join R in db.Receipts on I.receipt_id equals R.id
+                        join P in db.Products on I.ingredient_id equals P.id
+                        where I.receipt_id == id
+                        select new ShowableRecipitDetails()
+                        {
+                            ProductName = P.name,
+                            Quantity = I.quantity,
+                        }
+                ).ToList();
+            }
+        }
     }
 }

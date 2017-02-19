@@ -19,9 +19,23 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
             var data = await client.ExecuteGetTaskAsync<List<ShowableReceipt>>(request);
             return data;
         }
+        public void GetReceiptDetails(int id, Action<IRestResponse<List<ShowableRecipitDetails>>> callback)
+        {
+            var request = new RestRequest($"api/receipts/{id}/details", Method.GET);
+            request.AddHeader("Authorization", $"bearer {token}");
+            request.AddHeader("Content-Type", "application/json");
+            client.ExecuteAsync(request, callback);
+        }
         public void RemoveReceipt(int? id, Action<IRestResponse, RestRequestAsyncHandle> callback)
         {
             var request = new RestRequest($"api/receipts/{id}", Method.DELETE);
+            request.AddHeader("Authorization", $"bearer {token}");
+            request.AddHeader("Content-Type", "application/json");
+            client.ExecuteAsync(request, callback);
+        }
+        public void RemoveReceiptDetails(int? id, Action<IRestResponse, RestRequestAsyncHandle> callback)
+        {
+            var request = new RestRequest($"api/receipts/{id}/details", Method.DELETE);
             request.AddHeader("Authorization", $"bearer {token}");
             request.AddHeader("Content-Type", "application/json");
             client.ExecuteAsync(request, callback);

@@ -53,14 +53,59 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             DataGrid.RowEditEnding += DataGrid_RowEditEnding;
             DataGrid.PreviewKeyDown += DataGrid_PreviewKeyDown;
         }
+
+        private readonly object possibleLocationsLock = new object();
+        private List<string> possibleLocationsList;
+        private List<string> PossibleLocations
+        {
+            get
+            {
+                lock (possibleLocationsLock)
+                {
+                    if (possibleLocationsList == null)
+                    {
+                        possibleLocationsList = new List<string>();
+                    }
+                    return possibleLocationsList;
+                }
+            }
+        }
+
+        private void RefreshAll()
+        {
+            this.Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoRefreshAll));
+        }
+        private void DoRefreshAll()
+        {
+            RestClient.Client().GetLocations((response, handle) =>
+            {
+                if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
+                {
+                    MessageBoxesHelper.ShowProblemWithRequest(response);
+                }
+                else
+                {
+                    this.Dispatcher.Invoke(DispatcherPriority.Background, new Action(() =>
+                    {
+                        var data = response.Data;
+                        PossibleLocations.Clear();
+                        foreach (var location in data)
+                        {
+                            PossibleLocations.Add(location.Name);
+                        }
+                        DataGridCombo.ItemsSource = PossibleLocations;
+                        DoRefreshData();
+                    }));
+                }
+            });
+        }
         private void ItemsLoaded(object sender, RoutedEventArgs e)
         {
-            RefreshData();
+            RefreshAll();
         }
         private void ProgressBarStart()
         {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => Progress.Visibility = Visibility.Visible));
-
         }
 
         private void ProgressBarStop()

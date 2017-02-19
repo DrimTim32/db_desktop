@@ -54,5 +54,10 @@ namespace BarProject.DesktopApplication.Remote
             if (Data.Quantity != 0)
                 window?.RegisterProduct(Product, Data.Quantity);
         }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
+        }
     }
 }

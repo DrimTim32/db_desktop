@@ -11,6 +11,7 @@ namespace BarProject.DatabaseProxy.Models.ReadModels
     public class ShowableWorkstation
     {
         public int? Id { get; set; }
+        public string LocationName { get; set; }
         public string Name { get; set; }
         public ShowableWorkstation()
         {
@@ -21,6 +22,7 @@ namespace BarProject.DatabaseProxy.Models.ReadModels
         {
             Id = workstation.id;
             Name = workstation.name;
+            LocationName = workstation.Location.name;
         }
     }
 }

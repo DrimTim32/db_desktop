@@ -21,6 +21,13 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
             var data = await client.ExecuteGetTaskAsync<List<ShowableLocation>>(request);
             return data;
         }
+        public void GetLocations(Action<IRestResponse<List<ShowableLocation>>, RestRequestAsyncHandle> callback)
+        {
+            var request = new RestRequest("api/locations/", Method.GET);
+            request.AddHeader("Authorization", $"bearer {token}");
+            request.AddHeader("Content-Type", "application/json");
+            client.ExecuteAsync(request, callback);
+        }
         public void RemoveLocation(int? id, Action<IRestResponse, RestRequestAsyncHandle> callback)
         {
             var request = new RestRequest($"api/locations/{id}", Method.DELETE);

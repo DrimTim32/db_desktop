@@ -23,19 +23,19 @@ namespace BarProject.DatabaseProxy.Functions
                 db.removeWorkstation(id);
             }
         }
-        public static void AddWorkstation(ShowableWorkstation workstation, int locationId)
+        public static void AddWorkstation(ShowableWorkstation workstation)
         {
             using (var db = new Entities())
             {
-                db.addWorkstation(workstation.Name, locationId);
+                var location = db.Locations.FirstOrDefault(x => x.name == workstation.LocationName);
+                db.addWorkstation(workstation.Name, location?.id);
             }
         }
         public static void UpdateWorkstation(int id, ShowableWorkstation workstation)
         {
             using (var db = new Entities())
             {
-                db.updateWorkstation(id, workstation.Name);
-
+                db.updateWorkstation(id, workstation.Name); 
             }
         }
     }

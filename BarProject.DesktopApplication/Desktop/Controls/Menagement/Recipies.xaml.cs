@@ -2,9 +2,11 @@
 using System.Collections.ObjectModel;
 using System.Net;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Threading;
 using BarProject.DatabaseProxy.Models.ReadModels;
 using BarProject.DesktopApplication.Common.Utils;
+using BarProject.DesktopApplication.Desktop.Windows;
 using RestSharp;
 using RestClient = BarProject.DesktopApplication.Library.RestHelpers.RestClient;
 
@@ -45,7 +47,9 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         {
             InitializeComponent();
             Loaded += Recipies_Loaded;
+            this.DataGrid.MouseDoubleClick += DataGrid_MouseDoubleClick;
         }
+
 
         private void Recipies_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
@@ -82,22 +86,17 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
         {
             this.Dispatcher.Invoke(DispatcherPriority.Background, new Action(DoRefreshData));
         }
-
-        private void RemoveTax(ShowableReceipt receipt)
+        private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            RestClient.Client().RemoveReceipt(receipt.Id,
-                           (response, handle) =>
-                           {
-                               if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
-                               {
-                                   MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
-                                       response.Content);
-                               }
-                               else
-                               {
-                                   RefreshData();
-                               }
-                           });
+            var dg = sender as DataGrid;
+            if (dg != null && dg.SelectedIndex >= 0)
+            {
+                var dgr = (DataGridRow)(dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex));
+                var receipt = (ShowableReceipt)dgr.Item;
+
+                var window = new RecipieDetailsWindow(receipt.Id.Value);
+                window.ShowDialog();
+            }
         }
 
     }

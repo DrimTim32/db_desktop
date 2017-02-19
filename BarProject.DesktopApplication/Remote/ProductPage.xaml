@@ -14,8 +14,8 @@
                 <Label FontSize="50">You are about to add:</Label>
                 <Label x:Name="ProductNameBlock" FontSize="50" Content="{Binding Product.Name}"></Label>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Height="106">
-                <Label FontSize="50">Quantity:</Label>
+            <StackPanel Orientation="Horizontal" Height="106" HorizontalAlignment="Right" >
+                <Label FontSize="50" Margin="0,0,100,0">Quantity:</Label>
                 <Label x:Name="QuantityValue" FontSize="50" Content="{Binding Data.Quantity}"/>
                 <StackPanel Orientation="Vertical">
                     <controls:Tile x:Name="TileUp" Style="{StaticResource SmallTileStyle}" Margin="0">
@@ -26,9 +26,9 @@
                     </controls:Tile>
                 </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <controls:Tile Click="AcceptButtonClick" Content="Accept" Style="{StaticResource MediumTileStyle}" FontSize="45"/>
-                <controls:Tile Content="Cancel" Style="{StaticResource MediumTileStyle}" FontSize="45"></controls:Tile>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                <controls:Tile Click="AcceptButtonClick" Content="Accept" Style="{StaticResource MediumTileStyle}" FontSize="45" Width="300"/>
+                <controls:Tile Click="ButtonBase_OnClick"  Content="Cancel" Style="{StaticResource MediumTileStyle}" FontSize="45" Width="300"></controls:Tile>
             </StackPanel>
         </StackPanel>
     </Grid>
