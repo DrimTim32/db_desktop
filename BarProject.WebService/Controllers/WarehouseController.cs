@@ -39,7 +39,7 @@ namespace BarProject.WebService.Controllers
             {
                 var claims = Request.GetOwinContext().Authentication.User.Claims;
                 var first = claims.First(x => x.Type == "username");
-                WarehouseFunctions.AddWarehouseOrder(first.Value,order);
+                WarehouseFunctions.AddWarehouseOrder(first.Value, order);
                 return Ok();
             }
             catch (Exception ex)
@@ -49,12 +49,42 @@ namespace BarProject.WebService.Controllers
         }
         [Authorize(Roles = "Admin,Owner")]
         [HttpGet, ResponseType(typeof(List<ShowableWarehouseOrderDetails>))]
-        [Route("details/{id}")]
+        [Route("orders/{id}/details")]
         public IHttpActionResult GetDetails(int id)
         {
             try
-            { 
+            {
                 return Ok(WarehouseFunctions.GetWarehouseOrdersDetails(id));
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+        [Authorize(Roles = "Admin,Owner")]
+        [HttpPost]
+        [Route("orders/{id}/details")]
+        public IHttpActionResult AddDetails(int id, ShowableWarehouseOrderDetails details)
+        {
+            try
+            {
+                WarehouseFunctions.AddWarehouseOrderDetails(id, details);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+        [Authorize(Roles = "Admin,Owner")]
+        [HttpPatch]
+        [Route("orders/{id}/details")]
+        public IHttpActionResult PatchDetails(int id, ShowableWarehouseOrderDetails details)
+        {
+            try
+            {
+                WarehouseFunctions.UpdateWarehouseOrderDetails(id, details);
+                return Ok();
             }
             catch (Exception ex)
             {

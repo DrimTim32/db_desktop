@@ -35,5 +35,21 @@ namespace BarProject.DatabaseProxy.Functions
                 db.addWarehouseOrder(user?.id, supplier?.id, location?.id, order.OrderDate, order.RequiredDate, null);
             }
         }
+        public static void AddWarehouseOrderDetails(int orderId, ShowableWarehouseOrderDetails details)
+        {
+            using (var db = new Entities())
+            {
+                var product = db.Products.FirstOrDefault(x => x.name == details.Name);
+                db.addWarehouseOrderDetail(orderId, product.id, details.UnitPrice, details.Quantity);
+            }
+        }
+        public static void UpdateWarehouseOrderDetails(int orderId, ShowableWarehouseOrderDetails details)
+        {
+            using (var db = new Entities())
+            {
+                var product = db.Products.FirstOrDefault(x => x.name == details.Name);
+                db.updateWarehouseOrderDetail(orderId, product.id, details.UnitPrice, details.Quantity);
+            }
+        }
     }
 }

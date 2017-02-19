@@ -8,14 +8,12 @@ namespace BarProject.DatabaseProxy.Models.ReadModels
         public ShowableWarehouseOrderDetails() { }
         public int? Id { get; set; }
         public string Name { get; set; }
-        public string CategoryName { get; set; }
+        public string ProductName { get; set; }
         public decimal UnitPrice { get; set; }
-        public short Quantity { get; set; }
-        public decimal Sum => UnitPrice * Quantity;
+        public short Quantity { get; set; } 
         public ShowableWarehouseOrderDetails(getWarehouseOrderDetailsPretty_Result result)
         {
             Name = result.name;
-            CategoryName = result.category_name;
             UnitPrice = result.purchase_price;
             Quantity = result.quantity; 
         }

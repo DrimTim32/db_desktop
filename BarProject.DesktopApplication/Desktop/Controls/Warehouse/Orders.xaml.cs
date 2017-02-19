@@ -228,7 +228,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
                 if (product?.Id == null)
                     return;
                 
-                var window = new OrdersDetailsWindow(product.Id.Value, ProductNames, CategoriesNames);
+                var window = new OrdersDetailsWindow(product.Id.Value, ProductNames);
                 window.Closed += (s, x) => RefreshData();
                 window.ShowDialog();
             }

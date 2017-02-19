@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BarProject.DesktopApplication.Desktop.Windows"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
-        Title="OrdersDetailsWindow" Height="300" Width="300">
+        Title="OrdersDetailsWindow" Height="300" Width="350">
     <Grid>
         <StackPanel>
             <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
@@ -15,9 +15,11 @@
                       ItemsSource="{Binding DetailsList}" SelectionMode="Single"  SelectionUnit="FullRow"
                       AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name"  Binding="{Binding Name}"/>
-                    <DataGridTextColumn Header="Category"  Binding="{Binding CategoryName}"/>
-                    <DataGridTextColumn Header="Quantity"  Binding="{Binding Quantity}"/>
+                    <DataGridComboBoxColumn Header="Product name" 
+                                                SelectedItemBinding="{Binding Name}" 
+                                                ItemsSource="{Binding}" x:Name="DataGridCombo"/>
+                    <controls:DataGridNumericUpDownColumn Header="Unit Price"  Binding="{Binding UnitPrice}" Interval="0.01"/>
+                    <controls:DataGridNumericUpDownColumn Header="Quantity"  Binding="{Binding Quantity}" Interval="1" Minimum="0"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

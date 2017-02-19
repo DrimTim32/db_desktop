@@ -30,11 +30,28 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
         }
         public async Task<IRestResponse<List<ShowableWarehouseOrderDetails>>> GetWarehouseOrdersDetails(int id)
         {
-            var request = new RestRequest($"api/warehouse/orders/{id}", Method.GET);
+            var request = new RestRequest($"api/warehouse/orders/{id}/details", Method.GET);
             request.AddHeader("Authorization", $"bearer {token}");
             request.AddHeader("Content-Type", "application/json");
             var data = await client.ExecuteGetTaskAsync<List<ShowableWarehouseOrderDetails>>(request);
             return data;
+        }
+        public void AddWarehouseOrderDetails(int orderId, ShowableWarehouseOrderDetails order, Action<IRestResponse, RestRequestAsyncHandle> callback)
+        {
+            var request = new RestRequest($"api/warehouse/orders/{orderId}/details", Method.POST);
+            request.AddHeader("Authorization", $"bearer {token}");
+            var json = JsonConvert.SerializeObject(order);
+            request.AddParameter("application/json; charset=utf-8", json, ParameterType.RequestBody);
+            request.RequestFormat = DataFormat.Json;
+            client.ExecuteAsync(request, callback);
+        }
+        public void UpdateWarehouseOrderDetails(int orderId, ShowableWarehouseOrderDetails order, Action<IRestResponse, RestRequestAsyncHandle> callback)
+        {
+            var request = new RestRequest($"api/warehouse/orders/{orderId}/details", Method.PATCH) { RequestFormat = DataFormat.Json };
+            request.AddHeader("Authorization", $"bearer {token}");
+            request.JsonSerializer = new JsonSerializer();
+            request.AddBody(order);
+            client.ExecuteAsync(request, callback);
         }
         public void UpdateWarehouseOrder(ShowableWarehouseOrder order, Action<IRestResponse, RestRequestAsyncHandle> callback)
         {
