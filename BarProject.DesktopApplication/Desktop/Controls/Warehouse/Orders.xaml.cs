@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using BarProject.DatabaseProxy.Functions;
 using BarProject.DatabaseProxy.Models.ReadModels;
 using BarProject.DatabaseProxy.Models.WriteModels;
 using BarProject.DesktopApplication.Common.Utils;
@@ -31,14 +32,14 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
     public partial class Orders : UserControl
     {
         private List<string> _productNames;
-        private List<string> _categoriesNames; 
+        private List<string> _categoriesNames;
 
 
 
         private readonly SafeCounter _counter = new SafeCounter();
         private readonly object counterLocker = new object();
         private readonly object productsLocker = new object();
-        private readonly object categoriesLocker = new object(); 
+        private readonly object categoriesLocker = new object();
         public List<string> ProductNames
         {
             get { lock (productsLocker) { return _productNames; } }
@@ -48,7 +49,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
         {
             get { lock (categoriesLocker) { return _categoriesNames; } }
             set { lock (categoriesLocker) { _categoriesNames = value; } }
-        } 
+        }
         public SafeCounter Counter
         {
             get
@@ -213,7 +214,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
                 var product = dgr.Item as ShowableWarehouseOrder;
                 if (product?.Id == null)
                     return;
-                
+
                 var window = new OrdersDetailsWindow(product.Id.Value, ProductNames);
                 window.Closed += (s, x) => RefreshData();
                 window.ShowDialog();
@@ -306,5 +307,19 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
             }
         }
         #endregion
+
+        private void MarkAsDelivered_Click(object sender, RoutedEventArgs e)
+        {
+
+            var dg = DataGrid;
+            if (dg != null && dg.SelectedIndex >= 0)
+            {
+                var dgr = (DataGridRow)(dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex));
+                var product = dgr.Item as ShowableWarehouseOrder;
+                if (product?.Id == null)
+                    return;
+                OrdersFuncstions.MarkAsDelivered(product.Id.Value);
+            }
+        }
     }
 }

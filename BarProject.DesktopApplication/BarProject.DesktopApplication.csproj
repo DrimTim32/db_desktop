@@ -147,6 +147,9 @@
     <Compile Include="Desktop\Controls\Warehouse\Orders.xaml.cs">
       <DependentUpon>Orders.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Desktop\Controls\Warehouse\Warehouse.xaml.cs">
+      <DependentUpon>Warehouse.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Desktop\Controls\Warehouse\WarehouseUserControl.xaml.cs">
       <DependentUpon>WarehouseUserControl.xaml</DependentUpon>
     </Compile>
@@ -260,6 +263,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Desktop\Controls\Warehouse\Orders.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Desktop\Controls\Warehouse\Warehouse.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

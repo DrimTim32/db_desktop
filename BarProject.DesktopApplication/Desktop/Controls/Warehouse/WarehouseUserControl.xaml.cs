@@ -41,10 +41,17 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
                 Header = "Client orders",
                 Content = new ClientOrders()
             };
+            var warehouse = new MetroTabItem()
+            {
+                Header = "Warehouse",
+                Content = new Warehouse()
+            };
             orders.SetResourceReference(StyleProperty, "MenuLevel2");
+            warehouse.SetResourceReference(StyleProperty, "MenuLevel2");
             clientorders.SetResourceReference(StyleProperty, "MenuLevel2");
             TabControl.Items.Clear();
             TabControl.Items.Add(orders);
+            TabControl.Items.Add(warehouse);
             TabControl.Items.Add(clientorders);
         }
     }

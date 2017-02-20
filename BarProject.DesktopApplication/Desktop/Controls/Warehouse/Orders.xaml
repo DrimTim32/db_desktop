@@ -16,7 +16,7 @@
                       AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Employee name"  Binding="{Binding EmployeeName}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Value"  Binding="{Binding Value}"/>
+                    <DataGridTextColumn Header="Value"  Binding="{Binding Value}" IsReadOnly="True"/>
                     <DataGridComboBoxColumn Header="Supplier" 
                                                 SelectedItemBinding="{Binding SupplierName}" 
                                                 ItemsSource="{Binding}" x:Name="SupplierBox"/>
@@ -40,6 +40,8 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
+
+            <Button Click="MarkAsDelivered_Click">Mark as delivered</Button>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -139,6 +139,7 @@
     <Compile Include="Models\ReadModels\ShowableTax.cs" />
     <Compile Include="Models\ReadModels\ShowableUnit.cs" />
     <Compile Include="Models\ReadModels\ShowableUser.cs" />
+    <Compile Include="Models\ReadModels\ShowableWarehouseItem.cs" />
     <Compile Include="Models\ReadModels\ShowableWarehouseOrder.cs" />
     <Compile Include="Models\ReadModels\ShowableWorkstation.cs" />
     <Compile Include="Models\ReadModels\ShowableWorkstationRights.cs" />

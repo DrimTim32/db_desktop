@@ -16,6 +16,65 @@ namespace BarProject.WebService.Controllers
     [RoutePrefix("api/warehouse")]
     public class WarehouseController : ApiController
     {
+
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
+        [HttpGet, ResponseType(typeof(List<ShowableWarehouseItem>))]
+        [Route("")]
+        public IHttpActionResult GetState()
+        {
+            try
+            {
+                return Ok(WarehouseFunctions.GetWarehouse());
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
+        [HttpPost, Route("")]
+        public IHttpActionResult PostItem(ShowableWarehouseItem item)
+        {
+            try
+            {
+                WarehouseFunctions.AddWarehouseItem(item);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
+        [HttpPatch, Route("")]
+        public IHttpActionResult PatchItem(ShowableWarehouseItem item)
+        {
+            try
+            {
+                WarehouseFunctions.UpdateWarehouseItem(item);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
+        [HttpDelete, Route("")]
+        public IHttpActionResult DeleteItem(ShowableWarehouseItem item)
+        {
+            try
+            {
+                WarehouseFunctions.RemoveWarehouseItem(item);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+
         [Authorize(Roles = "Admin,Owner,Warehouse")]
         [HttpGet, ResponseType(typeof(List<ShowableWarehouseOrder>))]
         [Route("orders")]

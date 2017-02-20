@@ -51,5 +51,43 @@ namespace BarProject.DatabaseProxy.Functions
                 db.updateWarehouseOrderDetail(orderId, product.id, details.UnitPrice, details.Quantity);
             }
         }
+
+        public static List<ShowableWarehouseItem> GetWarehouse()
+        {
+            using (var db = new Entities())
+            {
+                return db.Warehouse_pretty.ToAnotherType<Warehouse_pretty, ShowableWarehouseItem>().ToList();
+            }
+        }
+
+        public static object AddWarehouseItem(ShowableWarehouseItem item)
+        {
+            using (var db = new Entities())
+            {
+                var location = db.Locations.FirstOrDefault(x => x.name == item.LocationName);
+                var product = db.Products.FirstOrDefault(x => x.name == item.ProductName);
+                return db.addToWarehouse(location?.id, product?.id, item.Quantity);
+            }
+        }
+        public static object UpdateWarehouseItem(ShowableWarehouseItem item)
+        {
+            using (var db = new Entities())
+            {
+
+                var location = db.Locations.FirstOrDefault(x => x.name == item.LocationName);
+                var product = db.Products.FirstOrDefault(x => x.name == item.ProductName);
+                return db.updateQuantityInWarehouse(location?.id, product?.id, item.Quantity);
+            }
+        }
+        public static object RemoveWarehouseItem(ShowableWarehouseItem item)
+        {
+            using (var db = new Entities())
+            {
+
+                var location = db.Locations.FirstOrDefault(x => x.name == item.LocationName);
+                var product = db.Products.FirstOrDefault(x => x.name == item.ProductName);
+                return db.removeFromWarehouse(location?.id, product?.id);
+            }
+        }
     }
 }
