@@ -30,7 +30,11 @@ namespace BarProject.DesktopApplication.Remote
         public void AcceptOrder()
         {
             if (CurrentOrder.Sum == 0)
+            {
+                CurrentOrder.Clear();
+                OrderDetails.Visibility = Visibility.Hidden;
                 return;
+            }
             RestClient.Client().AddUserOrder(CurrentOrder, ((response, handle) =>
             {
                 if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
