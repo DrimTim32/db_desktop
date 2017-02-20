@@ -30,6 +30,7 @@ namespace BarProject.DesktopApplication.Remote
             window.ShowDialog();
             var name = window.OrderId;
             var wind = Window.GetWindow(this) as MainRemoteWindow;
+            wind.CreateNewOrder();
             wind.CurrentOrder.Name = name ?? RandomString(10);
             var page = new CategoriesPage();
             NavigationService.Navigate(page);

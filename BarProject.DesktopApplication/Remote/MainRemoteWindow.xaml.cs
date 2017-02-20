@@ -25,11 +25,12 @@ namespace BarProject.DesktopApplication.Remote
 
         public void RegisterProduct(ShowableSoldProduct product, short quantity)
         {
-            OrderDetails.Visibility = Visibility.Visible;
             CurrentOrder.AddProduct(product, quantity);
         }
         public void AcceptOrder()
         {
+            if (CurrentOrder.Sum == 0)
+                return;
             RestClient.Client().AddUserOrder(CurrentOrder, ((response, handle) =>
             {
                 if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
@@ -41,17 +42,27 @@ namespace BarProject.DesktopApplication.Remote
                     Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
                     {
                         CurrentOrder.Id = response.Data;
-                        OrderToDo.Add(CurrentOrder);
-                        CurrentOrder = new WritableOrder();
+                        QueueOrder(CurrentOrder);
+                        CreateNewOrder();
                         OrderDetails.Visibility = Visibility.Hidden;
                     }));
                 }
             }));
 
         }
+
+        private void QueueOrder(WritableOrder order)
+        {
+            OrderToDo.Add(new WritableOrder(order));
+        }
+        public void CreateNewOrder()
+        {
+            OrderDetails.Visibility = Visibility.Visible;
+            CurrentOrder.Clear();
+        }
         public void DiscardOrder()
         {
-            CurrentOrder = new WritableOrder();
+            CreateNewOrder();
             OrderDetails.Visibility = Visibility.Hidden;
         }
 

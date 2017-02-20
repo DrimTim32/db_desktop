@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using BarProject.DatabaseConnector;
+using BarProject.DatabaseProxy.Extensions;
+using BarProject.DatabaseProxy.Models.ReadModels;
 using BarProject.DatabaseProxy.Models.WriteModels;
 
 namespace BarProject.DatabaseProxy.Functions
@@ -32,8 +34,16 @@ namespace BarProject.DatabaseProxy.Functions
         public static void MarkPaid(int id)
         {
             using (var db = new Entities())
-            { 
+            {
                 db.markPaid(id);
+            }
+        }
+
+        public static IEnumerable<ShowableClientOrder> GetOrders()
+        {
+            using (var db = new Entities())
+            {
+                return db.Client_orders_pretty.ToAnotherType<Client_orders_pretty, ShowableClientOrder>().ToList();
             }
         }
     }

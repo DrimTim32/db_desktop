@@ -11,6 +11,13 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
 {
     public partial class RestClient
     {
+        public async Task<IRestResponse<List<ShowableClientOrder>>> GetClientOrders()
+        {
+            var request = new RestRequest("api/orders/", Method.GET);
+            request.AddHeader("Authorization", $"bearer {token}");  
+            var data = await client.ExecuteGetTaskAsync<List<ShowableClientOrder>>(request);
+            return data;
+        }
         public void AddUserOrder(WritableOrder order, Action<IRestResponse<int>, RestRequestAsyncHandle> callback)
         {
             var request = new RestRequest("api/orders/", Method.POST);
@@ -74,7 +81,7 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
         public void MarkPaid(int id, Action<IRestResponse, RestRequestAsyncHandle> callback)
         {
             var request = new RestRequest($"api/orders/mark/{id}", Method.POST);
-            request.AddHeader("Authorization", $"bearer {token}");  
+            request.AddHeader("Authorization", $"bearer {token}");
             request.RequestFormat = DataFormat.Json;
             client.ExecuteAsync(request, callback);
         }

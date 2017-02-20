@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 using BarProject.DatabaseProxy.Functions;
 using BarProject.DatabaseProxy.Models.ExceptionHandlers;
 using BarProject.DatabaseProxy.Models.ReadModels;
@@ -38,6 +40,19 @@ namespace BarProject.WebService.Controllers
             {
                 OrdersFuncstions.MarkPaid(id);
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+        [HttpGet, Route(""), Authorize]
+        [ResponseType(typeof(IEnumerable<ShowableClientOrder>))]
+        public IHttpActionResult GetOrders()
+        {
+            try
+            { 
+                return Ok(OrdersFuncstions.GetOrders());
             }
             catch (Exception ex)
             {

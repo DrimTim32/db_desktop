@@ -141,6 +141,9 @@
     <Compile Include="Desktop\Controls\Menagement\Recipies.xaml.cs">
       <DependentUpon>Recipies.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Desktop\Controls\Warehouse\ClientOrders.xaml.cs">
+      <DependentUpon>ClientOrders.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Desktop\Controls\Warehouse\Orders.xaml.cs">
       <DependentUpon>Orders.xaml</DependentUpon>
     </Compile>
@@ -249,6 +252,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Desktop\Controls\Menagement\Recipies.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Desktop\Controls\Warehouse\ClientOrders.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
