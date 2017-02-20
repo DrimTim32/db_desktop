@@ -5,10 +5,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
       mc:Ignorable="d"  
-      Title="Subpages">  
-    <Grid> 
-        <controls:Tile Title="NEW ORDER" Style="{StaticResource LargeTileStyle}" Background="Red" Height="450" Width="450" Click="Tile_Click">
-            <Image Source="../Resources/Finance-Purchase-Order-icon.png" Width="250"/>
-        </controls:Tile>
+      Title="Subpages">
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <controls:Tile Title="NEW ORDER" Style="{StaticResource LargeTileStyle}" Background="Red" Height="450" Width="450" Click="NewOrder_Click">
+                <Image Source="../Resources/Finance-Purchase-Order-icon.png" Width="250"/>
+            </controls:Tile>
+            <controls:Tile Title="ORDERS" Style="{StaticResource LargeTileStyle}" Background="Green" Height="450" Width="450" Click="Orders_Show">
+                <Image Source="../Resources/Finance-Purchase-Order-icon.png" Width="250"/>
+            </controls:Tile>
+        </StackPanel>
     </Grid>
 </Page>

@@ -22,7 +22,21 @@ namespace BarProject.WebService.Controllers
                 var claims = Request.GetOwinContext().Authentication.User.Claims;
                 var first = claims.First(x => x.Type == "username");
 
-                OrdersFuncstions.AddOrder(first.Value, location);
+                var id = OrdersFuncstions.AddOrder(first.Value, location);
+                return Ok(id);
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+        [HttpPost, Route("mark/{id}")]
+        [Authorize]
+        public IHttpActionResult MarkPaid(int id)
+        {
+            try
+            {
+                OrdersFuncstions.MarkPaid(id);
                 return Ok();
             }
             catch (Exception ex)
@@ -30,5 +44,6 @@ namespace BarProject.WebService.Controllers
                 throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
             }
         }
+
     }
 }

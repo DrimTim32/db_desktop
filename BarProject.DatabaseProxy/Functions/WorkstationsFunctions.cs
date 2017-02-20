@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BarProject.DatabaseProxy.Models;
 
 namespace BarProject.DatabaseProxy.Functions
 {
@@ -39,5 +40,36 @@ namespace BarProject.DatabaseProxy.Functions
                 db.updateWorkstation(id, location?.id, workstation.Name);
             }
         }
+        public static List<ShowableWorkstationRights> GetWorkstationsRights()
+        {
+            using (var db = new Entities())
+            {
+                return
+                    db.Workstations_with_rights_pretty
+                        .ToAnotherType<Workstations_with_rights_pretty, ShowableWorkstationRights>().ToList();
+            }
+        }
+        public static void AddWorkstationRights(int id, UserPrivileges privlidges)
+        {
+            using (var db = new Entities())
+            {
+                db.addWorkstationRights(id, (byte)privlidges);
+            }
+        }
+        public static void UpdateWorkstationRights(int id, UserPrivileges workstation)
+        {
+            using (var db = new Entities())
+            {
+                // TODO : update workstation rights
+            }
+        }
+        public static void RemoveWorkstationRights(int id, UserPrivileges workstation)
+        {
+            using (var db = new Entities())
+            {
+                db.removeWorkstationRights(id, (byte)workstation);
+            }
+        }
+
     }
 }

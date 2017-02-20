@@ -23,12 +23,28 @@ namespace BarProject.DesktopApplication.Remote
         public MainPage()
         {
             InitializeComponent();
-        } 
-        private void Tile_Click(object sender, RoutedEventArgs e)
+        }
+        private void NewOrder_Click(object sender, RoutedEventArgs e)
         {
+            var window = new OrderCodeWindow();
+            window.ShowDialog();
+            var name = window.OrderId;
+            var wind = Window.GetWindow(this) as MainRemoteWindow;
+            wind.CurrentOrder.Name = name ?? RandomString(10);
             var page = new CategoriesPage();
             NavigationService.Navigate(page);
 
+        }
+        private static Random random = new Random();
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+        private void Orders_Show(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Orders());
         }
     }
 }

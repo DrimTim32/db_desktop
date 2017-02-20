@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BarProject.DatabaseConnector;
 using BarProject.DatabaseProxy.Models.WriteModels;
 
@@ -10,7 +8,7 @@ namespace BarProject.DatabaseProxy.Functions
 {
     public static class OrdersFuncstions
     {
-        public static void AddOrder(string userName, WritableOrder order)
+        public static int AddOrder(string userName, WritableOrder order)
         {
             using (var db = new Entities())
             {
@@ -18,7 +16,7 @@ namespace BarProject.DatabaseProxy.Functions
                 var localOrder = new Client_orders()
                 {
                     employee_id = id,
-                    order_time = DateTime.Now,
+                    order_time = order.OrderTime,
                     spot_id = 1,
                 };
                 db.Client_orders.Add(localOrder);
@@ -27,6 +25,15 @@ namespace BarProject.DatabaseProxy.Functions
                 {
                     db.addClientOrderDetail(localOrder.id, o.ProductId, o.Quantity);
                 }
+                return localOrder.id;
+            }
+        }
+
+        public static void MarkPaid(int id)
+        {
+            using (var db = new Entities())
+            { 
+                db.markPaid(id);
             }
         }
     }

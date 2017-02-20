@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Windows;
 using System.Windows.Navigation;
@@ -14,7 +15,8 @@ namespace BarProject.DesktopApplication.Remote
     using MahApps.Metro.Controls;
     public partial class MainRemoteWindow : MetroWindow
     {
-        public WritableOrder Order { get; set; } = new WritableOrder();
+        public static List<WritableOrder> OrderToDo { get; set; } = new List<WritableOrder>();
+        public WritableOrder CurrentOrder { get; set; } = new WritableOrder();
         public MainRemoteWindow(string username)
         {
             InitializeComponent();
@@ -24,11 +26,11 @@ namespace BarProject.DesktopApplication.Remote
         public void RegisterProduct(ShowableSoldProduct product, short quantity)
         {
             OrderDetails.Visibility = Visibility.Visible;
-            Order.AddProduct(product, quantity);
+            CurrentOrder.AddProduct(product, quantity);
         }
         public void AcceptOrder()
         {
-            RestClient.Client().AddUserOrder(Order, ((response, handle) =>
+            RestClient.Client().AddUserOrder(CurrentOrder, ((response, handle) =>
             {
                 if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
                 {
@@ -37,17 +39,19 @@ namespace BarProject.DesktopApplication.Remote
                 else
                 {
                     Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
-                    { 
-                        Order.Clear();
+                    {
+                        CurrentOrder.Id = response.Data;
+                        OrderToDo.Add(CurrentOrder);
+                        CurrentOrder = new WritableOrder();
                         OrderDetails.Visibility = Visibility.Hidden;
                     }));
                 }
             }));
 
-        } 
+        }
         public void DiscardOrder()
         {
-            Order.Clear();
+            CurrentOrder = new WritableOrder();
             OrderDetails.Visibility = Visibility.Hidden;
         }
 
@@ -69,5 +73,23 @@ namespace BarProject.DesktopApplication.Remote
             GoToFirstPage();
         }
 
+        public void SetAsPaid(WritableOrder order)
+        {
+            RestClient.Client().MarkPaid(order.Id, ((response, handle) =>
+            {
+                if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
+                {
+                    MessageBoxesHelper.ShowProblemWithRequest(response);
+                }
+                else
+                {
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
+                    {
+                        OrderToDo.Remove(order);
+                        OrderDetails.Visibility = Visibility.Hidden;
+                    }));
+                }
+            }));
+        }
     }
 }

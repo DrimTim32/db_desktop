@@ -34,6 +34,7 @@ namespace BarProject.DesktopApplication.Remote
         }
         public CategoriesPage(int? id = null, int? overridingId = null)
         {
+            
             _currentId = id;
             _overriding = overridingId;
             InitializeComponent();
@@ -54,12 +55,7 @@ namespace BarProject.DesktopApplication.Remote
             tile.SetResourceReference(StyleProperty, "LargeTileStyle");
             WrapPanel.Children.Add(tile);
         }
-
-        private class State
-        {
-            public int Id { get; set; }
-            public string Title { get; set; }
-        }
+         
         private void AddProductTile(string title, ShowableSoldProduct product)
         {
             var tile = new Tile { Title = title };
