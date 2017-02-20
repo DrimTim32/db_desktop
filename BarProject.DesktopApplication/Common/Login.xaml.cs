@@ -1,4 +1,6 @@
-﻿namespace BarProject.DesktopApplication.Common
+﻿using System.Text.RegularExpressions;
+
+namespace BarProject.DesktopApplication.Common
 {
     using System;
     using System.Configuration;
@@ -20,12 +22,16 @@
     /// </summary>
     public partial class Login : MetroWindow
     {
+        private int SpotId { get; }
+        private int WorkstationId { get; }
         public Login()
         {
             InitializeComponent();
             LoginBox.Text = "malin";
             PasswordBox.Password = "qwerty";
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            SpotId = ConfigHelper.Spot;
+            WorkstationId = ConfigHelper.Workstation;
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -93,35 +99,43 @@
                 Close();
             }
         }
-         
+
         private void LogIn(string login, string password)
         {
             Dispatcher.Invoke(DispatcherPriority.Background, new Action(() => { DoLogin(login, password); }));
-        } 
+        }
+        Regex dataRegex = new Regex(@"""error_description"":""(.*?)""");
         private void DoLogin(string login, string password)
         {
             ProgressBarStart();
             try
             {
                 Library.RestHelpers.RestClient.Client(ConfigurationManager.AppSettings["apiUrl"])
-                    .AutenticateMe(login, password, (response, privlidges) =>
-                    {
-                        if (response.ResponseStatus == ResponseStatus.TimedOut)
-                        {
-                            MessageBoxesHelper.ShowProblemWithRequest(response);
-                            Application.Current.Dispatcher.Invoke(ProgressBarStop);
-                        }
-                        else if (response.StatusCode != HttpStatusCode.OK)
-                        {
-                            MessageBoxesHelper.ShowWindowInformation("Problem with login",
-                                "Make sure that both password and login are correct");
-                            Application.Current.Dispatcher.Invoke(ProgressBarStop);
-                        }
-                        else
-                        {
-                            Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() => { ChooseWindow(privlidges, login); }));
-                        }
-                    });
+                    .AutenticateMe(login, password, SpotId, WorkstationId, (response, privlidges) =>
+                     {
+                         if (response.ResponseStatus == ResponseStatus.TimedOut)
+                         {
+                             MessageBoxesHelper.ShowProblemWithRequest(response);
+                             Application.Current.Dispatcher.Invoke(ProgressBarStop);
+                         }
+                         else if (response.ResponseStatus == ResponseStatus.Completed &&
+                                    response.StatusCode == HttpStatusCode.BadRequest)
+                         {
+                             var match = dataRegex.Match(response.Content);
+                             MessageBoxesHelper.ShowWindowInformation("Forbidden", match.Groups[1].Value);
+                             Application.Current.Dispatcher.Invoke(ProgressBarStop);
+                         }
+
+                         else if (response.StatusCode != HttpStatusCode.OK)
+                         {
+                             MessageBoxesHelper.ShowProblemWithRequest(response);
+                             Application.Current.Dispatcher.Invoke(ProgressBarStop);
+                         }
+                         else
+                         {
+                             Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() => { ChooseWindow(privlidges, login); }));
+                         }
+                     });
 
             }
             catch (Exception ex)

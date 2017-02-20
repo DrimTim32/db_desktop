@@ -43,6 +43,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
             Loaded += ItemsLoaded;
             DataGrid.RowEditEnding += DataGrid_RowEditEnding;
             DataGrid.PreviewKeyDown += DataGrid_PreviewKeyDown;
+            DataGrid.BeginningEdit += DataGrid_BeginningEdit;
         }
 
         private readonly object possibleLocationsLock = new object();
@@ -61,6 +62,11 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
                 }
             }
         }
+        private void DataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            e.Cancel = !e.Row.IsNewItem;
+        }
+
 
         private void RefreshAll()
         {
@@ -167,8 +173,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
                         if (response.ResponseStatus != ResponseStatus.Completed ||
                             response.StatusCode != HttpStatusCode.OK)
                         {
-                            MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
-                                response.Content.Replace("Reason", ""));
+                            MessageBoxesHelper.ShowProblemWithRequest(response);
                         }
                         RefreshData();
                     });
@@ -180,8 +185,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
                         if (response.ResponseStatus != ResponseStatus.Completed ||
                             response.StatusCode != HttpStatusCode.OK)
                         {
-                            MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
-                                response.Content.Replace("Reason", ""));
+                            MessageBoxesHelper.ShowProblemWithRequest(response);
                         }
                         RefreshData();
                     });

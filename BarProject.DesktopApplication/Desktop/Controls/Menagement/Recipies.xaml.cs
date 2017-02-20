@@ -89,8 +89,13 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             {
                 if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
                 {
-                    MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
-                        response.Content);
+                    if (response.Content.Contains("he DELETE statement"))
+                    {
+
+                        MessageBoxesHelper.ShowWindowInformationAsync("Unable to remove this recipie", "This recipies is being used");
+                    }
+                    else
+                        MessageBoxesHelper.ShowProblemWithRequest(response);
                 }
                 else
                 {

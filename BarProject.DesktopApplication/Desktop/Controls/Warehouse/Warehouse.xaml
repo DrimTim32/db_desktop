@@ -13,7 +13,7 @@
             <DataGrid Name="DataGrid"                       
                       DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:Warehouse}}"
                       ItemsSource="{Binding ItemsList}" SelectionMode="Single"
-                      AutoGenerateColumns="False">
+                      AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridComboBoxColumn Header="Product" 
                                                 SelectedItemBinding="{Binding ProductName}" 

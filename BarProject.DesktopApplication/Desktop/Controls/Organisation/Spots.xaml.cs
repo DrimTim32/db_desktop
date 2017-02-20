@@ -80,9 +80,15 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
             Loaded += Locations_Loaded;
             DataGrid.RowEditEnding += DataGrid_RowEditEnding;
             DataGrid.PreviewKeyDown += DataGrid_PreviewKeyDown;
+            DataGrid.BeginningEdit += DataGrid_BeginningEdit;
             GetAll();
         }
 
+        private void DataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            e.Cancel = !e.Row.IsNewItem;
+        }
+         
         private void Locations_Loaded(object sender, RoutedEventArgs e)
         {
             RefreshData();
@@ -162,16 +168,16 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
                 }
                 else
                 {
-                    RestClient.Client().UpdateSpot(location, (response, handle) =>
-                    {
-                        if (response.ResponseStatus != ResponseStatus.Completed ||
-                            response.StatusCode != HttpStatusCode.OK)
-                        {
-                            MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
-                                response.Content.Replace("Reason", ""));
-                        }
-                        RefreshData();
-                    });
+                    //RestClient.Client().UpdateSpot(location, (response, handle) =>
+                    //{
+                    //    if (response.ResponseStatus != ResponseStatus.Completed ||
+                    //        response.StatusCode != HttpStatusCode.OK)
+                    //    {
+                    //        MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
+                    //            response.Content.Replace("Reason", ""));
+                    //    }
+                    //    RefreshData();
+                    //});
                 }
 
             }

@@ -85,6 +85,18 @@
             }
         }
 
+        public static bool UserCanLoginOnLocation(UserPrivileges privileges, int locationId)
+        {
+            using (var db = new Entities())
+            {
+                var rights = db.Workstations_with_rights_pretty.FirstOrDefault(x => x.id == locationId);
+                var id = rights.id;
+                var v = db.EmployePermissions.Where(x => x.id == id);
+                var rightValue = v.FirstOrDefault().value.Value;
+                return rightValue <= (byte)privileges;
+            }
+        }
+
         public static void RemoveUser(string username)
         {
             using (var db = new Entities())

@@ -70,7 +70,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
             InitializeComponent();
             Loaded += Warehouse_Loaded;
             DataGrid.PreviewKeyDown += DataGrid_PreviewKeyDown;
-            DataGrid.RowEditEnding += DataGrid_RowEditEnding;
+            //DataGrid.RowEditEnding += DataGrid_RowEditEnding;
         }
 
         private void Warehouse_Loaded(object sender, RoutedEventArgs e)

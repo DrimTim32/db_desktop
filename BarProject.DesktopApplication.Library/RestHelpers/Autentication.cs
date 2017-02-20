@@ -15,11 +15,11 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
     {
         static Regex tokenRegex = new Regex("\"access_token\":\"(.*?)\"", RegexOptions.Multiline);
         static Regex UserPrivilegesRegex = new Regex("\"UserPrivileges\":\"(.*?)\"", RegexOptions.Multiline);
-        public void AutenticateMe(string login, string password, Action<IRestResponse, UserPrivileges> callback)
+        public void AutenticateMe(string login, string password, int spotId, int workstationId, Action<IRestResponse, UserPrivileges> callback)
         {
             client.Authenticator = new HttpBasicAuthenticator(login, password);
             var request = new RestRequest("token", Method.POST);
-            string encodedBody = $"grant_type=password&username={login}&password={password}";
+            string encodedBody = $"grant_type=password&username={login}&password={password}&spotId={spotId}&workstationId={workstationId}";
             request.AddParameter("application/x-www-form-urlencoded", encodedBody, ParameterType.RequestBody);
             request.AddParameter("Content-Type", "application/x-www-form-urlencoded", ParameterType.HttpHeader);
             request.Timeout = 10000;
