@@ -10,6 +10,7 @@
     <Grid>
         <StackPanel>
             <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
+            <ContentControl>
             <DataGrid Name="DataGrid"                       
                       DataContext="{Binding RelativeSource={RelativeSource AncestorType=warehouse:Orders}}"
                       ItemsSource="{Binding OrdersList}" SelectionMode="Single"  SelectionUnit="FullRow"
@@ -39,7 +40,8 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
-            </DataGrid>
+                </DataGrid>
+            </ContentControl>
 
             <Button Click="MarkAsDelivered_Click">Mark as delivered</Button>
         </StackPanel>

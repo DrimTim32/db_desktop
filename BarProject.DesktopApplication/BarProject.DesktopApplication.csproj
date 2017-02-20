@@ -160,6 +160,9 @@
     <Compile Include="Desktop\Introduction.xaml.cs">
       <DependentUpon>Introduction.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Desktop\Windows\ClientOrderDetailsWindow.xaml.cs">
+      <DependentUpon>ClientOrderDetailsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Desktop\Windows\OrdersDetailsWindow.xaml.cs">
       <DependentUpon>OrdersDetailsWindow.xaml</DependentUpon>
     </Compile>
@@ -313,6 +316,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Desktop\Windows\AddUserWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Desktop\Windows\ClientOrderDetailsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

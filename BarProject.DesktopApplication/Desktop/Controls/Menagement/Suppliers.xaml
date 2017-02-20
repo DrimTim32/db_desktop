@@ -11,22 +11,24 @@
         <StackPanel>
 
             <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
-            <DataGrid Name="DataGrid"                       
+            <ContentControl>
+                <DataGrid Name="DataGrid"                       
                       DataContext="{Binding RelativeSource={RelativeSource AncestorType=menagement:Suppliers}}"
                       ItemsSource="{Binding SuppliersList}"  SelectionMode="Single"  SelectionUnit="FullRow"      
                       AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name"  Binding="{Binding Name}"/>
-                    <DataGridTextColumn Header="Address"  Binding="{Binding Address}"/>
-                    <DataGridTextColumn Header="City"  Binding="{Binding City}"/>
-                    <DataGridTextColumn Header="PostalCode"  Binding="{Binding PostalCode}"/>
-                    <DataGridTextColumn Header="Country"  Binding="{Binding Country }"/>
-                    <DataGridTextColumn Header="ContactName"  Binding="{Binding ContactName}"/>
-                    <DataGridTextColumn Header="Phone"  Binding="{Binding Phone}"/>
-                    <DataGridTextColumn Header="Fax"  Binding="{Binding Fax}"/>
-                    <DataGridTextColumn Header="Website"  Binding="{Binding Website}"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name"  Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="Address"  Binding="{Binding Address}"/>
+                        <DataGridTextColumn Header="City"  Binding="{Binding City}"/>
+                        <DataGridTextColumn Header="PostalCode"  Binding="{Binding PostalCode}"/>
+                        <DataGridTextColumn Header="Country"  Binding="{Binding Country }"/>
+                        <DataGridTextColumn Header="ContactName"  Binding="{Binding ContactName}"/>
+                        <DataGridTextColumn Header="Phone"  Binding="{Binding Phone}"/>
+                        <DataGridTextColumn Header="Fax"  Binding="{Binding Fax}"/>
+                        <DataGridTextColumn Header="Website"  Binding="{Binding Website}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ContentControl>
         </StackPanel>
     </Grid>
 </UserControl>

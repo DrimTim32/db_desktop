@@ -14,8 +14,15 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
         public async Task<IRestResponse<List<ShowableClientOrder>>> GetClientOrders()
         {
             var request = new RestRequest("api/orders/", Method.GET);
-            request.AddHeader("Authorization", $"bearer {token}");  
+            request.AddHeader("Authorization", $"bearer {token}");
             var data = await client.ExecuteGetTaskAsync<List<ShowableClientOrder>>(request);
+            return data;
+        }
+        public async Task<IRestResponse<List<ShowableClientOrderDetails>>> GetClientOrdersDetails(int id)
+        {
+            var request = new RestRequest($"api/orders/{id}/details", Method.GET); 
+            request.AddHeader("Authorization", $"bearer {token}");
+            var data = await client.ExecuteGetTaskAsync<List<ShowableClientOrderDetails>>(request);
             return data;
         }
         public void AddUserOrder(WritableOrder order, Action<IRestResponse<int>, RestRequestAsyncHandle> callback)

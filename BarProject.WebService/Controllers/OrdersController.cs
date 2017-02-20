@@ -51,8 +51,21 @@ namespace BarProject.WebService.Controllers
         public IHttpActionResult GetOrders()
         {
             try
-            { 
+            {
                 return Ok(OrdersFuncstions.GetOrders());
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+        [HttpGet, Route("{id}/details"), Authorize]
+        [ResponseType(typeof(IEnumerable<ShowableClientOrder>))]
+        public IHttpActionResult GetOrdersDetails(int id)
+        {
+            try
+            {
+                return Ok(OrdersFuncstions.GetDetails(id));
             }
             catch (Exception ex)
             {

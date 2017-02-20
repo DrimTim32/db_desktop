@@ -10,18 +10,20 @@
     <Grid>
         <StackPanel>
             <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
-            <DataGrid Name="DataGrid"                       
+            <ContentControl>
+                <DataGrid Name="DataGrid"                       
                       DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:OrdersDetailsWindow}}"
                       ItemsSource="{Binding DetailsList}" SelectionMode="Single"  SelectionUnit="FullRow"
                       AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <DataGridComboBoxColumn Header="Product name" 
+                    <DataGrid.Columns>
+                        <DataGridComboBoxColumn Header="Product name" 
                                                 SelectedItemBinding="{Binding Name}" 
                                                 ItemsSource="{Binding}" x:Name="DataGridCombo"/>
-                    <controls:DataGridNumericUpDownColumn Header="Unit Price"  Binding="{Binding UnitPrice}" Interval="0.01"/>
-                    <controls:DataGridNumericUpDownColumn Header="Quantity"  Binding="{Binding Quantity}" Interval="1" Minimum="0"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                        <controls:DataGridNumericUpDownColumn Header="Unit Price"  Binding="{Binding UnitPrice}" Interval="0.01"/>
+                        <controls:DataGridNumericUpDownColumn Header="Quantity"  Binding="{Binding Quantity}" Interval="1" Minimum="0"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ContentControl>
         </StackPanel>
     </Grid>
 </controls:MetroWindow>

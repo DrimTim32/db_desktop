@@ -10,6 +10,7 @@
     <Grid>
         <StackPanel>
             <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
+            <ContentControl>
             <DataGrid Name="DataGrid"                       
                       DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:RecipieDetailsWindow}}"
                       ItemsSource="{Binding DetailsList}" SelectionMode="Single"  SelectionUnit="FullRow"
@@ -21,7 +22,8 @@
                                                 ItemsSource="{Binding}" x:Name="DataGridCombo"/> 
                     <controls:DataGridNumericUpDownColumn Header="Quantity" Interval="1"  Binding="{Binding Quantity}" Minimum="0" />
                 </DataGrid.Columns>
-            </DataGrid>
+                </DataGrid>
+            </ContentControl>
         </StackPanel>
     </Grid>
 </controls:MetroWindow>

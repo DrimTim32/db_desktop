@@ -10,20 +10,22 @@
     <Grid>
         <StackPanel>
             <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
-            <DataGrid Name="DataGrid"                       
+            <ContentControl>
+                <DataGrid Name="DataGrid"                       
                       DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:ClientOrders}}"
                       ItemsSource="{Binding CategoriesList}" SelectionMode="Single"
                       AutoGenerateColumns="False"  IsReadOnly="True">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Order time"  Binding="{Binding OrderTime}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Payment time"  Binding="{Binding PaymentTime}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Value"  Binding="{Binding Value}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Spot name"  Binding="{Binding SpotName}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Location name"  Binding="{Binding LocationName}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Employee name"  Binding="{Binding Name}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Employee surname"  Binding="{Binding Surname}" IsReadOnly="True"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Order time"  Binding="{Binding OrderTime}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Payment time"  Binding="{Binding PaymentTime}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Value"  Binding="{Binding Value}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Spot name"  Binding="{Binding SpotName}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Location name"  Binding="{Binding LocationName}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Employee name"  Binding="{Binding Name}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Employee surname"  Binding="{Binding Surname}" IsReadOnly="True"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ContentControl>
         </StackPanel>
     </Grid>
 </UserControl>

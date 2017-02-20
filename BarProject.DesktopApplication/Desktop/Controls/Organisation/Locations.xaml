@@ -11,19 +11,21 @@
     <Grid>
         <StackPanel>
             <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
-            <DataGrid Name="DataGrid"                       
+            <ContentControl>
+                <DataGrid Name="DataGrid"                       
                       DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:Locations}}"
                       ItemsSource="{Binding LocationsList}" SelectionMode="Single"  SelectionUnit="FullRow"
                       AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name"  Binding="{Binding Name}"/>
-                    <DataGridTextColumn Header="Address"  Binding="{Binding Address}"/>
-                    <DataGridTextColumn Header="City"  Binding="{Binding City}"/>
-                    <DataGridTextColumn Header="Country"  Binding="{Binding Country}"/>
-                    <DataGridTextColumn Header="Phone"  Binding="{Binding Phone}"/>
-                    <DataGridTextColumn Header="Postal Code"  Binding="{Binding PostalCode}"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name"  Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="Address"  Binding="{Binding Address}"/>
+                        <DataGridTextColumn Header="City"  Binding="{Binding City}"/>
+                        <DataGridTextColumn Header="Country"  Binding="{Binding Country}"/>
+                        <DataGridTextColumn Header="Phone"  Binding="{Binding Phone}"/>
+                        <DataGridTextColumn Header="Postal Code"  Binding="{Binding PostalCode}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ContentControl>
         </StackPanel>
     </Grid>
 </UserControl>

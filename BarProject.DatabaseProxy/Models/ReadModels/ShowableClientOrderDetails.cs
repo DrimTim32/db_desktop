@@ -24,7 +24,17 @@ namespace BarProject.DatabaseProxy.Models.ReadModels
 
         public ShowableClientOrderDetails(Client_order_details_pretty order)
         {
-
+            ProductName = order.product_name;
+            CategoryName = order.category_name;
+            Price = order.price;
+            Quantity = order.quantity;
+            OrderTime = order.order_time;
+            PaymentTime = order.payment_time;
+            SpotName = order.spot_name;
+            Address = order.address;
+            LocationName = order.location_name;
+            Name = order.user_name;
+            Surname = order.surname;
         }
     }
 }

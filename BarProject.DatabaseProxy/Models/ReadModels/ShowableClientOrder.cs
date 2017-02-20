@@ -1,10 +1,11 @@
-﻿using System; 
+﻿using System;
 using BarProject.DatabaseConnector;
 
 namespace BarProject.DatabaseProxy.Models.ReadModels
 {
     public class ShowableClientOrder
     {
+        public int? Id { get; set; }
         public Nullable<System.DateTime> OrderTime { get; set; }
         public Nullable<System.DateTime> PaymentTime { get; set; }
         public Nullable<decimal> Value { get; set; }
@@ -23,6 +24,7 @@ namespace BarProject.DatabaseProxy.Models.ReadModels
             Name = orders.user_name;
             LocationName = orders.location_name;
             Surname = orders.surname;
+            Id = orders.id;
 
         }
     }

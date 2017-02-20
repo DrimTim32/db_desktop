@@ -11,7 +11,7 @@
 
         <StackPanel Orientation="Vertical">
             <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
-            <ContentControl>
+            <ContentControl MaxHeight="600">
                 <DataGrid Name="DataGrid"                       
                       DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:Products}}"
                       ItemsSource="{Binding ProductLists}"  SelectionMode="Single"  SelectionUnit="FullRow"      

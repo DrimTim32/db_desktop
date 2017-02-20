@@ -10,18 +10,20 @@
     <Grid>
         <StackPanel>
             <Controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
-            <DataGrid Name="DataGrid" SelectionMode="Single"  SelectionUnit="FullRow"            
+            <ContentControl>
+                <DataGrid Name="DataGrid" SelectionMode="Single"  SelectionUnit="FullRow"            
                       DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:Categories}}"
                       ItemsSource="{Binding CategoriesList}" 
                       AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Slug"  Binding="{Binding Slug}"/>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                    <DataGridComboBoxColumn Header="Overriding Category" 
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Slug"  Binding="{Binding Slug}"/>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                        <DataGridComboBoxColumn Header="Overriding Category" 
                                                 SelectedItemBinding="{Binding Overriding}" 
                                                 ItemsSource="{Binding}" x:Name="DataGridCombo"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ContentControl>
         </StackPanel>
     </Grid>
 </UserControl>

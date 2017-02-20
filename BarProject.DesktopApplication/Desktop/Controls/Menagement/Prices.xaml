@@ -10,6 +10,7 @@
     <Grid>
         <StackPanel>
             <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
+            <ContentControl>
             <DataGrid x:Name="DataGrid"  DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:Prices}}"
                       ItemsSource="{Binding PricesList}" SelectionMode="Single"  SelectionUnit="FullRow"        
                       AutoGenerateColumns="False" IsReadOnly="True">
@@ -17,7 +18,8 @@
                     <DataGridTextColumn Header="Name"  Binding="{Binding Name}"/>
                     <DataGridTextColumn Header="Price"  Binding="{Binding Price}"/>
                 </DataGrid.Columns>
-            </DataGrid>
+                </DataGrid>
+            </ContentControl>
         </StackPanel>
     </Grid>
 </UserControl>

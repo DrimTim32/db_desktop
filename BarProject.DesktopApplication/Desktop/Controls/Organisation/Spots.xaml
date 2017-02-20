@@ -10,17 +10,19 @@
     <Grid>
         <StackPanel>
             <controls:MetroProgressBar IsIndeterminate="True" Visibility="Hidden" x:Name="Progress"/>
-            <DataGrid Name="DataGrid"                       
+            <ContentControl>
+                <DataGrid Name="DataGrid"                       
                       DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:Spots}}"
                       ItemsSource="{Binding SpotsList}" SelectionMode="Single"  SelectionUnit="FullRow"
                       AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Location Name"  Binding="{Binding Name}"/>
-                    <DataGridComboBoxColumn Header="Name" 
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Location Name"  Binding="{Binding Name}"/>
+                        <DataGridComboBoxColumn Header="Name" 
                                                 SelectedItemBinding="{Binding LocationName}" 
-                                                ItemsSource="{Binding}" x:Name="DataGridCombo"/> 
-                </DataGrid.Columns>
-            </DataGrid>
+                                                ItemsSource="{Binding}" x:Name="DataGridCombo"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ContentControl>
         </StackPanel>
     </Grid>
 </UserControl>

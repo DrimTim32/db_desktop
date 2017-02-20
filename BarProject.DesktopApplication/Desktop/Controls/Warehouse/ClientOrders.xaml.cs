@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using BarProject.DatabaseProxy.Models.ReadModels;
+using BarProject.DesktopApplication.Desktop.Windows;
 using BarProject.DesktopApplication.Library.RestHelpers;
 
 namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
@@ -47,6 +48,21 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
         {
             InitializeComponent();
             Loaded += ClientOrders_Loaded;
+            DataGrid.MouseDoubleClick += DataGrid_MouseDoubleClick;
+        }
+        private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var dg = sender as DataGrid;
+            if (dg != null && dg.SelectedIndex >= 0)
+            {
+                var dgr = (DataGridRow)(dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex));
+                var product = dgr.Item as ShowableClientOrder;
+                if (product?.Id == null)
+                    return;
+
+                var window = new ClientOrderDetailsWindow(product.Id.Value);
+                window.ShowDialog();
+            }
         }
 
         private void ClientOrders_Loaded(object sender, RoutedEventArgs e)

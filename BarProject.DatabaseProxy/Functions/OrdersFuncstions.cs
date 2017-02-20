@@ -10,7 +10,15 @@ namespace BarProject.DatabaseProxy.Functions
 {
     public static class OrdersFuncstions
     {
-     
+
+        public static List<ShowableClientOrderDetails> GetDetails(int id)
+        {
+            using (var db = new Entities())
+            {
+                return db.Client_order_details_pretty.ToAnotherType<Client_order_details_pretty, ShowableClientOrderDetails>()
+                    .ToList();
+            }
+        }
         public static int AddOrder(string userName, WritableOrder order)
         {
             using (var db = new Entities())
