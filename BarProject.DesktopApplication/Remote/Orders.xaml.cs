@@ -57,7 +57,7 @@ namespace BarProject.DesktopApplication.Remote
                 {
                     var window = Window.GetWindow(this) as MainRemoteWindow;
                     window.SetAsPaid(order);
-                    RefreshTiles();
+                    NavigationService.GoBack();
                 }
             };
             WrapPanel.Children.Add(tile);

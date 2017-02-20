@@ -19,6 +19,21 @@ namespace BarProject.WebService.Controllers
     {
         [HttpGet]
         [Authorize(Roles = "Admin,Owner,Warehouse")]
+        [ResponseType(typeof(IEnumerable<ShowableProductUsage>))]
+        [Route("usage")]
+        public IHttpActionResult GetUsage()
+        {
+            try
+            {
+                return Ok(ProductsFunctions.GetUsage());
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+        [HttpGet]
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [ResponseType(typeof(IEnumerable<ShowableSimpleProduct>))]
         [Route("")]
         public IHttpActionResult Get()
@@ -111,7 +126,7 @@ namespace BarProject.WebService.Controllers
         public IHttpActionResult Post([FromBody]WritableProduct product)
         {
             try
-            { 
+            {
                 ProductsFunctions.AddProduct(product);
                 return Ok();
             }

@@ -13,6 +13,14 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
 
     public partial class RestClient
     {
+        public async Task<IRestResponse<List<ShowableProductUsage>>> GetProductsUsage()
+        {
+            var request = new RestRequest($"api/products/usage", Method.GET);
+            request.AddHeader("Authorization", $"bearer {token}");
+            request.AddHeader("Content-Type", "application/json");
+            var data = await client.ExecuteGetTaskAsync<List<ShowableProductUsage>>(request);
+            return data;
+        }
         public async Task<IRestResponse<List<ShowableSimpleProduct>>> GetProducts()
         {
             var request = new RestRequest($"api/products/", Method.GET);

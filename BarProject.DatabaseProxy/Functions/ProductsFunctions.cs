@@ -15,18 +15,18 @@ namespace BarProject.DatabaseProxy.Functions
 
     public static class ProductsFunctions
     {
+        public static List<ShowableProductUsage> GetUsage()
+        {
+            using (var db = new Entities())
+            {
+                return db.ProductsUsages.ToAnotherType<ProductsUsage, ShowableProductUsage>().ToList();
+            }
+        }
         public static List<ShowableSimpleProduct> GetProductView()
         {
-            try
+            using (var db = new Entities())
             {
-                using (var db = new Entities())
-                {
-                    return db.productSimples.ToAnotherType<productSimple, ShowableSimpleProduct>().ToList();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new ResponseException(ex, Utilities.ExceptionType.Database);
+                return db.productSimples.ToAnotherType<productSimple, ShowableSimpleProduct>().ToList();
             }
         }
 

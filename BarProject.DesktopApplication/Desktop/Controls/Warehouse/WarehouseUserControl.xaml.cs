@@ -45,13 +45,19 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
             {
                 Header = "Warehouse",
                 Content = new Warehouse()
+            }; var productsUsage = new MetroTabItem()
+            {
+                Header = "Products usage",
+                Content = new ProductsUsage()
             };
             orders.SetResourceReference(StyleProperty, "MenuLevel2");
+            productsUsage.SetResourceReference(StyleProperty, "MenuLevel2");
             warehouse.SetResourceReference(StyleProperty, "MenuLevel2");
             clientorders.SetResourceReference(StyleProperty, "MenuLevel2");
             TabControl.Items.Clear();
             TabControl.Items.Add(orders);
             TabControl.Items.Add(warehouse);
+            TabControl.Items.Add(productsUsage);
             TabControl.Items.Add(clientorders);
         }
     }

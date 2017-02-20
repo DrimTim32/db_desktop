@@ -7,7 +7,7 @@
       mc:Ignorable="d"  
       Title="Subpages">
     <Grid>
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <controls:Tile Title="NEW ORDER" Style="{StaticResource LargeTileStyle}" Background="Red" Height="450" Width="450" Click="NewOrder_Click">
                 <Image Source="../Resources/Finance-Purchase-Order-icon.png" Width="250"/>
             </controls:Tile>

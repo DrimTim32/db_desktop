@@ -21,7 +21,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel x:Name="OrderDetails" Orientation="Horizontal" Visibility="Hidden" HorizontalAlignment="Right">
             <Label Content="New order details:    " FontSize="30"/>
@@ -31,10 +31,12 @@
                 <Label Content="   Current sum " FontSize="30" />
                 <Label Content="{Binding Sum, Mode=OneWay}" FontSize="30"/>
             </StackPanel>
-            <mah:Tile Content="Close order" Width="250" Height="50" FontSize="30" Click="CloseOrder_Click"/>
-            <mah:Tile Content="Cancel order" Width="250" Height="50" FontSize="30" Click="DiscardOrder_Click"/>
+            <StackPanel Orientation="Horizontal">
+                <mah:Tile Content="Close order" Width="250" Height="50" FontSize="30" Click="CloseOrder_Click"/>
+                <mah:Tile Content="Cancel order" Width="250" Height="50" FontSize="30" Click="DiscardOrder_Click"/>
+            </StackPanel>
         </StackPanel>
-        <Frame Source="MainPage.xaml" NavigationUIVisibility="Hidden" Grid.Row="1" x:Name="Frame"/>
+        <Frame Source="MainPage.xaml" NavigationUIVisibility="Hidden" Grid.Row="1" x:Name="Frame" HorizontalAlignment="Stretch"/>
         <Label x:Name="InfoLabel" Grid.Row="2" FontSize="30" />
     </Grid>
 </mah:MetroWindow>

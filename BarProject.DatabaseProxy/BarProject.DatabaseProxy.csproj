@@ -143,6 +143,7 @@
     <Compile Include="Models\ReadModels\ShowableWarehouseOrder.cs" />
     <Compile Include="Models\ReadModels\ShowableWorkstation.cs" />
     <Compile Include="Models\ReadModels\ShowableWorkstationRights.cs" />
+    <Compile Include="Models\ReadModels\ShowableProductUsage.cs" />
     <Compile Include="Models\UserPrivileges.cs" />
     <Compile Include="Models\Utilities\ExceptionData.cs" />
     <Compile Include="Models\Utilities\Utilities.cs" />
