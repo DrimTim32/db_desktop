@@ -103,11 +103,10 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                               {
                                   if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
                                   {
-                                      if (response.Content.Contains("DELETE"))
+                                      if (response.Content.Contains("DELETE statement") && response.Content.Contains("products_sold_id"))
                                       {
-                                          MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
-                                            "You cannot delete this product, some recepture uses it.");
-                                      }
+                                          MessageBoxesHelper.ShowWindowInformationAsync("Unable to remove this product", "Product cannot be removed because it exists on some order");
+                                      } 
                                       else
                                           MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
                                               response.Content);
