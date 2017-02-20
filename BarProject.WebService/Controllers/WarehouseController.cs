@@ -18,6 +18,22 @@ namespace BarProject.WebService.Controllers
     {
 
         [Authorize(Roles = "Admin,Owner,Warehouse")]
+        [HttpPatch, ResponseType(typeof(List<ShowableWarehouseItem>))]
+        [Route("orders/mark/{id}")]
+        public IHttpActionResult Mark(int id)
+        {
+            try
+            {
+                WarehouseFunctions.MarkAsDelivered(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Unknown);
+            }
+        }
+
+        [Authorize(Roles = "Admin,Owner,Warehouse")]
         [HttpGet, ResponseType(typeof(List<ShowableWarehouseItem>))]
         [Route("")]
         public IHttpActionResult GetState()

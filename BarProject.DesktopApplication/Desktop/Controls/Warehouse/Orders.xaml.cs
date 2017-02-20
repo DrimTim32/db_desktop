@@ -318,7 +318,15 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Warehouse
                 var product = dgr.Item as ShowableWarehouseOrder;
                 if (product?.Id == null)
                     return;
-                OrdersFuncstions.MarkAsDelivered(product.Id.Value);
+                RestClient.Client().MarkAsDelivered(product.Id.Value, (response, handle) =>
+                {
+                    if (response.ResponseStatus != ResponseStatus.Completed ||
+                        response.StatusCode != HttpStatusCode.OK)
+                    {
+                        MessageBoxesHelper.ShowProblemWithRequest(response);
+                    }
+                    RefreshData();
+                });
             }
         }
     }

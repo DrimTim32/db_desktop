@@ -18,6 +18,13 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
             var data = await client.ExecuteGetTaskAsync<List<ShowableWarehouseItem>>(request);
             return data;
         }
+
+        public void MarkAsDelivered(int id, Action<IRestResponse, RestRequestAsyncHandle> callback)
+        {
+            var request = new RestRequest($"api/warehouse/orders/mark/{id}", Method.PATCH);
+            request.AddHeader("Authorization", $"bearer {token}");
+            client.ExecuteAsync(request, callback);
+        }
         public void RemoveWarehouse(ShowableWarehouseItem category, Action<IRestResponse, RestRequestAsyncHandle> callback)
         {
             var request = new RestRequest($"api/warehouse/", Method.DELETE);

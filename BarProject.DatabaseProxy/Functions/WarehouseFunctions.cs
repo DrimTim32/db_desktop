@@ -11,6 +11,14 @@ namespace BarProject.DatabaseProxy.Functions
 {
     public static class WarehouseFunctions
     {
+
+        public static void MarkAsDelivered(int id)
+        {
+            using (var db = new Entities())
+            {
+                db.markDelivered(id);
+            }
+        }
         public static List<ShowableWarehouseOrder> GetWarehouseOrders()
         {
             using (var db = new Entities())

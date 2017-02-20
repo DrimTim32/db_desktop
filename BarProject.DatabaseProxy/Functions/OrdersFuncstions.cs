@@ -10,13 +10,7 @@ namespace BarProject.DatabaseProxy.Functions
 {
     public static class OrdersFuncstions
     {
-        public static void MarkAsDelivered(int id)
-        {
-            using (var db = new Entities())
-            {
-                db.markDelivered(id);
-            }
-        }
+     
         public static int AddOrder(string userName, WritableOrder order)
         {
             using (var db = new Entities())
