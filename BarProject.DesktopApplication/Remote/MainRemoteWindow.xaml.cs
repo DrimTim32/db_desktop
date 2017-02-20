@@ -61,6 +61,7 @@ namespace BarProject.DesktopApplication.Remote
         private void CloseOrder_Click(object sender, RoutedEventArgs e)
         {
             AcceptOrder();
+            GoToFirstPage();
         }
         private void DiscardOrder_Click(object sender, RoutedEventArgs e)
         {

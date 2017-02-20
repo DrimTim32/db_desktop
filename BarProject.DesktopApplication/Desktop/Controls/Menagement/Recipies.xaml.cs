@@ -9,6 +9,7 @@ using System.Windows.Threading;
 using BarProject.DatabaseProxy.Models.ReadModels;
 using BarProject.DesktopApplication.Common.Utils;
 using BarProject.DesktopApplication.Desktop.Windows;
+using MahApps.Metro.Controls.Dialogs;
 using RestSharp;
 using RestClient = BarProject.DesktopApplication.Library.RestHelpers.RestClient;
 
@@ -57,6 +58,45 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
             Loaded += Recipies_Loaded;
             DataGrid.MouseDoubleClick += DataGrid_MouseDoubleClick;
             DataGrid.RowEditEnding += DataGrid_RowEditEnding;
+            DataGrid.PreviewKeyDown += DataGrid_PreviewKeyDown;
+        }
+        void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            DataGrid dg = sender as DataGrid;
+            if (dg != null && dg.SelectedIndex >= 0)
+            {
+                DataGridRow dgr = (DataGridRow)(dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex));
+                if (e.Key == Key.Delete && !dgr.IsEditing)
+                {
+                    // User is attempting to delete the row
+                    var resul = MessageBoxesHelper.ShowYesNoMessage("Delete", "About to delete the current row.\n\nProceed?");
+                    if (resul == MessageDialogResult.Negative)
+                    {
+                        e.Handled = true;
+                    }
+                    else
+                    {
+                        var cat = (ShowableReceipt)dgr.Item;
+                        RemoveRecipie(cat);
+                    }
+                }
+            }
+        }
+        private void RemoveRecipie(ShowableReceipt recipie)
+        {
+            RestClient.Client().RemoveReceipt(recipie.Id,
+            (response, handle) =>
+            {
+                if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
+                {
+                    MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
+                        response.Content);
+                }
+                else
+                {
+                    RefreshData();
+                }
+            });
         }
         private void DataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {

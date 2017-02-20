@@ -74,7 +74,7 @@ namespace BarProject.WebService.Controllers
             }
         }
         [Authorize(Roles = "Admin,Owner,Warehouse")]
-        [HttpGet, Route("{id}")]
+        [HttpDelete, Route("{id}")]
         [ResponseType(typeof(IEnumerable<ShowableRecipitDetail>))]
         public IHttpActionResult Delete(int id)
         {
@@ -89,8 +89,7 @@ namespace BarProject.WebService.Controllers
             }
         }
         [Authorize(Roles = "Admin,Owner,Warehouse")]
-        [HttpGet, Route("{id}/details/{id2}")]
-        [ResponseType(typeof(IEnumerable<ShowableRecipitDetail>))]
+        [HttpDelete, Route("{id}/details/{id2}")]
         public IHttpActionResult DeleteDetails(int id, int id2)
         {
             try

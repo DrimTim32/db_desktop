@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -102,9 +103,16 @@ namespace BarProject.DesktopApplication.Desktop.Windows
                     return;
                 }
                 grid.RowEditEnding += DataGrid_RowEditEnding;
-                if (cat.Id == null) // new row added
+                if (cat.ProductId == null) // new row added
                 {
-                    AddRecipieDetails(cat);
+                    if (DetailsList.Count(x => x.ProductName == cat.ProductName) > 1)
+                    {
+                        MessageBoxesHelper.ShowWindowInformationAsync("Problem with new item!", "You cannot add the same product once more");
+                        RefreshData();
+                        ProgressBarStop();
+                    }
+                    else
+                        AddRecipieDetails(cat);
                 }
                 else
                 {
@@ -139,7 +147,7 @@ namespace BarProject.DesktopApplication.Desktop.Windows
         }
         private void RemoveDetails(ShowableRecipitDetail cat)
         {
-            RestClient.Client().RemoveReceiptDetails(Id, cat.Id,
+            RestClient.Client().RemoveReceiptDetails(Id, cat.ProductId,
                 (response, handle) =>
                 {
                     if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)

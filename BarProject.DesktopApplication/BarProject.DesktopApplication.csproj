@@ -107,12 +107,18 @@
     <Compile Include="Desktop\Controls\Administration\AdministrationUserControl.xaml.cs">
       <DependentUpon>AdministrationUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Desktop\Controls\Administration\LoginLogs.xaml.cs">
+      <DependentUpon>LoginLogs.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Desktop\Controls\Menagement\SafeCounter.cs" />
     <Compile Include="Desktop\Controls\Menagement\Taxes.xaml.cs">
       <DependentUpon>Taxes.xaml</DependentUpon>
     </Compile>
     <Compile Include="Desktop\Controls\Menagement\Units.xaml.cs">
       <DependentUpon>Units.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Desktop\Controls\Organisation\Spots.xaml.cs">
+      <DependentUpon>Spots.xaml</DependentUpon>
     </Compile>
     <Compile Include="Desktop\Controls\Organisation\Workstations.xaml.cs">
       <DependentUpon>Workstations.xaml</DependentUpon>
@@ -184,6 +190,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Desktop\Controls\Administration\LoginLogs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Desktop\Controls\Menagement\Categories.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -193,6 +203,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Desktop\Controls\Menagement\Units.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Desktop\Controls\Organisation\Spots.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

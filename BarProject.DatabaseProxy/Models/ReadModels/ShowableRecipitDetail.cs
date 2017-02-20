@@ -9,7 +9,6 @@ namespace BarProject.DatabaseProxy.Models.ReadModels
 {
     public class ShowableRecipitDetail
     {
-        public int? Id { get; set; }
         public int? ProductId { get; set; }
         public string ProductName { get; set; }
         public double Quantity { get; set; }
@@ -17,10 +16,9 @@ namespace BarProject.DatabaseProxy.Models.ReadModels
 
         public ShowableRecipitDetail(recipeDetails_Result result)
         {
-            Id = result.ingredient_id;
             Quantity = result.quantity;
             ProductId = result.ingredient_id;
-            //TODO : !!!
+            ProductName = result.ingredient_name; 
         }
     }
 }

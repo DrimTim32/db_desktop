@@ -41,11 +41,18 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Organisation
                 Header = "Workstations",
                 Content = new Workstations()
             };
+            var spots = new MetroTabItem()
+            {
+                Header = "Spots",
+                Content = new Spots()
+            };
             locations.SetResourceReference(StyleProperty, "MenuLevel2");
             workstations.SetResourceReference(StyleProperty, "MenuLevel2");
+            spots.SetResourceReference(StyleProperty, "MenuLevel2");
             TabControl.Items.Clear();
-            TabControl.Items.Add(locations);
             TabControl.Items.Add(workstations);
+            TabControl.Items.Add(locations);
+            TabControl.Items.Add(spots);
         }
     }
 }

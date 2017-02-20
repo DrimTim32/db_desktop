@@ -9,6 +9,8 @@ using System.Security.Claims;
 using Microsoft.Owin;
 using System.Linq;
 using System.Net.Http;
+using BarProject.DatabaseConnector;
+
 namespace BarProject.WebService.Controllers
 {
     using System.Linq;
@@ -76,22 +78,36 @@ namespace BarProject.WebService.Controllers
             }
             return Ok();
         }
-        //TODO : remove user
-        //[HttpDelete]
-        //[Authorize(Roles = "Admin,Owner")]
-        //[Route("{username}")]
-        //public IHttpActionResult Remove(string username)
-        //{
-        //    try
-        //    {
-        //        UserFunctions.Remove(user);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new ResponseException(ex, Utilities.ExceptionType.Database, user);
-        //    }
-        //    return Ok();
-        //}
+        [HttpDelete]
+        [Authorize(Roles = "Admin,Owner")]
+        [Route("{username}")]
+        public IHttpActionResult Remove(string username)
+        {
+            try
+            {
+                UserFunctions.RemoveUser(username);
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Database);
+            }
+            return Ok();
+        }
+
+        [HttpGet, Authorize(Roles = "Admin,Owner"), Route("logs")]
+        [ResponseType(typeof(IEnumerable<LoginLog>))]
+        public IHttpActionResult GetLogs()
+        {
+            try
+            {
+                return Ok(UserFunctions.GetLogs());
+            }
+            catch (Exception ex)
+            {
+                throw new ResponseException(ex, Utilities.ExceptionType.Database);
+            }
+
+        }
     }
 
 }

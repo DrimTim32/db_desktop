@@ -37,7 +37,7 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Administration
             var logs = new MetroTabItem()
             {
                 Header = "Logs",
-                Content = new UserControl()
+                Content = new LoginLogs()
             };
             users.SetResourceReference(StyleProperty, "MenuLevel2");
             logs.SetResourceReference(StyleProperty, "MenuLevel2");

@@ -10,12 +10,12 @@ namespace BarProject.DatabaseProxy.Models.ReadModels
         public string Name { get; set; }
         public string ProductName { get; set; }
         public decimal UnitPrice { get; set; }
-        public short Quantity { get; set; } 
+        public short Quantity { get; set; }
         public ShowableWarehouseOrderDetails(getWarehouseOrderDetailsPretty_Result result)
         {
             Name = result.name;
             UnitPrice = result.purchase_price;
-            Quantity = result.quantity; 
+            Quantity = result.quantity;
         }
     }
     public class ShowableWarehouseOrder
@@ -42,6 +42,8 @@ namespace BarProject.DatabaseProxy.Models.ReadModels
             OrderDate = result.order_date;
             RequiredDate = result.required_date;
             DeliveryDate = result.delivery_date;
+            if (result.value != null)
+                Value = result.value.Value;
 
         }
     }

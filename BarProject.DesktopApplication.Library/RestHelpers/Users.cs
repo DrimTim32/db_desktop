@@ -23,6 +23,14 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
             return client.Execute<UserPrivileges>(request);
         }
 
+        public async Task<IRestResponse<List<ShowableLoginLog>>> GetLogs()
+        {
+            var request = new RestRequest($"api/users/logs", Method.GET);
+            request.AddHeader("Authorization", $"bearer {token}");
+            request.AddHeader("Content-Type", "application/json");
+            var data = await client.ExecuteGetTaskAsync<List<ShowableLoginLog>>(request);
+            return data;
+        }
         public void GetUserCredentialsAsync(string username, Action<IRestResponse<UserPrivileges>, RestRequestAsyncHandle> callback)
         {
             var request = new RestRequest($"api/users/privileges/{username}", Method.GET);
@@ -47,5 +55,7 @@ namespace BarProject.DesktopApplication.Library.RestHelpers
             request.AddBody(user);
             client.ExecuteAsync(request, callback);
         }
+
+
     }
 }

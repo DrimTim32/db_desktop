@@ -87,8 +87,21 @@
 
         public static void RemoveUser(string username)
         {
-            throw new NotImplementedException();
-
+            using (var db = new Entities())
+            {
+                var usr = db.Users.FirstOrDefault(x => x.username == username);
+                if (usr == null)
+                    return;
+                db.Users.Remove(usr);
+            }
         }
+        public static IEnumerable<LoginLog> GetLogs()
+        {
+            using (var db = new Entities())
+            {
+                return db.LoginLogs.Select(x => x).ToList();
+            }
+        }
+
     }
 }

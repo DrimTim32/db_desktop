@@ -52,6 +52,7 @@ namespace BarProject.DatabaseProxy.Functions
                         {
                             ProductName = P.name,
                             Quantity = I.quantity,
+                            ProductId = P.id,
                         }
                 ).ToList();
             }

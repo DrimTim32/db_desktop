@@ -103,8 +103,14 @@ namespace BarProject.DesktopApplication.Desktop.Controls.Menagement
                               {
                                   if (response.ResponseStatus != ResponseStatus.Completed || response.StatusCode != HttpStatusCode.OK)
                                   {
-                                      MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
-                                          response.Content);
+                                      if (response.Content.Contains("DELETE"))
+                                      {
+                                          MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
+                                            "You cannot delete this product, some recepture uses it.");
+                                      }
+                                      else
+                                          MessageBoxesHelper.ShowWindowInformationAsync("Problem with writing to database",
+                                              response.Content);
                                   }
                                   else
                                   {
